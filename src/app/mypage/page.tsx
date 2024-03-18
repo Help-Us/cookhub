@@ -1,12 +1,11 @@
-import MyPageContents from "@/components/MyPageContents";
+import MyPageContents from "../../components/MyPageContents";
 import React from "react";
 
-const MyPage = () => {
+export default function MyPage() {
   return (
-    <div>
+    <>
+      <h2>프로필</h2>
       <MyPageContents />
-    </div>
+    </>
   );
-};
-
-export default MyPage;
+}
