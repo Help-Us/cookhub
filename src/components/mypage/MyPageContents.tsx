@@ -12,19 +12,6 @@ export default function MyPageContents() {
   const [userSessionNickname, setUserSessionNickname] = useState("");
   const [nickname, setNickname] = useState("");
 
-  // 세션 안에 있는 닉네임, 이메일 가져오기
-  // const getSession = async () => {
-  //   const session = await getUserSession();
-  //   if (session && session.session) {
-  //     const sessionNickname = session.session.user.user_metadata.nickname;
-  //     const sessionProfileImg = session.session.user.user_metadata.user_image;
-  //     setUserSessionNickname(sessionNickname);
-  //     setNickname(sessionNickname);
-  //     setAvatar(sessionProfileImg);
-  //   }
-  //   return;
-  // };
-  // getSession();
   console.log(nickname);
 
   return (

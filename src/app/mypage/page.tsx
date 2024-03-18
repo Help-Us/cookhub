@@ -1,4 +1,4 @@
-import MyPageContents from "../../components/MyPageContents";
+import MyPageContents from "../../components/mypage/MyPageContents";
 import React from "react";
 
 export default function MyPage() {
