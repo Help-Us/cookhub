@@ -11,7 +11,7 @@ interface Recipe {
 export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
 
-  // 레시피 데이터를 랜덤하게 섞는 함수
+  // 레시피 데이터 랜덤
   const shuffleArray = (array: any[]) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
