@@ -8,4 +8,5 @@ export type Recipe = {
   image: string;
   name: string;
   type: string;
+  how: string;
 };
