@@ -3,16 +3,7 @@
 import React, { useState } from "react";
 
 const FilteredFoods = () => {
-  const orderByList = ["최신순", "조회순"];
   const [orderByIndex, setOrderByIndex] = useState(-1);
-
-  //   const handleOrderByLatest = () => {
-  //     setOrderBy("latest");
-  //   };
-
-  //   const handleOrderByView = () => {
-  //     setOrderBy("view");
-  //   };
 
   return (
     <>
@@ -24,26 +15,7 @@ const FilteredFoods = () => {
           </span>
           건 조회
         </div>
-        <div className={`flex gap-2 cursor-pointer  gap-4`}>
-          {orderByList.map((item, index) => {
-            return (
-              <>
-                <div className="flex">
-                  <div className="mr-1">
-                    {orderByIndex === index ? `✔` : ""}
-                  </div>
-                  <div
-                    className={`${orderByIndex === index ? "text-gray-900" : "text-gray-400"}`}
-                    onClick={() => setOrderByIndex(index)}
-                  >
-                    {item}
-                  </div>
-                </div>
-                {index === 0 && <div className="text-gray-400">·</div>}
-              </>
-            );
-          })}
-        </div>
+        <div className={`flex gap-2 cursor-pointer  gap-4`}></div>
       </div>
       <div className="w-full grid grid-cols-4 gap-1">
         <div className="mb-8 cursor-pointer w-64 relative">
