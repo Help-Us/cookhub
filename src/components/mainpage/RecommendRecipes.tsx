@@ -15,10 +15,10 @@ const RecommendedRecipes: React.FC<RecommendedRecipesProps> = ({ recipes }) => {
     <div className="grid grid-cols-3 gap-4">
       {recipes.length > 0 && (
         recipes.map((recipe, index) => (
-          <div key={index} style={{ border: '2px solid #E6A4B4', width: '400px', height: '400px' }} className="p-4 rounded-lg border-[color:var(--subColor3)]">
+          <div key={index} className="p-4 rounded-lg border-[color:var(--subColor3)]">
             <div className="badge badge-ghost">{recipe.type}</div>
             {recipe.image && <img src={recipe.image} alt="Recipe" style={{ width: '300px', height: '300px' }} className="w-full h-auto"/>}
-            <h3>{recipe.name}</h3>
+            <h3 className='text-brown font-bold'>{recipe.name}</h3>
           </div>
         ))
       )}

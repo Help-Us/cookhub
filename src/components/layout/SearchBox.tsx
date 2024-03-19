@@ -16,7 +16,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
 
   return (
     <>
-      <div className="flex justify-center items-center h-64 bg-[color:var(--baseColor)]">
+      <div className="flex justify-center items-center h-64 bg-grey w-screen">
         <div className="w-full max-w-4xl py-8 flex flex-col justify-center items-center">
           <h1 className="text-2xl font-bold mb-4">레시피를 검색해주세요</h1>
           <div className="flex items-center gap-2">
