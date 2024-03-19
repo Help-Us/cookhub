@@ -11,7 +11,7 @@ const categoryPage = () => {
           <CategoryBar />
         </div>
         <div className="mt-16 flex flex-col items-center">
-          <div className="font-bold text-2xl mb-4">
+          <div className="font-bold text-2xl mb-10">
             <span className="text-rose-500">양식</span> 검색결과
           </div>
           <FilteredFoods />

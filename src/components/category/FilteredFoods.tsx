@@ -3,96 +3,67 @@
 import React, { useState } from "react";
 
 const FilteredFoods = () => {
-  const [orderBy, setOrderBy] = useState("latest");
+  const orderByList = ["최신순", "조회순"];
+  const [orderByIndex, setOrderByIndex] = useState(-1);
 
-  const handleOrderByLatest = () => {
-    setOrderBy("latest");
-  };
+  //   const handleOrderByLatest = () => {
+  //     setOrderBy("latest");
+  //   };
 
-  const handleOrderByView = () => {
-    setOrderBy("view");
-  };
+  //   const handleOrderByView = () => {
+  //     setOrderBy("view");
+  //   };
 
   return (
     <>
-      <div className="flex w-full justify-between text-sm items-center mb-1">
+      <div className="flex w-full justify-between text-sm items-center mb-4">
         <div className="">
           검색결과{" "}
-          <span className="text-[color:var(--hilightColor1)] text-lg">13</span>
+          <span className="text-[color:var(--hilightColor1)] font-bold text-lg">
+            13
+          </span>
           건 조회
         </div>
-        <div className={`flex gap-2 cursor-pointer  `}>
-          <div
-            className={`${orderBy === "latest" ? "text-gray-900" : "text-gray-400"}`}
-            onClick={handleOrderByLatest}
-          >{`${orderBy === "latest" ? "✔" : ""} 최신순`}</div>
-          <div className="text-gray-400">·</div>
-          <div
-            className={`${orderBy === "view" ? "text-gray-900" : "text-gray-400"}`}
-            onClick={handleOrderByView}
-          >{`${orderBy === "view" ? "✔" : ""} 조회순`}</div>
+        <div className={`flex gap-2 cursor-pointer  gap-4`}>
+          {orderByList.map((item, index) => {
+            return (
+              <>
+                <div className="flex">
+                  <div className="mr-1">
+                    {orderByIndex === index ? `✔` : ""}
+                  </div>
+                  <div
+                    className={`${orderByIndex === index ? "text-gray-900" : "text-gray-400"}`}
+                    onClick={() => setOrderByIndex(index)}
+                  >
+                    {item}
+                  </div>
+                </div>
+                {index === 0 && <div className="text-gray-400">·</div>}
+              </>
+            );
+          })}
         </div>
       </div>
       <div className="w-full grid grid-cols-4 gap-1">
-        <div className="mb-8">
+        <div className="mb-8 cursor-pointer w-64 relative">
+          {/* 추천, 인기 스티커 조건 추가 필 */}
+          <div className="absolute text-sm top-36 right-16 mr-1 rounded-full bg-[color:var(--hilightColor2)] w-11 h-11 flex items-center justify-center leading-5 text-white">
+            추천
+          </div>
+          <div className="absolute text-sm top-36 right-4 rounded-full bg-[color:var(--subColor6)] w-11 h-11 flex items-center justify-center leading-5 text-white">
+            인기
+          </div>
           <img
             className="w-64"
             src="https://img.hankyung.com/photo/202309/99.20417298.1.jpg"
           ></img>
-          <div className="flex text-sm text-gray-600 gap-2 mt-1">
+          <div className="flex text-sm text-gray-600 gap-2 mt-8">
             <span>#파스타</span>
             <span>#오일파스타</span>
             <span>#새우오일파스타</span>
           </div>
-          <div className="mt-2 text-lg">마라 삼계탕</div>
-        </div>
-        <div>
-          <img
-            className="w-64"
-            src="https://www.shutterstock.com/ko/blog/wp-content/uploads/sites/17/2018/11/shutterstock_1181891455.jpg"
-          ></img>
-          <div className="flex text-sm text-gray-600 gap-2 mt-1">
-            <span>#파스타</span>
-            <span>#오일파스타</span>
-            <span>#새우오일파스타</span>
-          </div>
-          <div className="mt-2 text-lg">새우 오일 파스타</div>
-        </div>
-        <div>
-          <img
-            className="w-64"
-            src="https://www.shutterstock.com/ko/blog/wp-content/uploads/sites/17/2018/11/shutterstock_1181891455.jpg"
-          ></img>
-          <div className="flex text-sm text-gray-600 gap-2 mt-1">
-            <span>#파스타</span>
-            <span>#오일파스타</span>
-            <span>#새우오일파스타</span>
-          </div>
-          <div className="mt-2 text-lg">새우 오일 파스타</div>
-        </div>
-        <div>
-          <img
-            className="w-64"
-            src="https://www.shutterstock.com/ko/blog/wp-content/uploads/sites/17/2018/11/shutterstock_1181891455.jpg"
-          ></img>
-          <div className="flex text-sm text-gray-600 gap-2 mt-1">
-            <span>#파스타</span>
-            <span>#오일파스타</span>
-            <span>#새우오일파스타</span>
-          </div>
-          <div className="mt-2 text-lg">새우 오일 파스타</div>
-        </div>
-        <div>
-          <img
-            className="w-64"
-            src="https://www.shutterstock.com/ko/blog/wp-content/uploads/sites/17/2018/11/shutterstock_1181891455.jpg"
-          ></img>
-          <div className="flex text-sm text-gray-600 gap-2 mt-1">
-            <span>#파스타</span>
-            <span>#오일파스타</span>
-            <span>#새우오일파스타</span>
-          </div>
-          <div className="mt-2 text-lg">새우 오일 파스타</div>
+          <div className="mt-1 text-xl font-bold">마라 삼계탕</div>
         </div>
       </div>
     </>
