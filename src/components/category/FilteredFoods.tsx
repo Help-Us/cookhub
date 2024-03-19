@@ -1,6 +1,18 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 
 const FilteredFoods = () => {
+  const [orderBy, setOrderBy] = useState("latest");
+
+  const handleOrderByLatest = () => {
+    setOrderBy("latest");
+  };
+
+  const handleOrderByView = () => {
+    setOrderBy("view");
+  };
+
   return (
     <>
       {" "}
@@ -8,10 +20,16 @@ const FilteredFoods = () => {
         <div className="">
           검색결과 <span className="text-rose-500 text-lg">13</span>건 조회
         </div>
-        <div className="flex gap-2 cursor-pointer text-gray-400">
-          <div>✔ 최신순</div>
-          <div>·</div>
-          <div>조회순</div>
+        <div className={`flex gap-2 cursor-pointer  `}>
+          <div
+            className={`${orderBy === "latest" ? "text-gray-900" : "text-gray-400"}`}
+            onClick={handleOrderByLatest}
+          >{`${orderBy === "latest" ? "✔" : ""} 최신순`}</div>
+          <div className="text-gray-400">·</div>
+          <div
+            className={`${orderBy === "view" ? "text-gray-900" : "text-gray-400"}`}
+            onClick={handleOrderByView}
+          >{`${orderBy === "view" ? "✔" : ""} 조회순`}</div>
         </div>
       </div>
       <div className="w-full grid grid-cols-4 gap-1">

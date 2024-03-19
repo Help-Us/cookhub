@@ -4,7 +4,7 @@ import React from "react";
 
 const categoryPage = () => {
   return (
-    <div className="bg-gray-200 w-3/5 m-auto  min-w-96">
+    <div className="bg-gray-200 w-3/5 m-auto min-w-fit">
       <CategoryBar />
       <div className="mt-16 flex flex-col items-center">
         <div className="font-bold text-2xl mb-4">
