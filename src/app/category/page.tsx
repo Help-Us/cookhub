@@ -2,7 +2,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="bg-gray-200 w-4/5 m-auto ">
+    <div className="bg-gray-200 w-3/5 m-auto ">
       <div className="flex p-2 items-center">
         <div
           className={`flex items-center justify-center border border-solid border-rose-500 w-28 h-8 text-md/[10px] rounded-xl bg-amber-100`}
@@ -57,15 +57,80 @@ const page = () => {
           </div>
         </div>
       </div>
-      <div>칼로리</div>
-      <div>
-        검색결과 컨테이너
-        <div>검색결과 수</div>
-        <div>최신순</div>
-        <div>조회순</div>
-        <div>
-          음식 그리드 컨테이나
-          <div></div>
+      <div className="bg-lime-100 mt-10 flex flex-col items-center">
+        <div className="font-bold ">
+          <span className="text-rose-500">양식</span> 검색결과
+        </div>
+        <div className="flex w-full justify-between text-sm">
+          <div className="">
+            검색결과 <span className="text-rose-500 text-lg">13</span>건 조회
+          </div>
+          <div className="flex gap-2">
+            <div>최신순</div>
+            <div>조회순</div>
+          </div>
+        </div>
+        <div className="w-full grid grid-flow-col grid-rows-2 gap-2">
+          <div>
+            <img
+              className="w-64"
+              src="https://www.shutterstock.com/ko/blog/wp-content/uploads/sites/17/2018/11/shutterstock_1181891455.jpg"
+            ></img>
+            <div className="flex text-sm text-gray-600 gap-2 mt-1">
+              <span>#파스타</span>
+              <span>#오일파스타</span>
+              <span>#새우오일파스타</span>
+            </div>
+            <div className="mt-2 text-lg">새우 오일 파스타</div>
+          </div>
+          <div>
+            <img
+              className="w-64"
+              src="https://www.shutterstock.com/ko/blog/wp-content/uploads/sites/17/2018/11/shutterstock_1181891455.jpg"
+            ></img>
+            <div className="flex text-sm text-gray-600 gap-2 mt-1">
+              <span>#파스타</span>
+              <span>#오일파스타</span>
+              <span>#새우오일파스타</span>
+            </div>
+            <div className="mt-2 text-lg">새우 오일 파스타</div>
+          </div>
+          <div>
+            <img
+              className="w-64"
+              src="https://www.shutterstock.com/ko/blog/wp-content/uploads/sites/17/2018/11/shutterstock_1181891455.jpg"
+            ></img>
+            <div className="flex text-sm text-gray-600 gap-2 mt-1">
+              <span>#파스타</span>
+              <span>#오일파스타</span>
+              <span>#새우오일파스타</span>
+            </div>
+            <div className="mt-2 text-lg">새우 오일 파스타</div>
+          </div>
+          <div>
+            <img
+              className="w-64"
+              src="https://www.shutterstock.com/ko/blog/wp-content/uploads/sites/17/2018/11/shutterstock_1181891455.jpg"
+            ></img>
+            <div className="flex text-sm text-gray-600 gap-2 mt-1">
+              <span>#파스타</span>
+              <span>#오일파스타</span>
+              <span>#새우오일파스타</span>
+            </div>
+            <div className="mt-2 text-lg">새우 오일 파스타</div>
+          </div>
+          <div>
+            <img
+              className="w-64"
+              src="https://www.shutterstock.com/ko/blog/wp-content/uploads/sites/17/2018/11/shutterstock_1181891455.jpg"
+            ></img>
+            <div className="flex text-sm text-gray-600 gap-2 mt-1">
+              <span>#파스타</span>
+              <span>#오일파스타</span>
+              <span>#새우오일파스타</span>
+            </div>
+            <div className="mt-2 text-lg">새우 오일 파스타</div>
+          </div>
         </div>
       </div>
     </div>
