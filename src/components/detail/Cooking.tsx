@@ -6,7 +6,7 @@ const Cooking = () => {
     return (
         <div className="flex-col mt-20">
             <p className="text-brown text-2xl font-bold">만드는 방법</p>
-            <div className="flex mt-5">
+            <div className="flex mt-10">
                 <Image
                     src={'https://lh3.googleusercontent.com/proxy/8lSvdDvsWQLwxYpIuFZK3J9dv5Vhh961c0yROUnP4BCczQSSSKm36XwToxnMDIUk27QC0zzOPpFpHzjPwKrjPXsd24amPUogjs9BDv5EeAYvyRkiSpzXmgxYsvc79vz7UMhxJZrR5vlDwPyvT_PcYVJHyk0T'}
                     alt="step image"
@@ -19,7 +19,7 @@ const Cooking = () => {
                     <p className="ml-10 ">마늘은 편 썰고, 양파는 슬라이스한다.</p>
                 </div>
             </div>
-            <div className="flex mt-5">
+            <div className="flex mt-10">
                 <Image
                     src={'https://lh3.googleusercontent.com/proxy/8lSvdDvsWQLwxYpIuFZK3J9dv5Vhh961c0yROUnP4BCczQSSSKm36XwToxnMDIUk27QC0zzOPpFpHzjPwKrjPXsd24amPUogjs9BDv5EeAYvyRkiSpzXmgxYsvc79vz7UMhxJZrR5vlDwPyvT_PcYVJHyk0T'}
                     alt="step image"

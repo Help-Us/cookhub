@@ -25,7 +25,10 @@ const Comments = () => {
 
     return (
         <div className="flex-col mt-20">
-            <p className="text-brown text-2xl font-bold">댓글</p>
+            <div className="flex">
+                <p className="text-brown text-2xl font-bold">댓글</p>
+                <p className="text-deepgrey text-2xl font-bold ml-2">{comments.length}</p>
+            </div>
             <div>
                 <input
                     type="text"
