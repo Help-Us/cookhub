@@ -20,11 +20,11 @@ const CategoryBar = () => {
     <>
       <div className="flex p-2 items-center mb-2 ">
         <div
-          className={`flex items-center justify-center border border-solid border-[color:var(--hilightColor1)] w-28 h-8 text-md/[10px] rounded-xl bg-[color:var(--subColor1)]`}
+          className={`flex items-center justify-center border border-solid border-[color:var(--highlightColor1)] w-28 h-8 text-md/[10px] rounded-xl bg-[color:var(--subColor1)]`}
         >
           요리 종류
         </div>
-        <div className="bg-[color:var(--hilightColor1)] w-1 h-8 ml-4 mr-8"></div>
+        <div className="bg-[color:var(--highlightColor1)] w-1 h-8 ml-4 mr-8"></div>
         <div className="flex items-center gap-6">
           {foodList.map((item, index) => {
             return (
@@ -32,7 +32,7 @@ const CategoryBar = () => {
                 onClick={() => setSelectedFoodIndex(index)}
                 className={`text-md pl-4 pr-4 text-center cursor-pointer ${
                   selectedFoodIndex === index
-                    ? "text-[color:var(--hilightColor1)] "
+                    ? "text-[color:var(--highlightColor1)] "
                     : ""
                 }`}
               >
@@ -44,11 +44,11 @@ const CategoryBar = () => {
       </div>
       <div className="flex p-2 items-center">
         <div
-          className={`flex items-center justify-center border border-solid border-[color:var(--hilightColor1)] w-28 h-8 text-md/[10px] rounded-xl bg-[color:var(--subColor1)]`}
+          className={`flex items-center justify-center border border-solid border-[color:var(--highlightColor1)] w-28 h-8 text-md/[10px] rounded-xl bg-[color:var(--subColor1)]`}
         >
           칼로리
         </div>
-        <div className="bg-[color:var(--hilightColor1)] w-1 h-8 ml-4 mr-8"></div>
+        <div className="bg-[color:var(--highlightColor1)] w-1 h-8 ml-4 mr-8"></div>
         {calorieList.map((item, index) => {
           return (
             <>
@@ -56,7 +56,7 @@ const CategoryBar = () => {
                 onClick={() => setSelectedCalorieIndex(index)}
                 className={`text-md pl-4 pr-4 text-center cursor-pointer ${
                   selectedCalorieIndex === index
-                    ? "text-[color:var(--hilightColor1)] "
+                    ? "text-[color:var(--highlightColor1)] "
                     : ""
                 }`}
               >
