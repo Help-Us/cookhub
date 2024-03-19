@@ -11,10 +11,10 @@ const DetailPage = () => {
         <main className="flex flex-col items-center">
             <div className="mb-10">
                 <Image
-                    src={'https://static.wtable.co.kr/image/production/service/recipe/1967/bfbec835-45b4-4e15-a658-ec4f1947ba2e.jpg'}
+                    src={'https://images.pexels.com/photos/2205270/pexels-photo-2205270.jpeg?cs=srgb&dl=pexels-donald-tong-2205270.jpg&fm=jpg'}
                     alt="food image"
                     width={600}
-                    height={100}
+                    height={600}
                     className=""
                 />
             </div>
