@@ -7,12 +7,13 @@
 }
 
 :root {
-  --baseColor: #F5EEE6;
+  --subColor1: #F5EEE6;
   --subColor1: #FFF8E3;
   --subColor2: #F3D7CA;
   --subColor3: #E6A4B4;
-  --subColor3: #D14D72;
-  --subColor3: #67729D;
+  --subColor4: #D14D72;
+  --subColor5: #67729D;
+  --hilightColor1: #F6465F;
   --borderColor1: #C70000;
 }
 

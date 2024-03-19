@@ -15,10 +15,11 @@ const FilteredFoods = () => {
 
   return (
     <>
-      {" "}
       <div className="flex w-full justify-between text-sm items-center mb-1">
         <div className="">
-          검색결과 <span className="text-rose-500 text-lg">13</span>건 조회
+          검색결과{" "}
+          <span className="text-[color:var(--hilightColor1)] text-lg">13</span>
+          건 조회
         </div>
         <div className={`flex gap-2 cursor-pointer  `}>
           <div

@@ -15,11 +15,11 @@ const CategoryBar = () => {
     <>
       <div className="flex p-2 items-center mb-2 ">
         <div
-          className={`flex items-center justify-center border border-solid border-rose-500 w-28 h-8 text-md/[10px] rounded-xl bg-amber-100`}
+          className={`flex items-center justify-center border border-solid border-[color:var(--borderColor1)] w-28 h-8 text-md/[10px] rounded-xl bg-[color:var(--subColor1)]`}
         >
           요리 종류
         </div>
-        <div className="bg-amber-100 w-2 h-10 ml-4 mr-8"></div>
+        <div className="bg-[color:var(--subColor1)] w-2 h-10 ml-4 mr-8"></div>
         <div className="flex items-center gap-6">
           {foodList.map((item) => {
             return (
@@ -32,11 +32,11 @@ const CategoryBar = () => {
       </div>
       <div className="flex p-2 items-center">
         <div
-          className={`flex items-center justify-center border border-solid border-rose-500 w-28 h-8 text-md/[10px] rounded-xl bg-amber-100`}
+          className={`flex items-center justify-center border border-solid border-[color:var(--borderColor1)] w-28 h-8 text-md/[10px] rounded-xl bg-[color:var(--subColor1)]`}
         >
           칼로리
         </div>
-        <div className="bg-amber-100 w-2 h-10 ml-4 mr-8"></div>
+        <div className="bg-[color:var(--subColor1)] w-2 h-10 ml-4 mr-8"></div>
         {calorieList.map((item, idx) => {
           return (
             <>
