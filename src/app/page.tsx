@@ -29,7 +29,7 @@ export default function Home() {
         type: recipe.RCP_PAT2,
       }));
 
-      shuffleArray(recipesData); // 레시피 데이터 배열을 랜덤하게 섞음
+      shuffleArray(recipesData); // 레시피 데이터 배열 랜덤하게 섞음
       setRecipes(recipesData);
     } catch (error) {
       console.error("Failed to fetch initial recipes:", error);
@@ -37,7 +37,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetchInitialRecipes(); // 컴포넌트가 마운트될 때 초기 레시피를 불러옴
+    fetchInitialRecipes(); // 마운트될 때, 초기 레시피 불러옴
   }, []);
 
   const fetchRecipe = async (recipeName: string) => {
@@ -60,12 +60,15 @@ export default function Home() {
   return (
     <>
       <SearchBox onSearch={fetchRecipe} />
+      <h1>스트랩 TOP 레시피</h1>
+      <p>데이터 들어올자리</p>
+
       <h1>추천 레시피</h1>
       {recipes.length > 0 && (
         recipes.map((recipe, index) => (
           <div key={index}>
-            {recipe.image && <img src={recipe.image} alt="Recipe" />}
             <h3>{recipe.name}</h3>
+            {recipe.image && <img src={recipe.image} alt="Recipe" />}
             <p>{recipe.type}</p>
           </div>
         ))
