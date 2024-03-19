@@ -25,6 +25,7 @@ const config: Config = {
       },
       width: {
         '700': '700px',
+        '980': '980px',
       }
     },
   },

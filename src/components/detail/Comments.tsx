@@ -1,0 +1,52 @@
+"use client";
+
+import React, { useState, ChangeEvent, KeyboardEvent } from "react";
+
+const Comments = () => {
+
+    const [inputText, setInputText] = useState('');
+    const [comments, setComments] = useState<string[]>([]);
+
+    const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter" && inputText.trim() !== '' && inputText.length <= 100) {
+            setComments([...comments, inputText]);
+            setInputText('');
+        }
+    };
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const newText = event.target.value
+        if (newText.length > 100) {
+            alert("100자 이내로 작성해주세요.");
+        } else {
+            setInputText(newText);
+        }
+    }
+
+    return (
+        <div className="flex-col mt-20">
+            <p className="text-brown text-2xl font-bold">댓글</p>
+            <div>
+                <input
+                    type="text"
+                    placeholder="댓글을 입력해주세요."
+                    className="flex h-20 w-980 p-10 mt-5 rounded-3xl caret-peach border-2 border-peach text-xl shadow-lg shadow-black-500"
+                    value={inputText}
+                    onChange={handleChange}
+                    onKeyPress={handleKeyPress}
+                />
+            </div>
+            <div>
+                <div className="flex flex-col h-96 h-980 mt-5 rounded-3xl border-2 border-peach text-xl shadow-lg shadow-black-500">
+                    {comments.map((comment, index) => (
+                        <div key={index} className="p-4 border-b-2 border-peach">
+                            <p className="">{comment}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default Comments;

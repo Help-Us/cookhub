@@ -3,6 +3,7 @@ import Ingredients from "@/components/detail/Ingredients";
 import Nutrient from "@/components/detail/Nutrient";
 import FoodName from "@/components/detail/FoodName";
 import Cooking from "@/components/detail/Cooking";
+import Comments from "@/components/detail/Comments";
 import Image from "next/image";
 
 const DetailPage = () => {
@@ -24,11 +25,14 @@ const DetailPage = () => {
                     <Ingredients />
                     <Cooking />
                 </div>
-                <div className="">
+                <div className="ml-5">
                     <Nutrient />
                 </div>
             </div>
 
+            <div className="flex ml-5">
+                <Comments />
+            </div>
 
 
         </main>
