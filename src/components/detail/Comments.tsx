@@ -37,7 +37,7 @@ const Comments = () => {
                 />
             </div>
             <div>
-                <div className="flex flex-col h-96 h-980 mt-5 rounded-3xl border-2 border-peach text-xl shadow-lg shadow-black-500">
+                <div className="flex flex-col min-h-[300px] w-980 mt-5 rounded-3xl border-2 border-peach text-xl shadow-lg shadow-black-500">
                     {comments.map((comment, index) => (
                         <div key={index} className="p-4 border-b-2 border-peach">
                             <p className="">{comment}</p>

@@ -31,3 +31,9 @@ a {
 body {
   box-sizing: border-box;
 }
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

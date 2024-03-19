@@ -1,4 +1,6 @@
 import React from "react";
+import { IoBookmarkOutline } from "react-icons/io5";
+import { IoBookmark } from "react-icons/io5";
 
 const Nutrient = () => {
     return (
@@ -15,7 +17,7 @@ const Nutrient = () => {
                     <p className="mb-2">열량ㅤㅤㅤㅤㅤㅤㅤㅤkcal</p>
                 </div>
                 <div className="bg-pink text-black h-16 w-52 mx-auto flex justify-center items-center">
-                    <p className="text-2xl">스크랩</p>
+                    <p className="text-2xl flex items-center">스크랩ㅤ<IoBookmarkOutline /></p>
                 </div>
             </div>
     );
