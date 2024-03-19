@@ -1,6 +1,6 @@
 import React from "react";
-import Ingredients from "@/components/Ingredients";
-import Nutrient from "@/components/Nutrient";
+import Ingredients from "@/components/detail/Ingredients";
+import Nutrient from "@/components/detail/Nutrient";
 
 const DetailPage = () => {
     return (
