@@ -50,7 +50,7 @@ const Comments = () => {
                     </div>
                 ) : (
                     <div className="flex justify-center items-center min-h-[300px] w-950 mt-5 rounded-3xl border-2 border-peach text-xl shadow-lg shadow-black-500">
-                        <p className="text-center font-light">댓글을 작성하여 레시피의 리뷰 또는 난이도를 공유해보세요 🙂</p>
+                        <p className="text-center font-light">댓글을 작성하여 리뷰 또는 난이도를 공유해보세요 🙂</p>
                     </div>
                 )}
             </div>
