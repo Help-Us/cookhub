@@ -1,9 +1,9 @@
 import React from "react";
 
-const page = () => {
+const categoryPage = () => {
   return (
-    <div className="bg-gray-200 w-3/5 m-auto ">
-      <div className="flex p-2 items-center">
+    <div className="bg-gray-200 w-3/5 m-auto  min-w-96">
+      <div className="flex p-2 items-center mb-2 ">
         <div
           className={`flex items-center justify-center border border-solid border-rose-500 w-28 h-8 text-md/[10px] rounded-xl bg-amber-100`}
         >
@@ -57,31 +57,32 @@ const page = () => {
           </div>
         </div>
       </div>
-      <div className="bg-lime-100 mt-10 flex flex-col items-center">
-        <div className="font-bold ">
+      <div className="mt-16 flex flex-col items-center">
+        <div className="font-bold text-2xl mb-4">
           <span className="text-rose-500">양식</span> 검색결과
         </div>
-        <div className="flex w-full justify-between text-sm">
+        <div className="flex w-full justify-between text-sm items-center mb-1">
           <div className="">
             검색결과 <span className="text-rose-500 text-lg">13</span>건 조회
           </div>
-          <div className="flex gap-2">
-            <div>최신순</div>
+          <div className="flex gap-2 cursor-pointer text-gray-400">
+            <div>✔ 최신순</div>
+            <div>·</div>
             <div>조회순</div>
           </div>
         </div>
-        <div className="w-full grid grid-flow-col grid-rows-2 gap-2">
-          <div>
+        <div className="w-full grid grid-cols-4 gap-1">
+          <div className="mb-8">
             <img
               className="w-64"
-              src="https://www.shutterstock.com/ko/blog/wp-content/uploads/sites/17/2018/11/shutterstock_1181891455.jpg"
+              src="https://img.hankyung.com/photo/202309/99.20417298.1.jpg"
             ></img>
             <div className="flex text-sm text-gray-600 gap-2 mt-1">
               <span>#파스타</span>
               <span>#오일파스타</span>
               <span>#새우오일파스타</span>
             </div>
-            <div className="mt-2 text-lg">새우 오일 파스타</div>
+            <div className="mt-2 text-lg">마라 삼계탕</div>
           </div>
           <div>
             <img
@@ -137,4 +138,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default categoryPage;
