@@ -1,15 +1,12 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import SearchBox from "@/components/layout/SearchBox";
-
-interface Recipe {
-  image: string;
-  name: string;
-  type: string;
-}
+import { Recipe } from '@/types';
+import RecommendedRecipes from '@/components/mainpage/RecommendRecipes';
 
 export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
   // 레시피 데이터 랜덤
   const shuffleArray = (array: any[]) => {
@@ -19,9 +16,10 @@ export default function Home() {
     }
   };
 
+  // 초기, 추천 레시피
   const fetchInitialRecipes = async () => {
     try {
-      const response = await fetch(`https://openapi.foodsafetykorea.go.kr/api/sample/COOKRCP01/json/1/7`);
+      const response = await fetch(`https://openapi.foodsafetykorea.go.kr/api/${apiKey}/COOKRCP01/json/1/10`);
       const data = await response.json();
       let recipesData: Recipe[] = data.COOKRCP01.row.map((recipe: any) => ({
         image: recipe.ATT_FILE_NO_MAIN,
@@ -29,8 +27,10 @@ export default function Home() {
         type: recipe.RCP_PAT2,
       }));
 
-      shuffleArray(recipesData); // 레시피 데이터 배열 랜덤하게 섞음
-      setRecipes(recipesData);
+      shuffleArray(recipesData); // 레시피 데이터 배열 랜덤하게
+      const selectedRecipes = recipesData.slice(0, 6);
+
+      setRecipes(selectedRecipes); // 상태 업데이트
     } catch (error) {
       console.error("Failed to fetch initial recipes:", error);
     }
@@ -40,9 +40,10 @@ export default function Home() {
     fetchInitialRecipes(); // 마운트될 때, 초기 레시피 불러옴
   }, []);
 
+  // 검색 시,
   const fetchRecipe = async (recipeName: string) => {
     try {
-      const response = await fetch(`https://openapi.foodsafetykorea.go.kr/api/sample/COOKRCP01/json/1/100/RCP_NM="${recipeName}"`);
+      const response = await fetch(`https://openapi.foodsafetykorea.go.kr/api/${apiKey}/COOKRCP01/json/1/10/RCP_NM="${recipeName}"`);
       const data = await response.json();
       let recipesData: Recipe[] = data.COOKRCP01.row.map((recipe: any) => ({
         image: recipe.ATT_FILE_NO_MAIN,
@@ -61,18 +62,10 @@ export default function Home() {
     <>
       <SearchBox onSearch={fetchRecipe} />
       <h1>스트랩 TOP 레시피</h1>
-      <p>데이터 들어올자리</p>
+      <p>데이터 들어 올 자리</p>
 
       <h1>추천 레시피</h1>
-      {recipes.length > 0 && (
-        recipes.map((recipe, index) => (
-          <div key={index}>
-            <h3>{recipe.name}</h3>
-            {recipe.image && <img src={recipe.image} alt="Recipe" />}
-            <p>{recipe.type}</p>
-          </div>
-        ))
-      )}
+      <RecommendedRecipes recipes={recipes}/>
     </>
   )
 }
