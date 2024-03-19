@@ -5,7 +5,7 @@ interface RecommendedRecipesProps {
   recipes: Recipe[];
 }
 
-export const revalidate = 10;
+// export const revalidate = 10;
 
 // text-[color:var(--borderColor1)]
 // bg-[color:var(--baseColor)]

@@ -27,7 +27,7 @@ export default function Home() {
         type: recipe.RCP_PAT2,
       }));
 
-      shuffleArray(recipesData); // 레시피 데이터 배열 랜덤하게 섞음
+      shuffleArray(recipesData); // 레시피 데이터 배열 랜덤하게
       const selectedRecipes = recipesData.slice(0, 6);
 
       setRecipes(selectedRecipes); // 상태 업데이트
