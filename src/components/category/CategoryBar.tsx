@@ -1,6 +1,16 @@
 import React from "react";
 
 const CategoryBar = () => {
+  const foodList = ["밥", "반찬", "국/찌개", "후식"];
+  const calorieList = [
+    "다이어트",
+    "간단 한끼",
+    "일반식",
+    "푸짐하게",
+    "오늘만 산다"
+  ];
+  const calorieNumberList = ["100", "250", "350", "450", "500"];
+
   return (
     <>
       <div className="flex p-2 items-center mb-2 ">
@@ -11,16 +21,13 @@ const CategoryBar = () => {
         </div>
         <div className="bg-amber-100 w-2 h-10 ml-4 mr-8"></div>
         <div className="flex items-center gap-6">
-          <div className="text-md pl-4 pr-4 text-center cursor-pointer">밥</div>
-          <div className="text-md pl-4 pr-4 text-center cursor-pointer">
-            반찬
-          </div>
-          <div className="text-md pl-4 pr-4 text-center cursor-pointer">
-            국 / 찌개
-          </div>
-          <div className="text-md pl-4 pr-4 text-center cursor-pointer">
-            후식
-          </div>
+          {foodList.map((item) => {
+            return (
+              <div className="text-md pl-4 pr-4 text-center cursor-pointer">
+                {item}
+              </div>
+            );
+          })}
         </div>
       </div>
       <div className="flex p-2 items-center">
@@ -30,32 +37,17 @@ const CategoryBar = () => {
           칼로리
         </div>
         <div className="bg-amber-100 w-2 h-10 ml-4 mr-8"></div>
-        <div className="flex items-center gap-6">
-          <div className="text-md pl-4 pr-4 text-center cursor-pointer">
-            다이어트 <br />
-            <p className="text-sm">(~100kcal)</p>
-          </div>
-          <div className="text-md pl-4 pr-4 text-center cursor-pointer">
-            간단 한끼
-            <br />
-            <p className="text-sm">(~250kcal)</p>
-          </div>
-          <div className="text-md pl-4 pr-4 text-center cursor-pointer">
-            일반식
-            <br />
-            <p className="text-sm">(~350kcal)</p>
-          </div>
-          <div className="text-md pl-4 pr-4 text-center cursor-pointer">
-            푸짐하게
-            <br />
-            <p className="text-sm">(~450kcal)</p>
-          </div>
-          <div className="text-md pl-4 pr-4 text-center cursor-pointer">
-            오늘만 산다
-            <br />
-            <p className="text-sm">(~500kcal)</p>
-          </div>
-        </div>
+        {calorieList.map((item, idx) => {
+          return (
+            <>
+              <div className="text-md pl-4 pr-4 text-center cursor-pointer">
+                {item}
+                <br />
+                <span className="text-sm">(~{calorieNumberList[idx]}kcal)</span>
+              </div>
+            </>
+          );
+        })}
       </div>
     </>
   );
