@@ -1,28 +1,40 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useRef } from "react";
 
 export default function MyPageContents() {
   // const [loading, setLoading] = useState(true);
   // or
   // const [uid, setUid] = useState('');
-
+  const imgRef = useRef<HTMLInputElement>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [avatar, setAvatar] = useState("");
+  const [uploadFile, setUploadFile] = useState<File>();
   const [userSessionNickname, setUserSessionNickname] = useState("");
   const [nickname, setNickname] = useState("");
-
-  console.log(nickname);
 
   return (
     <section>
       <form>
-        <div>
+        {/* <div>
           <img alt="프로필 이미지" />
-        </div>
+        </div> */}
         <div>
           <label>프로필 사진 업로드</label>
-          <img src={avatar} alt="프로필 이미지" />
+          {isEditing ? (
+            <input
+              type="file"
+              accept="image/*"
+              id="img"
+              onChange={(e) => {
+                setUploadFile(e.target.files?.[0]);
+              }}
+            />
+          ) : (
+            <>
+              <img src={avatar} alt="프로필 이미지" />
+            </>
+          )}
         </div>
         <div>
           <label htmlFor="nickname">닉네임</label>
@@ -30,7 +42,7 @@ export default function MyPageContents() {
             <input
               type="text"
               maxLength={10}
-              value={nickname || ""}
+              value={nickname}
               onChange={(e) => {
                 setNickname(e.target.value);
               }}

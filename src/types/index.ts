@@ -1,5 +1,6 @@
-type UserInfo = {
+type UserProfile = {
+  userId: string;
   nickname: string;
   email: string;
-  avatar: string;
+  avatar_img: string;
 };
