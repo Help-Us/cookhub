@@ -6,16 +6,20 @@ import MyPageScrap from "./MyPageScrap";
 import Image from "next/image";
 import "../styles/style.css";
 import { UserDatabaseType } from "@/types";
+import MyPageImage from "./MyPageImage";
+import { useQuery } from "@tanstack/react-query";
 
 export default function MyPageContents() {
   const [userInfo, setUserInfo] = useState<UserDatabaseType[] | null>(null);
   const [nickname, setNickname] = useState("");
-  const [email, setEmail] = useState<string>("");
 
   const imgRef = useRef<HTMLInputElement>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [avatar, setAvatar] = useState(""); // 여기에 defaultImg를 넣어줘야할듯
   const [uploadFile, setUploadFile] = useState<File>(); // 여기에 defaultImg를 넣어줘야할듯
+
+  const [datas, setDatas] = useState();
+  // const { isLoading, isError } = useQuery("users");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,6 +32,21 @@ export default function MyPageContents() {
     };
     fetchData();
   }, []);
+
+  // 아바타 이미지 등록
+  const onAddImgHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    if (uploadFile === null) {
+      return false;
+    }
+
+    const imgFile = event.target.files?.[0];
+    if (imgFile) {
+      setUploadFile(imgFile);
+      let img = URL.createObjectURL(imgFile);
+      setAvatar(img);
+    }
+  };
 
   if (!userInfo) return <div>Loading...</div>;
 
@@ -43,9 +62,8 @@ export default function MyPageContents() {
           <input
             type="file"
             id="avatar"
-            onChange={(e) => {
-              setUploadFile(e.target.files?.[0]);
-            }}
+            accept="image/*"
+            onChange={onAddImgHandler}
           />
         </div>
 
@@ -64,16 +82,16 @@ export default function MyPageContents() {
                 id="nickname"
                 maxLength={10}
                 value={nickname}
-                onChange={(e) => {
-                  setNickname(e.target.value);
-                }}
+                // onChange={onChangeImgHandler}
               />
             ) : (
-              <div className="text-xl mb-7">
-                <p className="mb-5">Email: {userInfo[0].email}</p>
-                <p>Nickname: {userInfo[0].nickname}</p>
-              </div>
+              <div></div>
             )}
+          </div>
+
+          <div className="text-xl mb-7">
+            <p className="mb-5">Email: {userInfo[0].email}</p>
+            <p>Nickname: {userInfo[0].nickname}</p>
           </div>
 
           <div>
@@ -113,6 +131,7 @@ export default function MyPageContents() {
           </div>
         </form>
       </div>
+
       <MyPageScrap />
     </section>
   );

@@ -18,3 +18,8 @@ export interface UserDatabaseType {
   avatar_img: string;
   id: string;
 }
+
+export interface UserImageUrlType {
+  uploadedFileUrl: string[];
+  setUploadedFileUrl: React.Dispatch<React.SetStateAction<string[]>>;
+}

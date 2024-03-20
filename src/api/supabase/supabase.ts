@@ -23,16 +23,39 @@ export const getSelectUserInfo = async () => {
   return data;
 };
 
-export const getAllUserData = async (): Promise<UserDatabaseType[] | null> => {
-  try {
-    const { data, error } = await supabase.from("userData").select("*");
-    if (error) {
-      console.error("Error fetching user data:", error.message);
-      return null;
-    }
-    return data;
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-    return null;
+// 유저 정보 업데이트
+export const updateUserInfo = async () => {
+  const { data, error } = await supabase
+    .from("userData")
+    .update({ other_column: "otherValue" })
+    .eq("some_column", "someValue")
+    .select();
+  if (error) {
+    console.log("유저 정보 새로 업데이트 실패", error);
   }
+  return data;
+};
+
+// storage에서 이미지 다운
+export const downloadImage = async (imagePath: string) => {
+  const { data, error } = await supabase.storage
+    .from("avatars")
+    .download(imagePath);
+  if (error) {
+    console.log("이미지 다운로드 실패", error);
+  }
+  return data;
+};
+
+// storage에 이미지 업로드
+export const uploadImage = async (file: File, imagePath: string) => {
+  const { data, error } = await supabase.storage
+    .from("avatars") // 사용할 스토리지 버킷 이름
+    .upload(`${file.name}`, file); // 파일 경로 및 파일 객체 전달
+
+  if (error) {
+    console.log("이미지 업로드 실패", error);
+  }
+  console.log(data);
+  return data;
 };
