@@ -4,6 +4,7 @@
 
 * {
   box-sizing: border-box;
+  margin: 0;
 }
 
 :root {
@@ -20,7 +21,7 @@
   --borderColor2:#E0C3AE;
   --titleColor: #784B31;
   --contentColor: #B6856A;
-  --white: #FFFFFF;
+  --white: #ffffff;
 }
 
 a {
