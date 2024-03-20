@@ -19,7 +19,7 @@ const Category = ({
   //   console.log(filteredRecipes);
   useEffect(() => {}, []);
 
-  const foodList = ["밥", "반찬", "국/찌개", "후식"];
+  const foodList = ["밥", "반찬", "국&찌개", "후식"];
   const calorieList = [
     "다이어트",
     "간단 한끼",
@@ -119,7 +119,11 @@ const Category = ({
           <div className="font-bold text-2xl mb-10">
             <span className="text-rose-500">{searchKeyword}</span> 검색결과
           </div>
-          <FilteredFoods filteredRecipes={filteredRecipes} />
+          <FilteredFoods
+            filteredRecipes={filteredRecipes}
+            selectedFood={selectedFood}
+            selectedCalorieNumberLevel={selectedCalorieNumberLevel}
+          />
         </div>
       </div>
     </>
