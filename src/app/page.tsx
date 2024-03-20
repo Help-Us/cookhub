@@ -1,23 +1,21 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import SearchBox from "@/components/layout/SearchBox";
-import { Recipe } from '@/types';
 import RecommendedRecipes from '@/components/mainpage/RecommendRecipes';
+import { createClient } from '@supabase/supabase-js'
+
+import type { Recipe } from '@/types';
+import type { Database } from '@/types/database.type'
 
 export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searched, setSearched] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
-  // 레시피 데이터 랜덤
-  const shuffleArray = (array: any[]) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-  };
+  const supabaseURL = process.env.NEXT_PUBLIC_SUPABASE_URL? process.env.NEXT_PUBLIC_SUPABASE_URL : "";
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY : "";
+  const supabase = createClient<Database>(supabaseURL, supabaseKey);
 
   useEffect(() => {
     setIsLoading(true); // 컴포넌트가 마운트될 때 로딩 상태를 true로 설정
@@ -27,50 +25,62 @@ export default function Home() {
   // 초기, 추천 레시피 목록
   const fetchInitialRecipes = async () => {
     try {
-      const response = await fetch(`https://openapi.foodsafetykorea.go.kr/api/${apiKey}/COOKRCP01/json/1/1000`);
-      const data = await response.json();
-      let recipesData: Recipe[] = data.COOKRCP01.row.map((recipe: any) => ({
-        image: recipe.ATT_FILE_NO_MAIN,
-        name: recipe.RCP_NM,
-        type: recipe.RCP_PAT2,
-        how: recipe.RCP_WAY2,
-      }));
+        setIsLoading(true);
+        const { data: recipesData, error } = await supabase
+            .from('cookrcp') // Supabase 테이블
+            .select('RCP_ID, RCP_WAY, RCP_TYPE, RCP_IMG_BIG, RCP_NAME')
 
-      shuffleArray(recipesData); // 레시피 데이터 배열 랜덤하게
-      const selectedRecipes = recipesData.slice(0, 6);
+        if (error) throw error;
 
-      setRecipes(selectedRecipes); // 상태 업데이트
+        // 데이터 변환
+        const formattedData = recipesData.map(recipe => ({
+            id: recipe.RCP_ID,
+            image: recipe.RCP_IMG_BIG,
+            name: recipe.RCP_NAME,
+            type: recipe.RCP_TYPE,
+            how: recipe.RCP_WAY,
+        }));
+
+        const randomRecipes = formattedData.sort(() => 0.5 - Math.random()).slice(0, 6);
+        setRecipes(randomRecipes); // 상태 업데이트
     } catch (error) {
-      console.error("Failed to fetch initial recipes:", error);
+        console.error("Failed to fetch initial recipes:", error);
     } finally {
-      setIsLoading(false); // API 호출 완료 후 로딩 종료
+        setIsLoading(false); // API 호출 완료 후 로딩 종료
     }
   };
+
 
   // 검색 시, 검색 결과 목록
   const fetchRecipe = async (recipeName: string) => {
     try {
-      setIsLoading(true); // 검색 전 로딩 상태로 변경
-      setSearched(true); // 검색이 수행되었음을 표시
-      setSearchTerm(recipeName); // 검색된 키워드 상태 업데이트
+        setIsLoading(true);
+        setSearched(true);
+        setSearchTerm(recipeName);
 
-      const response = await fetch(`https://openapi.foodsafetykorea.go.kr/api/${apiKey}/COOKRCP01/json/1/1000/RCP_NM="${recipeName}"`);
-      const data = await response.json();
-      let recipesData: Recipe[] = data.COOKRCP01.row.map((recipe: any) => ({
-        image: recipe.ATT_FILE_NO_MAIN,
-        name: recipe.RCP_NM,
-        type: recipe.RCP_PAT2,
-        how: recipe.RCP_WAY2,
-      }));
+        const { data: recipesData, error } = await supabase
+            .from('cookrcp')
+            .select('RCP_ID, RCP_WAY, RCP_TYPE, RCP_IMG_BIG, RCP_NAME')
+            .ilike('RCP_NAME', `%${recipeName}%`); // 이름에 검색어가 포함된 레시피 검색
 
-      shuffleArray(recipesData); // 검색 결과도 랜덤하게 섞음
-      setRecipes(recipesData);
+        if (error) throw error;
+
+        const formattedData = recipesData.map(recipe => ({
+            id: recipe.RCP_ID,
+            image: recipe.RCP_IMG_BIG,
+            name: recipe.RCP_NAME,
+            type: recipe.RCP_TYPE,
+            how: recipe.RCP_WAY,
+        }));
+        
+        setRecipes(formattedData);
     } catch (error) {
-      console.error("Failed to fetch recipe:", error);
+        console.error("Failed to fetch recipe:", error);
     } finally {
-      setIsLoading(false); // 검색 완료 후 로딩 상태를 false로 변경
+        setIsLoading(false);
     }
-  };
+};
+
 
   return (
     <>
@@ -83,7 +93,7 @@ export default function Home() {
           <SearchBox onSearch={fetchRecipe} />
           {searched ? (
             <>
-              <h2 className="text-2xl"><span className="text-red-500">{searchTerm}</span> 검색 결과</h2>
+              <h2 className="text-2xl my-5"><span className="text-red-500">{searchTerm}</span> 검색 결과</h2>
               <RecommendedRecipes recipes={recipes}/>
             </>
           ) : (

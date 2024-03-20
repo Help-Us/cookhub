@@ -5,6 +5,7 @@ type UserInfo = {
 };
 
 export type Recipe = {
+  id: number;
   image: string;
   name: string;
   type: string;
