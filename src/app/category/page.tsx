@@ -18,13 +18,20 @@ const categoryPage = () => {
     "푸짐하게",
     "오늘만 산다"
   ];
-  const calorieNumberList = ["100", "250", "350", "450", "500"];
+  const calorieNumberList = [100, 250, 350, 450, 500];
 
-  const [selectedFoodIndex, setSelectedFoodIndex] = useState(""); // 초기값은 선택되지 않음을 의미
-  const [selectedCalorieIndex, setSelectedCalorieIndex] = useState("");
+  const [selectedFood, setSelectedFood] = useState(""); // 초기값은 선택되지 않음을 의미
+  const [selectedCalorieLevel, setSelectedCalorieLevel] = useState("");
+  const [selectedCalorieNumberLevel, setSelectedCalorieNumberLevel] =
+    useState(0);
 
-  //카테고리바에서는 state만 여기로 넘겨주면됨
-  //db에서 키워드로 한번 가른 데이터 넘겨주고
+  const handleCalorieClick = (
+    calorieLevel: string,
+    calorieNumberLevel: number
+  ) => {
+    setSelectedCalorieLevel(calorieLevel);
+    setSelectedCalorieNumberLevel(calorieNumberLevel);
+  };
 
   return (
     <>
@@ -42,9 +49,9 @@ const categoryPage = () => {
                 return (
                   <div
                     key={index}
-                    onClick={() => setSelectedFoodIndex(item)}
+                    onClick={() => setSelectedFood(item)}
                     className={`text-md pl-4 pr-4 text-center cursor-pointer ${
-                      selectedFoodIndex === item
+                      selectedFood === item
                         ? "text-[color:var(--highlightColor1)] "
                         : ""
                     }`}
@@ -67,9 +74,11 @@ const categoryPage = () => {
                 <>
                   <div
                     key={index}
-                    onClick={() => setSelectedCalorieIndex(item)}
+                    onClick={() =>
+                      handleCalorieClick(item, calorieNumberList[index])
+                    }
                     className={`text-md pl-4 pr-4 text-center cursor-pointer ${
-                      selectedCalorieIndex === item
+                      selectedCalorieLevel === item
                         ? "text-[color:var(--highlightColor1)] "
                         : ""
                     }`}
