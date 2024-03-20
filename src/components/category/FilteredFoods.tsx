@@ -40,10 +40,11 @@ const FilteredFoods = ({
                 className="w-64 h-44 object-cover"
                 src={item.RCP_IMG_SMALL ? item.RCP_IMG_SMALL : ""}
               ></img>
-              <div className="flex text-sm text-gray-600 gap-2 mt-8">
-                <span>{item.HASH_TAG ? `#${item.HASH_TAG}` : ""}</span>
+
+              <div className="mt-1 text-xl font-bold mt-4">{item.RCP_NAME}</div>
+              <div className="flex text-sm text-gray-600 gap-2">
+                {item.HASH_TAG && <span>#{item.HASH_TAG}</span>}
               </div>
-              <div className="mt-1 text-xl font-bold">{item.RCP_NAME}</div>
             </div>
           );
         })}
