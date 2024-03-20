@@ -13,25 +13,19 @@ const FilteredFoods = ({
   selectedCalorieNumberLevel: number;
 }) => {
   // 카테고리 선택 취소
-  const categoryFilter = (): RecipeType[] | null => {
+  const categoryFilter = () => {
     if (!filteredRecipes) return null; // filteredRecipes가 undefined일 경우 null 반환
 
-    if (selectedFood && selectedCalorieNumberLevel) {
-      const filteredByCategoryRecipes = filteredRecipes
-        ?.filter((item) => item.RCP_TYPE === selectedFood)
-        .filter((item) => item.INFO_CAR <= selectedCalorieNumberLevel);
-      return filteredByCategoryRecipes;
-    } else if (selectedFood && !selectedCalorieNumberLevel) {
-      const filteredByCategoryRecipes = filteredRecipes?.filter(
-        (item) => item.RCP_TYPE === selectedFood
-      );
-      return filteredByCategoryRecipes;
-    } else if (!selectedFood && selectedCalorieNumberLevel) {
-      const filteredByCategoryRecipes = filteredRecipes?.filter(
-        (item) => item.INFO_CAR <= selectedCalorieNumberLevel
-      );
-      return filteredByCategoryRecipes;
-    } else return filteredRecipes;
+    const filterByCategoryRecipes = filteredRecipes.filter((item) => {
+      // 카테고리를 선택했으면 필터조건추가, 아니면 true로 필터링 조건 무시(모든 아이템이 통과)
+      const filterByFood = selectedFood ? item.RCP_TYPE === selectedFood : true;
+      const filterByCalories = selectedCalorieNumberLevel
+        ? item.INFO_CAR <= selectedCalorieNumberLevel
+        : true;
+      return filterByFood && filterByCalories;
+    });
+    console.log(filterByCategoryRecipes);
+    return filterByCategoryRecipes;
   };
 
   const [recipeList, setRecipeList] = useState<RecipeType[] | null>(
@@ -41,8 +35,6 @@ const FilteredFoods = ({
   useEffect(() => {
     setRecipeList(categoryFilter());
   }, [selectedFood, selectedCalorieNumberLevel, filteredRecipes]);
-  console.log(recipeList);
-  console.log(selectedFood, selectedCalorieNumberLevel);
 
   // 두 카테고리 중 카테고리 선택 안했을 때는 모두 출력
   //
