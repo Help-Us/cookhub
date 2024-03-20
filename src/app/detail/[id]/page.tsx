@@ -5,8 +5,18 @@ import FoodName from "@/components/detail/FoodName";
 import Cooking from "@/components/detail/Cooking";
 import Comments from "@/components/detail/Comments";
 import Image from "next/image";
+import { createClient } from "@/utils/supabase/server";
 
-const DetailPage = () => {
+const DetailPage = async () => {
+    const supabase = createClient();
+
+    let { data: cookrcp, error } = await supabase
+    .from('cookrcp')
+    .select('*')
+    .eq('RCP_ID', '28')
+
+    console.log('======',cookrcp);
+
     return (
         <main className="flex flex-col items-center">
             <div className="mb-10">
@@ -38,6 +48,5 @@ const DetailPage = () => {
         </main>
     );
 }
-
 
 export default DetailPage;
