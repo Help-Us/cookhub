@@ -1,7 +1,8 @@
-type UserInfo = {
+export type UserProfile = {
+  uid: string;
   nickname: string;
   email: string;
-  avatar: string;
+  avatar_img: string;
 };
 
 export type Recipe = {
@@ -9,3 +10,16 @@ export type Recipe = {
   name: string;
   type: string;
 };
+
+export interface UserDatabaseType {
+  uid: string;
+  nickname: string;
+  email: string;
+  avatar_img: string;
+  id: string;
+}
+
+export interface UserImageUrlType {
+  uploadedFileUrl: string[];
+  setUploadedFileUrl: React.Dispatch<React.SetStateAction<string[]>>;
+}

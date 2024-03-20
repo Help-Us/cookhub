@@ -4,19 +4,24 @@
 
 * {
   box-sizing: border-box;
+  margin: 0;
 }
 
 :root {
-  --subColor1: #F5EEE6;
+  --baseColor: #F5EEE6;
   --subColor1: #FFF8E3;
   --subColor2: #F3D7CA;
   --subColor3: #E6A4B4;
   --subColor4: #D14D72;
   --subColor5: #67729D;
   --subColor6: #F49700;
-  --hilightColor1: #F6465F;
-  --hilightColor2: #ED4043;
+  --highlightColor1: #F6465F;
+  --highlightColor2: #ED4043;
   --borderColor1: #C70000;
+  --borderColor2:#E0C3AE;
+  --titleColor: #784B31;
+  --contentColor: #B6856A;
+  --white: #ffffff;
 }
 
 a {
