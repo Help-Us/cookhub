@@ -1,21 +1,34 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import Ingredients from "@/components/detail/Ingredients";
 import Nutrient from "@/components/detail/Nutrient";
 import FoodName from "@/components/detail/FoodName";
 import Cooking from "@/components/detail/Cooking";
 import Comments from "@/components/detail/Comments";
 import Image from "next/image";
-import { createClient } from "@/utils/supabase/server";
+import { supabase } from "@/api/supabase/supabase";
 
-const DetailPage = async () => {
-    const supabase = createClient();
+const DetailPage = ({ params }: { params: { id: string } }) => {
+    const { id } = params;
 
-    let { data: cookrcp, error } = await supabase
-    .from('cookrcp')
-    .select('*')
-    .eq('RCP_ID', '28')
+    const fatchdata = async () => {
+        let { data: cookrcp, error } = await supabase
+            .from('cookrcp')
+            .select('*')
+            .eq('RCP_ID', id)
+        console.log(cookrcp)
+        return cookrcp;
+    }
 
-    console.log('======',cookrcp);
+    useEffect(
+        () => {
+            const kda = fatchdata();
+            console.log(kda);
+        }, []
+    )
+
+    console.log('현재 아이디는',id);
 
     return (
         <main className="flex flex-col items-center">

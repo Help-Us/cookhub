@@ -1,7 +1,7 @@
 import React from "react";
-import { createClient } from "@/utils/supabase/server";
 
-const FoodName = () => {
+
+const FoodName = async ({}) => {
 
     return (
         <div className="mb-10">
