@@ -10,7 +10,7 @@ const FilteredFoods = ({
 }) => {
   const [orderByIndex, setOrderByIndex] = useState(-1);
 
-  console.log(filteredRecipes);
+  // console.log(filteredRecipes);
 
   return (
     <>
@@ -41,8 +41,8 @@ const FilteredFoods = ({
                 src={item.RCP_IMG_SMALL ? item.RCP_IMG_SMALL : ""}
               ></img>
 
-              <div className="mt-1 text-xl font-bold mt-4">{item.RCP_NAME}</div>
-              <div className="flex text-sm text-gray-600 gap-2">
+              <div className="mt-1 text-lg font-bold mt-4">{item.RCP_NAME}</div>
+              <div className="flex text-sm text-gray-600 gap-2 mt-1">
                 {item.HASH_TAG && <span>#{item.HASH_TAG}</span>}
               </div>
             </div>

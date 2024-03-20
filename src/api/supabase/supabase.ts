@@ -59,3 +59,16 @@ export const uploadImage = async (file: File, imagePath: string) => {
   console.log(data);
   return data;
 };
+
+export const filterData = async (searchKeyword: string | null) => {
+  const { data: cookrcp, error } = await supabase
+    .from("cookrcp")
+    .select("*")
+    .like("RCP_NAME", `%${searchKeyword}%`);
+
+  if (error) {
+    console.log("레시피를 불러오는 중 오류가 발생했습니다.", error);
+  }
+
+  return cookrcp;
+};

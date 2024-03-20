@@ -14,7 +14,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       onSearch(input);
-      router.push(`/category?search=${input}`);
+      router.push(`/category/${input}`);
     }
   };
 

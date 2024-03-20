@@ -5,21 +5,19 @@ import FilteredFoods from "@/components/category/FilteredFoods";
 
 import SearchBox from "@/components/layout/SearchBox";
 import { RecipeType } from "@/types";
-import filterData from "@/utils/filterData";
 import { createClient } from "@/utils/supabase/server";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Category = ({
-  filteredRecipes
+  filteredRecipes,
+  searchKeyword
 }: {
   filteredRecipes: RecipeType[] | null;
+  searchKeyword: string | null;
 }) => {
   //   console.log(filteredRecipes);
   useEffect(() => {}, []);
-
-  const params = useSearchParams();
-  const searchKeyword = params.get("search");
 
   const foodList = ["밥", "반찬", "국/찌개", "후식"];
   const calorieList = [
