@@ -25,12 +25,24 @@ const categoryPage = () => {
   const [selectedCalorieNumberLevel, setSelectedCalorieNumberLevel] =
     useState(0);
 
-  const handleCalorieClick = (
+  const handleCalorieCategoryClick = (
     calorieLevel: string,
     calorieNumberLevel: number
   ) => {
     setSelectedCalorieLevel(calorieLevel);
     setSelectedCalorieNumberLevel(calorieNumberLevel);
+
+    // 같은 카테고리 한번 더 클릭시 선택취소
+    if (selectedCalorieLevel === calorieLevel) {
+      setSelectedCalorieLevel("");
+    }
+  };
+
+  const handleFoodCategoryClick = (foodType: string) => {
+    setSelectedFood(foodType);
+    if (selectedFood === foodType) {
+      setSelectedFood("");
+    }
   };
 
   return (
@@ -49,7 +61,7 @@ const categoryPage = () => {
                 return (
                   <div
                     key={index}
-                    onClick={() => setSelectedFood(item)}
+                    onClick={() => handleFoodCategoryClick(item)}
                     className={`text-md pl-4 pr-4 text-center cursor-pointer ${
                       selectedFood === item
                         ? "text-[color:var(--highlightColor1)] "
@@ -75,7 +87,7 @@ const categoryPage = () => {
                   <div
                     key={index}
                     onClick={() =>
-                      handleCalorieClick(item, calorieNumberList[index])
+                      handleCalorieCategoryClick(item, calorieNumberList[index])
                     }
                     className={`text-md pl-4 pr-4 text-center cursor-pointer ${
                       selectedCalorieLevel === item
