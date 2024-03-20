@@ -6,7 +6,7 @@ import RecommendedRecipes from '@/components/mainpage/RecommendRecipes';
 
 export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [searched, setSearched] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
@@ -19,7 +19,12 @@ export default function Home() {
     }
   };
 
-  // 초기, 추천 레시피
+  useEffect(() => {
+    setIsLoading(true); // 컴포넌트가 마운트될 때 로딩 상태를 true로 설정
+    fetchInitialRecipes(); // 마운트될 때, 초기 레시피 불러옴
+  }, []);
+
+  // 초기, 추천 레시피 목록
   const fetchInitialRecipes = async () => {
     try {
       const response = await fetch(`https://openapi.foodsafetykorea.go.kr/api/${apiKey}/COOKRCP01/json/1/1000`);
@@ -42,11 +47,7 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    fetchInitialRecipes(); // 마운트될 때, 초기 레시피 불러옴
-  }, []);
-
-  // 검색 시,
+  // 검색 시, 검색 결과 목록
   const fetchRecipe = async (recipeName: string) => {
     try {
       setIsLoading(true); // 검색 전 로딩 상태로 변경
@@ -74,23 +75,27 @@ export default function Home() {
   return (
     <>
       {isLoading ? (
-        <span className="loading loading-spinner loading-lg"></span>
-      ):(
+        <div className="flex justify-center items-center min-h-screen">
+          <span className="loading loading-spinner loading-lg"></span>
+        </div>
+      ) : (
         <div className="flex flex-col items-center justify-center min-h-screen">
           <SearchBox onSearch={fetchRecipe} />
-          {searched && ( // 검색이 수행되었을 때만 검색된 키워드를 포함하는 문구를 보여줌
-            <h2 className="text-2xl"><span className="text-red-500">{searchTerm}</span> 검색 결과</h2> // 검색된 키워드를 빨간색으로 표시
-          )}
-          {!searched && (
+          {searched ? (
             <>
-              <h1 className='text-brown text-2xl font-bold text-left py-5 bg-grey'>스트랩 TOP 레시피</h1>
+              <h2 className="text-2xl"><span className="text-red-500">{searchTerm}</span> 검색 결과</h2>
+              <RecommendedRecipes recipes={recipes}/>
+            </>
+          ) : (
+            <>
+              <h1 className='text-brown text-2xl font-bold text-left py-5'>스트랩 TOP 레시피</h1>
               <p>데이터 들어 올 자리</p>
               <h1 className='text-brown text-2xl font-bold text-left'>추천 레시피</h1>
+              <RecommendedRecipes recipes={recipes}/>
             </>
           )}
-          <RecommendedRecipes recipes={recipes}/>
         </div>
       )}
     </>
-  )
+  )  
 }
