@@ -1,6 +1,5 @@
 "use client";
 
-import CategoryBar from "@/components/category/CategoryBar";
 import FilteredFoods from "@/components/category/FilteredFoods";
 
 import SearchBox from "@/components/layout/SearchBox";
@@ -57,8 +56,8 @@ const Category = ({
 
   return (
     <>
-      <div className="w-1/2 m-auto min-w-fit">
-        <div className="flex flex-col justify-center w-3/4 m-auto">
+      <div className="w-[1048px] m-auto min-w-fit">
+        <div className="flex flex-col justify-center w-full">
           <div className="flex p-2 items-center mb-2 ">
             <div
               className={`flex items-center justify-center border border-solid border-[color:var(--highlightColor1)] w-28 h-8 text-md/[10px] rounded-xl bg-[color:var(--subColor1)]`}
@@ -84,7 +83,7 @@ const Category = ({
               })}
             </div>
           </div>
-          <div className="flex p-2 items-center">
+          <div className="flex p-2 items-center ">
             <div
               className={`flex items-center justify-center border border-solid border-[color:var(--highlightColor1)] w-28 h-8 text-md/[10px] rounded-xl bg-[color:var(--subColor1)]`}
             >

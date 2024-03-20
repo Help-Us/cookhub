@@ -36,18 +36,9 @@ const FilteredFoods = ({
     setRecipeList(categoryFilter());
   }, [selectedFood, selectedCalorieNumberLevel, filteredRecipes]);
 
-  // 두 카테고리 중 카테고리 선택 안했을 때는 모두 출력
-  //
-
-  // if (!selectedFood && !selectedCalorieNumberLevel) {
-  //   const filteredRecipe2 = filteredRecipes;
-
-  //   return filteredRecipe2;
-  // }
-
   return (
     <>
-      <div className="flex w-full justify-between text-sm items-center mb-4">
+      <div className="flex w-full justify-between text-sm items-center mb-2">
         <div className="">
           검색결과{" "}
           <span className="text-[color:var(--highlightColor1)] font-bold text-lg">
@@ -57,9 +48,11 @@ const FilteredFoods = ({
         </div>
         {/* <div className={`flex cursor-pointer  gap-4`}></div> */}
       </div>
+      {recipeList?.length === 0 && (
+        <div className="w-full mt-12 text-center">검색결과가 없습니다.</div>
+      )}
       <div className="w-full grid grid-cols-4 gap-2">
         {/* --------------- 레시피 맵------------------- */}
-
         {recipeList?.map((item) => {
           return (
             <div className="mb-8 cursor-pointer w-64 relative">
