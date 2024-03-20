@@ -9,6 +9,7 @@ export interface Database {
             type: string;
             image: string;
             way: string;
+            tip?: string;
           };
           Insert: {
             // the data to be passed to .insert()

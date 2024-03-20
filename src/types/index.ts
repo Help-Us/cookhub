@@ -10,4 +10,5 @@ export type Recipe = {
   name: string;
   type: string;
   how: string;
+  tip?: string;
 };

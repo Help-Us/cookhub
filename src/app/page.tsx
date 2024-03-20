@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import SearchBox from "@/components/layout/SearchBox";
-import RecommendedRecipes from '@/components/mainpage/RecommendRecipes';
+import RecommendedRecipe from '@/components/mainpage/RecommendRecipe';
 import { createClient } from '@supabase/supabase-js'
 
 import type { Recipe } from '@/types';
@@ -28,7 +28,7 @@ export default function Home() {
         setIsLoading(true);
         const { data: recipesData, error } = await supabase
             .from('cookrcp') // Supabase 테이블
-            .select('RCP_ID, RCP_WAY, RCP_TYPE, RCP_IMG_BIG, RCP_NAME')
+            .select('RCP_ID, RCP_WAY, RCP_TYPE, RCP_IMG_BIG, RCP_NAME, RCP_TIP')
 
         if (error) throw error;
 
@@ -39,6 +39,7 @@ export default function Home() {
             name: recipe.RCP_NAME,
             type: recipe.RCP_TYPE,
             how: recipe.RCP_WAY,
+            tip: recipe.RCP_TIP,
         }));
 
         const randomRecipes = formattedData.sort(() => 0.5 - Math.random()).slice(0, 6);
@@ -60,7 +61,7 @@ export default function Home() {
 
         const { data: recipesData, error } = await supabase
             .from('cookrcp')
-            .select('RCP_ID, RCP_WAY, RCP_TYPE, RCP_IMG_BIG, RCP_NAME')
+            .select('RCP_ID, RCP_WAY, RCP_TYPE, RCP_IMG_BIG, RCP_NAME, RCP_TIP')
             .ilike('RCP_NAME', `%${recipeName}%`); // 이름에 검색어가 포함된 레시피 검색
 
         if (error) throw error;
@@ -71,6 +72,7 @@ export default function Home() {
             name: recipe.RCP_NAME,
             type: recipe.RCP_TYPE,
             how: recipe.RCP_WAY,
+            tip: recipe.RCP_TIP,
         }));
         
         setRecipes(formattedData);
@@ -93,15 +95,15 @@ export default function Home() {
           <SearchBox onSearch={fetchRecipe} />
           {searched ? (
             <>
-              <h2 className="text-2xl my-5"><span className="text-red-500">{searchTerm}</span> 검색 결과</h2>
-              <RecommendedRecipes recipes={recipes}/>
+              <h2 className="text-2xl my-5">"<span className="text-red-500">{searchTerm}</span>" 검색 결과</h2>
+              <RecommendedRecipe recipes={recipes} searched={true}/>
             </>
           ) : (
             <>
               <h1 className='text-brown text-2xl font-bold text-left py-5'>스트랩 TOP 레시피</h1>
               <p>데이터 들어 올 자리</p>
               <h1 className='text-brown text-2xl font-bold text-left'>추천 레시피</h1>
-              <RecommendedRecipes recipes={recipes}/>
+              <RecommendedRecipe recipes={recipes} searched={false}/>
             </>
           )}
         </div>
