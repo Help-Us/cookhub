@@ -14,6 +14,7 @@ const config: Config = {
         deepgrey: '#D9D9D9',
         beige: '#FFF8E3',
         peach: '#F3D7CA',
+        peachbrown: '#C7B0A5',
         pink: '#E6A4B4',
         brown: '#784b31',
         hotpink: '#D14D72',

@@ -44,19 +44,23 @@ const Comments = () => {
                 {comments.length > 0 ? (
                     <div className="flex flex-col min-h-[300px] w-950 mt-5 rounded-3xl border-2 border-peach text-xl shadow-lg shadow-black-500">
                         {comments.map((comment, index) => (
-                            <div className="m-5">
-                                <div className="flex items-center">
+                            <div className="m-5 h-54">
+                                <div className="flex items-center mt-5">
                                     <Image
                                         src={'https://i.pinimg.com/280x280_RS/ce/6c/fc/ce6cfc73ef62f44510a64bc62937328f.jpg'}
                                         alt="food image"
-                                        width={70}
-                                        height={70}
-                                        className="rounded-full"
+                                        width={60}
+                                        height={60}
+                                        className="rounded-full ml-5"
                                     />
                                     <p className="text-black text-xl font-bold ml-5">닉네임</p>
                                 </div>
-                                <div key={index} className="p-4 border-2 border-deepgrey rounded-br-lg m-5">
+                                <div key={index} className="p-4 border-2 rounded-br-lg m-5">
                                     <p className="">{comment}</p>
+                                </div>
+                                <div className="flex justify-end ml-10">
+                                    <button className="mr-10">수정</button>
+                                    <button className="mr-5">삭제</button>
                                 </div>
                             </div>
                         ))}
