@@ -29,6 +29,7 @@ const CategoryBar = () => {
           {foodList.map((item, index) => {
             return (
               <div
+                key={index}
                 onClick={() => setSelectedFoodIndex(index)}
                 className={`text-md pl-4 pr-4 text-center cursor-pointer ${
                   selectedFoodIndex === index
@@ -53,6 +54,7 @@ const CategoryBar = () => {
           return (
             <>
               <div
+                key={index}
                 onClick={() => setSelectedCalorieIndex(index)}
                 className={`text-md pl-4 pr-4 text-center cursor-pointer ${
                   selectedCalorieIndex === index

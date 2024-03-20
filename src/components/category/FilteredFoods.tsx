@@ -5,6 +5,8 @@ import React, { useState } from "react";
 const FilteredFoods = () => {
   const [orderByIndex, setOrderByIndex] = useState(-1);
 
+  //zustand로 searched 레시피 가져오기?
+
   return (
     <>
       <div className="flex w-full justify-between text-sm items-center mb-4">
