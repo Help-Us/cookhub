@@ -44,6 +44,7 @@ const Category = ({
     // 같은 카테고리 한번 더 클릭시 선택취소
     if (selectedCalorieLevel === calorieLevel) {
       setSelectedCalorieLevel("");
+      setSelectedCalorieNumberLevel(0);
     }
   };
 
@@ -56,7 +57,7 @@ const Category = ({
 
   return (
     <>
-      <div className="w-3/5 m-auto min-w-fit">
+      <div className="w-1/2 m-auto min-w-fit">
         <div className="flex flex-col justify-center w-3/4 m-auto">
           <div className="flex p-2 items-center mb-2 ">
             <div

@@ -1,7 +1,7 @@
 "use client";
 
 import { RecipeType } from "@/types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const FilteredFoods = ({
   filteredRecipes,
@@ -12,19 +12,46 @@ const FilteredFoods = ({
   selectedFood: string;
   selectedCalorieNumberLevel: number;
 }) => {
-  console.log(selectedFood);
-
   // 카테고리 선택 취소
-  // const categoryFilter = (): RecipeType[] | undefined | null => {
-  //   if (selectedFood) {
-  //     const filteredByCategoryRecipes = filteredRecipes?.filter((item) => {
-  //       return (item.RCP_TYPE = selectedFood);
-  //     });
-  //     return filteredByCategoryRecipes;
-  //   } else return filteredRecipes;
-  // };
+  const categoryFilter = (): RecipeType[] | null => {
+    if (!filteredRecipes) return null; // filteredRecipes가 undefined일 경우 null 반환
 
-  // const a = categoryFilter();
+    if (selectedFood && selectedCalorieNumberLevel) {
+      const filteredByCategoryRecipes = filteredRecipes
+        ?.filter((item) => item.RCP_TYPE === selectedFood)
+        .filter((item) => item.INFO_CAR <= selectedCalorieNumberLevel);
+      return filteredByCategoryRecipes;
+    } else if (selectedFood && !selectedCalorieNumberLevel) {
+      const filteredByCategoryRecipes = filteredRecipes?.filter(
+        (item) => item.RCP_TYPE === selectedFood
+      );
+      return filteredByCategoryRecipes;
+    } else if (!selectedFood && selectedCalorieNumberLevel) {
+      const filteredByCategoryRecipes = filteredRecipes?.filter(
+        (item) => item.INFO_CAR <= selectedCalorieNumberLevel
+      );
+      return filteredByCategoryRecipes;
+    } else return filteredRecipes;
+  };
+
+  const [recipeList, setRecipeList] = useState<RecipeType[] | null>(
+    filteredRecipes
+  );
+
+  useEffect(() => {
+    setRecipeList(categoryFilter());
+  }, [selectedFood, selectedCalorieNumberLevel, filteredRecipes]);
+  console.log(recipeList);
+  console.log(selectedFood, selectedCalorieNumberLevel);
+
+  // 두 카테고리 중 카테고리 선택 안했을 때는 모두 출력
+  //
+
+  // if (!selectedFood && !selectedCalorieNumberLevel) {
+  //   const filteredRecipe2 = filteredRecipes;
+
+  //   return filteredRecipe2;
+  // }
 
   return (
     <>
@@ -32,41 +59,46 @@ const FilteredFoods = ({
         <div className="">
           검색결과{" "}
           <span className="text-[color:var(--highlightColor1)] font-bold text-lg">
-            {filteredRecipes?.length}
+            {recipeList?.length}
           </span>
           건 조회
         </div>
-        <div className={`flex gap-2 cursor-pointer  gap-4`}></div>
+        {/* <div className={`flex cursor-pointer  gap-4`}></div> */}
       </div>
-      <div className="w-full grid grid-cols-4 gap-1">
+      <div className="w-full grid grid-cols-4 gap-2">
         {/* --------------- 레시피 맵------------------- */}
 
-        {filteredRecipes
-          ?.filter((item) => item.RCP_TYPE === selectedFood)
-          .map((item) => {
-            return (
-              <div className="mb-8 cursor-pointer w-64 relative">
-                {/* 추천, 인기 스티커 조건 추가 필 */}
-                <div className="absolute text-sm top-36 right-16 mr-1 rounded-full bg-[color:var(--highlightColor2)] w-11 h-11 flex items-center justify-center leading-5 text-white">
-                  추천
-                </div>
-                <div className="absolute text-sm top-36 right-4 rounded-full bg-[color:var(--subColor6)] w-11 h-11 flex items-center justify-center leading-5 text-white">
-                  인기
-                </div>
-                <img
-                  className="w-64 h-44 object-cover"
-                  src={item.RCP_IMG_SMALL ? item.RCP_IMG_SMALL : ""}
-                ></img>
+        {recipeList?.map((item) => {
+          return (
+            <div className="mb-8 cursor-pointer w-64 relative">
+              {/* 추천, 인기 스티커 조건 추가 필 */}
+              {/* <div className="absolute text-sm top-36 right-16 mr-1 rounded-full bg-[color:var(--highlightColor2)] w-11 h-11 flex items-center justify-center leading-5 text-white">
+                추천
+              </div>
+              <div className="absolute text-sm top-36 right-4 rounded-full bg-[color:var(--subColor6)] w-11 h-11 flex items-center justify-center leading-5 text-white">
+                인기
+              </div> */}
+              <img
+                className="w-64 h-44 object-cover"
+                src={item.RCP_IMG_SMALL ? item.RCP_IMG_SMALL : ""}
+              ></img>
 
-                <div className="mt-1 text-lg font-bold mt-4">
-                  {item.RCP_NAME}
-                </div>
-                <div className="flex text-sm text-gray-600 gap-2 mt-1">
-                  {item.HASH_TAG && <span>#{item.HASH_TAG}</span>}
+              <div
+                className={`mt-1 ${item.RCP_NAME.length >= 13 ? "text-md" : "text-lg"} font-bold mt-4`}
+              >
+                {item.RCP_NAME}
+              </div>
+              <div className="flex text-sm text-gray-600 gap-2 mt-1">
+                {item.HASH_TAG && <span>#{item.HASH_TAG}</span>}
+                <div
+                  className={`ml-auto text-gray-900 text-xs mr-3 bg-[color:var(--subColor1)] border border-solid border-yellow-500 rounded-full flex justify-center items-center ${item.INFO_CAR.toString().length < 3 ? "w-14" : "w-16"} h-5`}
+                >
+                  {item.INFO_CAR}kcal
                 </div>
               </div>
-            );
-          })}
+            </div>
+          );
+        })}
       </div>
     </>
   );

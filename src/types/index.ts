@@ -25,13 +25,13 @@ export interface UserImageUrlType {
 }
 
 export type RecipeType = {
-  HASH_TAG?: string | null;
-  INFO_CAR?: number | null;
-  INFO_FAT?: number;
-  INFO_NA?: number;
-  INFO_PRO?: number;
-  INFO_TAN?: number;
-  INFO_WEIGHT?: number | null;
+  HASH_TAG: string;
+  INFO_CAR: number;
+  INFO_FAT: number;
+  INFO_NA: number;
+  INFO_PRO: number;
+  INFO_TAN: number;
+  INFO_WEIGHT: number;
   MANUAL01?: string | null;
   MANUAL02?: string | null;
   MANUAL03?: string | null;
@@ -45,11 +45,11 @@ export type RecipeType = {
   MANUAL_IMG05?: string | null;
   MANUAL_IMG06?: string | null;
   RCP_ID: number;
-  RCP_IMG_BIG?: string | null;
-  RCP_IMG_SMALL?: string | null;
-  RCP_INGREDIENT?: string | null;
+  RCP_IMG_BIG: string;
+  RCP_IMG_SMALL: string;
+  RCP_INGREDIENT: string;
   RCP_NAME: string;
-  RCP_TIP?: string | null;
-  RCP_TYPE?: string | null;
-  RCP_WAY?: string | null;
+  RCP_TIP: string;
+  RCP_TYPE: string;
+  RCP_WAY: string;
 };
