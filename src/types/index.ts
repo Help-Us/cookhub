@@ -10,3 +10,11 @@ export type Recipe = {
   name: string;
   type: string;
 };
+
+export interface UserDatabaseType {
+  uid: string;
+  nickname: string;
+  email: string;
+  avatar_img: string;
+  id: string;
+}
