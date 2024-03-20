@@ -23,8 +23,7 @@ export default function MyPageContents() {
         const data = await getSelectUserInfo(); // 유저 정보를 가져와서 상태에 저장
         setUserInfo(data);
       } catch (error) {
-        console.error("유저 정보를 가져오는데 실패했습니다.", error);
-        // 에러 처리 로직을 여기에 추가하시면 됩니다.
+        console.error("유저 정보 가져오기 실패", error);
       }
     };
     fetchData();
