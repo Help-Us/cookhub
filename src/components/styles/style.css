@@ -1,0 +1,31 @@
+.font-roboto{
+  font-family: 'Roboto';
+  font-style: normal;
+}
+
+.profile-btn {
+  background-color: var(--subColor4);
+  color: var(--white);
+}
+
+.profile-btn:hover {
+  background-color: var(--subColor3);
+  color: var(--white);
+}
+
+.section-base-color {
+  background-color: var(--baseColor);
+  color: var(--titleColor);
+}
+
+.header-font-color {
+  color: var(--titleColor);
+}
+
+.content-font-color {
+  color: var(--contentColor);
+}
+
+.border-line {
+  border: 1px solid var(--borderLine);
+}
