@@ -4,6 +4,7 @@ import SearchBox from "@/components/layout/SearchBox";
 import RecommendedRecipe from '@/components/mainpage/RecommendRecipe';
 import ClippingRecipe from '@/components/mainpage/ClippingRecipe'
 import { createClient } from '@supabase/supabase-js'
+import { useRouter } from "next/navigation";
 
 import type { Recipe } from '@/types';
 import type { Database } from '@/types/database.type'
@@ -16,6 +17,12 @@ export default function Home() {
   const supabaseURL = process.env.NEXT_PUBLIC_SUPABASE_URL? process.env.NEXT_PUBLIC_SUPABASE_URL : "";
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY : "";
   const supabase = createClient<Database>(supabaseURL, supabaseKey);
+
+  const router = useRouter(); // useRouter 훅을 사용하기 위해 추가
+
+  const onSearch = (searchTerm: string) => {
+    router.push(`/category/${searchTerm.trim() ? searchTerm : "All"}`);
+  };
 
   useEffect(() => {
     setIsLoading(true); // 컴포넌트가 마운트될 때 로딩 상태를 true로 설정
@@ -90,7 +97,7 @@ export default function Home() {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center">
-          <SearchBox />
+          <SearchBox onSearch={onSearch}/>
           <div className='w-1200'>
               <h1 className='text-brown text-2xl text-left py-5'>스크랩 TOP 레시피</h1>
               <ClippingRecipe recipes={topScrappedRecipes}/>
