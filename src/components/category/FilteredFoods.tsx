@@ -3,6 +3,7 @@
 import { RecipeType } from "@/types";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import logoImage from "../../assets/images/Cookhub_Logo.png.png";
 
 const FilteredFoods = ({
   filteredRecipes,
@@ -64,13 +65,23 @@ const FilteredFoods = ({
               <div className="absolute text-sm top-36 right-4 rounded-full bg-[color:var(--subColor6)] w-11 h-11 flex items-center justify-center leading-5 text-white">
                 인기
               </div> */}
-              <Image
-                width={256}
-                height={176}
-                alt="Recipe Thumbnail Image"
-                className="w-64 h-44 object-cover"
-                src={item.RCP_IMG_SMALL ? item.RCP_IMG_SMALL : ""}
-              ></Image>
+              {item.RCP_IMG_SMALL ? (
+                <Image
+                  width={256}
+                  height={176}
+                  alt="Recipe Thumbnail Image"
+                  className="w-64 h-44 object-cover object-center"
+                  src={item.RCP_IMG_SMALL ? item.RCP_IMG_SMALL : ""}
+                />
+              ) : (
+                <Image
+                  width={256}
+                  height={176}
+                  alt="Recipe Thumbnail Image"
+                  className="w-64 h-44 object-cover object-center"
+                  src={logoImage}
+                />
+              )}
 
               <div
                 className={`mt-1 ${item.RCP_NAME.length >= 13 ? "text-md" : "text-lg"} font-bold mt-4`}
