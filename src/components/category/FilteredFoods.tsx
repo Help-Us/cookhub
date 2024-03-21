@@ -66,7 +66,7 @@ const FilteredFoods = ({
   return (
     <>
       <div className="flex w-full justify-between text-sm items-center mb-2">
-        {recipeList?.length === 1000 ? (
+        {recipeList && recipeList?.length >= 1000 ? (
           <div className="">
             현재{" "}
             <span className="text-[color:var(--highlightColor1)] font-bold text-lg">
