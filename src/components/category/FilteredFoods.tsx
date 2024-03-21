@@ -20,7 +20,7 @@ const FilteredFoods = ({
   const categoryFilter = () => {
     if (!filteredRecipes) return null; // filteredRecipes가 undefined일 경우 null 반환
 
-    const filterFood = (item: RecipeType, selectedFood: string) => {
+    const filterFoodType = (item: RecipeType, selectedFood: string) => {
       if (selectedFood === "특별식") {
         return item.RCP_TYPE === "일품" || item.RCP_TYPE === "기타";
       } else return item.RCP_TYPE === selectedFood;
@@ -30,7 +30,6 @@ const FilteredFoods = ({
       item: RecipeType,
       selectedCalorieNumberLevel: number
     ) => {
-      console.log(selectedCalorieNumberLevel);
       switch (selectedCalorieNumberLevel) {
         case 200:
           return item.INFO_CAR <= 200;
@@ -45,13 +44,14 @@ const FilteredFoods = ({
 
     const filterByCategoryRecipes = filteredRecipes.filter((item) => {
       // 카테고리를 선택했으면 필터조건추가, 아니면 true로 필터링 조건 무시(모든 아이템이 통과)
-      const filterByFood = selectedFood ? filterFood(item, selectedFood) : true;
+      const filterByFood = selectedFood
+        ? filterFoodType(item, selectedFood)
+        : true;
       const filterByCalories = selectedCalorieNumberLevel
         ? switchCaloriesLevel(item, selectedCalorieNumberLevel)
         : true;
       return filterByFood && filterByCalories;
     });
-    console.log(filterByCategoryRecipes);
     return filterByCategoryRecipes;
   };
 
