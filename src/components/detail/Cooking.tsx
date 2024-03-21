@@ -32,7 +32,7 @@ const Cooking = ({ manualIMG1, manualIMG2, manualIMG3, manualIMG4, manualIMG5, m
                         className=""
                     />
                     <div className="flex-col">
-                        <p className="text-xl font-medium ml-10 mb-5">Step 1</p>
+                        <p className="text-xl font-medium ml-10 mb-5 select-none">Step 1</p>
                         <p className="ml-10">{renderManualText(manual1)}</p>
                     </div>
                 </div>
@@ -47,7 +47,7 @@ const Cooking = ({ manualIMG1, manualIMG2, manualIMG3, manualIMG4, manualIMG5, m
                         className=""
                     />
                     <div className="flex-col">
-                        <p className="text-xl font-medium ml-10 mb-5">Step 2</p>
+                        <p className="text-xl font-medium ml-10 mb-5 select-none">Step 2</p>
                         <p className="ml-10">{renderManualText(manual2)}</p>
                     </div>
                 </div>
@@ -62,7 +62,7 @@ const Cooking = ({ manualIMG1, manualIMG2, manualIMG3, manualIMG4, manualIMG5, m
                         className=""
                     />
                     <div className="flex-col">
-                        <p className="text-xl font-medium ml-10 mb-5">Step 3</p>
+                        <p className="text-xl font-medium ml-10 mb-5 select-none">Step 3</p>
                         <p className="ml-10">{renderManualText(manual3)}</p>
                     </div>
                 </div>
@@ -77,7 +77,7 @@ const Cooking = ({ manualIMG1, manualIMG2, manualIMG3, manualIMG4, manualIMG5, m
                         className=""
                     />
                     <div className="flex-col">
-                        <p className="text-xl font-medium ml-10 mb-5">Step 4</p>
+                        <p className="text-xl font-medium ml-10 mb-5 select-none">Step 4</p>
                         <p className="ml-10">{renderManualText(manual4)}</p>
                     </div>
                 </div>
@@ -92,7 +92,7 @@ const Cooking = ({ manualIMG1, manualIMG2, manualIMG3, manualIMG4, manualIMG5, m
                         className=""
                     />
                     <div className="flex-col">
-                        <p className="text-xl font-medium ml-10 mb-5">Step 5</p>
+                        <p className="text-xl font-medium ml-10 mb-5 select-none">Step 5</p>
                         <p className="ml-10">{renderManualText(manual5)}</p>
                     </div>
                 </div>
@@ -107,7 +107,7 @@ const Cooking = ({ manualIMG1, manualIMG2, manualIMG3, manualIMG4, manualIMG5, m
                         className=""
                     />
                     <div className="flex-col">
-                        <p className="text-xl font-medium ml-10 mb-5">Step 6</p>
+                        <p className="text-xl font-medium ml-10 mb-5 select-none">Step 6</p>
                         <p className="ml-10">{renderManualText(manual6)}</p>
                     </div>
                 </div>
