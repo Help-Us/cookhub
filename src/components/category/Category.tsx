@@ -48,6 +48,7 @@ const Category = ({
       <div className="w-[1048px] m-auto min-w-fit">
         <div className="flex flex-col justify-center w-full">
           <div className="flex p-2 items-center mb-2 ">
+            {/* ------------------ 요리종류 카테고리바 --------------- */}
             <div
               className={`flex items-center justify-center border border-solid border-[color:var(--highlightColor1)] w-28 h-8 text-md/[10px] rounded-xl bg-[color:var(--subColor1)]`}
             >
@@ -72,6 +73,8 @@ const Category = ({
               })}
             </div>
           </div>
+
+          {/* ------------------ 칼로리 카테고리바 --------------- */}
           <div className="flex p-2 items-center ">
             <div
               className={`flex items-center justify-center border border-solid border-[color:var(--highlightColor1)] w-28 h-8 text-md/[10px] rounded-xl bg-[color:var(--subColor1)]`}
@@ -120,6 +123,8 @@ const Category = ({
               <span className="text-rose-500">{searchKeyword}</span> 검색결과
             </div>
           )}
+
+          {/* 레시피들 컴포넌트 */}
           <FilteredFoods
             filteredRecipes={filteredRecipes}
             selectedFood={selectedFood}

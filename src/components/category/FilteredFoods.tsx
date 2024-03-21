@@ -132,7 +132,6 @@ const FilteredFoods = ({
                   className={`ml-auto text-gray-900 text-xs mr-3 bg-[color:var(--subColor1)] border border-solid border-yellow-500 rounded-full flex justify-center items-center ${item.INFO_CAR.toString().length < 4 ? "w-14" : "w-[70px]"} h-5`}
                 >
                   {item.INFO_CAR}kcal
-                  {item.RCP_TYPE}
                 </div>
               </div>
             </div>
