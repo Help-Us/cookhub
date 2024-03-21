@@ -20,26 +20,34 @@ const FilteredFoods = ({
   const categoryFilter = () => {
     if (!filteredRecipes) return null; // filteredRecipes가 undefined일 경우 null 반환
 
+    const filterFood = (item: RecipeType, selectedFood: string) => {
+      if (selectedFood === "특별식") {
+        return item.RCP_TYPE === "일품" || item.RCP_TYPE === "기타";
+      } else return item.RCP_TYPE === selectedFood;
+    };
+
+    const switchCaloriesLevel = (
+      item: RecipeType,
+      selectedCalorieNumberLevel: number
+    ) => {
+      console.log(selectedCalorieNumberLevel);
+      switch (selectedCalorieNumberLevel) {
+        case 200:
+          return item.INFO_CAR <= 200;
+        case 400:
+          return item.INFO_CAR > 200 && item.INFO_CAR <= 400;
+        case 700:
+          return item.INFO_CAR > 400 && item.INFO_CAR <= 700;
+        case 701:
+          return item.INFO_CAR > 700;
+      }
+    };
+
     const filterByCategoryRecipes = filteredRecipes.filter((item) => {
       // 카테고리를 선택했으면 필터조건추가, 아니면 true로 필터링 조건 무시(모든 아이템이 통과)
-      const filterByFood = selectedFood ? item.RCP_TYPE === selectedFood : true;
-      if (selectedCalorieNumberLevel) {
-        if (selectedCalorieNumberLevel === 200) {
-          const filterByCalories = item.INFO_CAR <= 200;
-          return filterByCalories;
-        } else if (selectedCalorieNumberLevel === 400) {
-          const filterByCalories = item.INFO_CAR >= 201 && item.INFO_CAR <= 400;
-          return filterByCalories;
-        } else if (selectedCalorieNumberLevel === 700) {
-          const filterByCalories = item.INFO_CAR >= 401 && item.INFO_CAR <= 700;
-          return filterByCalories;
-        } else if (selectedCalorieNumberLevel === 701) {
-          const filterByCalories = item.INFO_CAR >= 701;
-          return filterByCalories;
-        }
-      } else true;
+      const filterByFood = selectedFood ? filterFood(item, selectedFood) : true;
       const filterByCalories = selectedCalorieNumberLevel
-        ? item.INFO_CAR <= selectedCalorieNumberLevel
+        ? switchCaloriesLevel(item, selectedCalorieNumberLevel)
         : true;
       return filterByFood && filterByCalories;
     });
@@ -124,6 +132,7 @@ const FilteredFoods = ({
                   className={`ml-auto text-gray-900 text-xs mr-3 bg-[color:var(--subColor1)] border border-solid border-yellow-500 rounded-full flex justify-center items-center ${item.INFO_CAR.toString().length < 4 ? "w-14" : "w-[70px]"} h-5`}
                 >
                   {item.INFO_CAR}kcal
+                  {item.RCP_TYPE}
                 </div>
               </div>
             </div>
