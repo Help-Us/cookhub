@@ -48,6 +48,18 @@ export default function MyPageContents() {
     }
   };
 
+  // 이미지 미리보기 함수
+  const imgReader = () => {
+    const reader = new FileReader();
+    if (imgRef.current && imgRef.current.files) {
+      reader.readAsDataURL(imgRef.current.files[0]);
+      reader.onloadend = () => {
+        setAvatar(reader.result as string);
+      };
+      setUploadFile(imgRef.current.files[0]);
+    }
+  };
+
   if (!userInfo) return <div>Loading...</div>;
 
   return (
@@ -98,21 +110,18 @@ export default function MyPageContents() {
             {/* <button className=" w-full px-3 py-2 mt-3 text-white bg-yellow-500 rounded-md hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">
               프로필 사진 변경 완료
             </button> */}
-            {!isEditing ? (
-              <div className="flex flex-col mt-3">
-                <button
-                  type="button"
-                  onClick={() => setIsEditing(true)} // 수정 모드로 전환
-                  className="profile-btn w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
-                >
-                  수정하기
-                </button>
-                <button className="profile-btn w-full pr-28 pl-28 py-2.5 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">
-                  로그아웃
-                </button>
-              </div>
-            ) : (
+            {isEditing ? (
               <div className="flex justify-between mt-3">
+                <input
+                  id="avatar"
+                  type="file"
+                  accept="image/*"
+                  ref={imgRef}
+                  onChange={(e) => {
+                    setUploadFile(e.target.files?.[0]);
+                    imgReader();
+                  }}
+                />
                 <button
                   type="submit" // 폼 제출
                   className="w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
@@ -125,6 +134,19 @@ export default function MyPageContents() {
                   className="w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
                 >
                   취소
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col mt-3">
+                <button
+                  type="button"
+                  onClick={() => setIsEditing(true)} // 수정 모드로 전환
+                  className="profile-btn w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
+                >
+                  수정하기
+                </button>
+                <button className="profile-btn w-full pr-28 pl-28 py-2.5 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">
+                  로그아웃
                 </button>
               </div>
             )}

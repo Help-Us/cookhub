@@ -14,6 +14,15 @@ export const getLoginUserInfo = async () => {
   return data;
 };
 
+// 유저 세션 가져오기 - 웹 페이지에 머무르는 user
+export const getUserSession = async () => {
+  const { data, error } = await supabase.auth.getSession();
+  if (error) {
+    console.log("유저 세션 에러!");
+  }
+  return data;
+};
+
 // 내가 넣은 유저 정보 fetch 가져오기
 export const getSelectUserInfo = async () => {
   let { data, error } = await supabase.from("userData").select("*");
@@ -33,6 +42,22 @@ export const updateUserInfo = async () => {
   if (error) {
     console.log("유저 정보 새로 업데이트 실패", error);
   }
+  return data;
+};
+
+// 타겟 유저 닉네임 값 변경
+export const updateTargetUserNickname = async (
+  newNickname: string,
+  uid: string
+) => {
+  const { data, error } = await supabase
+    .from("userData")
+    .update({ nickname: newNickname })
+    .eq("uid", uid); // 현재 로그인한 유저의 id
+  if (error) {
+    console.log("닉네임 변경 실패", error);
+  }
+  console.log("updateTargetUser => ", data);
   return data;
 };
 
