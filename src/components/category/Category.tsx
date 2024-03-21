@@ -2,9 +2,10 @@
 
 import FilteredFoods from "@/components/category/FilteredFoods";
 
-import SearchBox from "@/components/layout/SearchBox";
 import { RecipeType } from "@/types";
 import React, { useEffect, useState } from "react";
+import SearchBox from "../layout/SearchBox";
+import { filterData } from "@/api/supabase/supabase";
 
 const Category = ({
   filteredRecipes,
@@ -45,6 +46,8 @@ const Category = ({
 
   return (
     <>
+      <SearchBox onSearch={(searchKeyword) => filterData(searchKeyword)} />
+
       <div className="w-[1048px] m-auto min-w-fit">
         <div className="flex flex-col justify-center w-full">
           <div className="flex p-2 items-center mb-2 ">

@@ -1,5 +1,6 @@
 import { filterData } from "@/api/supabase/supabase";
 import Category from "@/components/category/Category";
+import SearchBox from "@/components/layout/SearchBox";
 
 import { usePathname, useSearchParams } from "next/navigation";
 import React from "react";
