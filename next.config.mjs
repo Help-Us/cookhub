@@ -8,6 +8,7 @@ const nextConfig = {
       "www.foodsafetykorea.go.kr"
     ]
   }
+
 };
 
 export default nextConfig;
