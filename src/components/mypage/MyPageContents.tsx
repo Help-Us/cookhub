@@ -1,26 +1,27 @@
 "use client";
 
-import { getSelectUserInfo } from "@/api/supabase/supabase";
+import {
+  getSelectUserInfo,
+  updateTargetUserNickname
+} from "@/api/supabase/supabase";
 import React, { useState, useRef, useEffect } from "react";
 import MyPageScrap from "./MyPageScrap";
 import Image from "next/image";
 import "../styles/style.css";
 import { UserDatabaseType } from "@/types";
-import MyPageImage from "./MyPageImage";
+import defaultImg from "@/assets/defaultImg.jpg";
 import { useQuery } from "@tanstack/react-query";
 
 export default function MyPageContents() {
   const [userInfo, setUserInfo] = useState<UserDatabaseType[] | null>(null);
   const [nickname, setNickname] = useState("");
-
+  const [updateNickname, setUpdateNickname] = useState("");
   const imgRef = useRef<HTMLInputElement>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [avatar, setAvatar] = useState(""); // 여기에 defaultImg를 넣어줘야할듯
   const [uploadFile, setUploadFile] = useState<File>(); // 여기에 defaultImg를 넣어줘야할듯
 
-  const [datas, setDatas] = useState();
-  // const { isLoading, isError } = useQuery("users");
-
+  // 첫렌더링
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,22 +34,18 @@ export default function MyPageContents() {
     fetchData();
   }, []);
 
-  // 아바타 이미지 등록
-  const onAddImgHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    if (uploadFile === null) {
-      return false;
-    }
+  const {
+    data: userData,
+    isLoading,
+    isError
+  } = useQuery({
+    queryKey: ["userData"],
+    queryFn: getSelectUserInfo
+  });
 
-    const imgFile = event.target.files?.[0];
-    if (imgFile) {
-      setUploadFile(imgFile);
-      let img = URL.createObjectURL(imgFile);
-      setAvatar(img);
-    }
-  };
+  console.log(userData); // 전체 유저 정보
 
-  // 이미지 미리보기 함수
+  // 이미지 미리보기
   const imgReader = () => {
     const reader = new FileReader();
     if (imgRef.current && imgRef.current.files) {
@@ -60,50 +57,65 @@ export default function MyPageContents() {
     }
   };
 
-  if (!userInfo) return <div>Loading...</div>;
+  // 사용자가 입력한 값으로 editingText 상태 업데이트
+  const onChangeNicknameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsEditing(true);
+    setNickname(e.target.value);
+    setUpdateNickname(e.target.value);
+  };
+
+  // 수정 완료 버튼 클릭 핸들러
+  const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // 닉네임 변경
+    try {
+      await updateTargetUserNickname(nickname, userData?.[0].email);
+      setUpdateNickname(nickname);
+      setIsEditing(false); // 수정 모드 종료
+      // // 이미지 변경
+      // if (uploadFile) {
+      //   await uploadImage(uploadFile, userInfo?.[0].email);
+      // }
+    } catch (error) {
+      console.error("닉네임 변경 실패", error);
+    }
+    setIsEditing(false);
+  };
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <section className="section-base-color flex flex-col justify-center pr-10 pl-10 py-16 rounded-3xl shadow-xl border-line shadow-[#E0C3AE]">
       <h2 className="header-font-color text-center mb-20 text-3xl ">프로필</h2>
 
       <div className="flex justify-center gap-5 mb-10">
-        <div className="flex flex-col align-center mb-5">
-          {/* 아바타 */}
-          <Image src={avatar} alt="프로필 사진" width={300} height={300} />
-          {/* 파일선택 */}
-          <input
-            type="file"
-            id="avatar"
-            accept="image/*"
-            onChange={onAddImgHandler}
-          />
-        </div>
+        <form onSubmit={onSubmitHandler} className="p-4 content-font-color">
+          <div className="flex flex-col align-center mb-5">
+            {/* 아바타 */}
+            <Image
+              src={defaultImg}
+              alt="프로필 사진"
+              width={300}
+              height={300}
+            />
+          </div>
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            // 수정 완료 후 수정 종료
-            setIsEditing(false);
-          }}
-          className="p-4 content-font-color"
-        >
           <div className="text-xl mt-3 mb-5">
             {isEditing ? (
               <input
                 type="text"
                 id="nickname"
                 maxLength={10}
-                value={nickname}
-                // onChange={onChangeImgHandler}
+                onChange={onChangeNicknameHandler}
               />
             ) : (
-              <div></div>
+              <div>{nickname}</div>
             )}
           </div>
 
           <div className="text-xl mb-7">
-            <p className="mb-5">Email: {userInfo[0].email}</p>
-            <p>Nickname: {userInfo[0].nickname}</p>
+            <p className="mb-5">Email: {userInfo?.[0].email}</p>
+            <p>Nickname: {userInfo?.[0].nickname}</p>
           </div>
 
           <div>

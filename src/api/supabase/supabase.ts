@@ -53,7 +53,7 @@ export const updateTargetUserNickname = async (
   const { data, error } = await supabase
     .from("userData")
     .update({ nickname: newNickname })
-    .eq("uid", uid); // 현재 로그인한 유저의 id
+    .eq("email", uid); // 현재 로그인한 유저의 id
   if (error) {
     console.log("닉네임 변경 실패", error);
   }
