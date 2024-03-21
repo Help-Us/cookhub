@@ -15,12 +15,12 @@ const DetailPage = ({ params }: { params: { id: string } }) => {
     const [cookrcp, setCookrcp] = useState<any | null>(null);
 
     const fetchData = async () => {
-        let { data: cookrcp, error } = await supabase
+        let { data: cookrcpData, error } = await supabase
             .from('cookrcp')
             .select('*')
             .eq('RCP_ID', id);
         if (error) console.error("데이터를 불러오는데 실패했습니다.", error);
-        else setCookrcp(cookrcp[0]); // 데이터를 상태에 저장
+        else setCookrcp(cookrcpData ? cookrcpData[0] : null); // 데이터를 상태에 저장, cookrcpData가 있으면 첫 번째 요소를, 없으면 null을 설정
     };
 
     useEffect(() => {

@@ -1,8 +1,10 @@
 import React from "react";
 
-const Ingredients = ({ingre}) => {
+interface IngredientsProps {
+    ingre: string;
+}
 
-
+const Ingredients: React.FC<IngredientsProps> = ({ingre}) => {
     return (
         <div>
             <div className="mb-2.5">

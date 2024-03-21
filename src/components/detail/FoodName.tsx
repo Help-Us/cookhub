@@ -1,7 +1,11 @@
 import React from "react";
 
-
-const FoodName = ({ tag, name, way }) => {
+interface FootNameProps {
+    tag: string;
+    name: string;
+    way: string;
+}
+const FoodName: React.FC<FootNameProps> = ({ tag, name, way }) => {
 
     return (
         <div className="mb-10">

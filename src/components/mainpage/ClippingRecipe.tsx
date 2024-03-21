@@ -2,12 +2,12 @@ import React from 'react';
 import { Recipe } from '@/types';
 import Link from 'next/link';
 
-interface RecommendedRecipesProps {
+interface ClippingRecipesProps {
   recipes: Recipe[];
 }
 // export const revalidate = 10;
 
-const RecommendedRecipe: React.FC<RecommendedRecipesProps> = ({ recipes }) => {
+const ClippingRecipe: React.FC<ClippingRecipesProps> = ({ recipes }) => {
   return (
     <div>
       <div className="grid grid-cols-3 gap-4 w-1200 mb-5">
@@ -31,4 +31,4 @@ const RecommendedRecipe: React.FC<RecommendedRecipesProps> = ({ recipes }) => {
   );
 }
 
-export default RecommendedRecipe;
+export default ClippingRecipe;

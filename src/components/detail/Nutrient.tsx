@@ -2,7 +2,15 @@ import React from "react";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { IoBookmark } from "react-icons/io5";
 
-const Nutrient = ({ tan, dan, ge, kcal, na }) => {
+interface NutrientProps {
+    tan: number;
+    dan: number;
+    ge: number;
+    kcal: number;
+    na: number;
+}
+
+const Nutrient: React.FC<NutrientProps> = ({ tan, dan, ge, kcal, na }) => {
     return (
         <div className="bg-hotpink h-72 w-60 text-white font-medium">
             <div className="p-1">
