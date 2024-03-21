@@ -32,7 +32,7 @@ export default function MyPageContents() {
       }
     };
     fetchData();
-  }, []);
+  }, [userInfo]);
 
   const {
     data: userData,
@@ -72,7 +72,7 @@ export default function MyPageContents() {
       await updateTargetUserNickname(nickname, userData?.[0].email);
       setUpdateNickname(nickname);
       setIsEditing(false); // 수정 모드 종료
-      // // 이미지 변경
+      // 이미지 변경
       // if (uploadFile) {
       //   await uploadImage(uploadFile, userInfo?.[0].email);
       // }
@@ -102,20 +102,22 @@ export default function MyPageContents() {
 
           <div className="text-xl mt-3 mb-5">
             {isEditing ? (
-              <input
-                type="text"
-                id="nickname"
-                maxLength={10}
-                onChange={onChangeNicknameHandler}
-              />
+              <>
+                <p className="mb-5">Email: {userInfo?.[0].email}</p>
+                <input
+                  type="text"
+                  id="nickname"
+                  maxLength={10}
+                  onChange={onChangeNicknameHandler}
+                />
+              </>
             ) : (
-              <div>{nickname}</div>
+              <div className="text-xl mb-7">
+                <p className="mb-5">Email: {userInfo?.[0].email}</p>
+                {/* <p>Nickname: {userInfo?.[0].nickname}</p> */}
+                <div>{nickname}</div>
+              </div>
             )}
-          </div>
-
-          <div className="text-xl mb-7">
-            <p className="mb-5">Email: {userInfo?.[0].email}</p>
-            <p>Nickname: {userInfo?.[0].nickname}</p>
           </div>
 
           <div>
@@ -123,7 +125,7 @@ export default function MyPageContents() {
               프로필 사진 변경 완료
             </button> */}
             {isEditing ? (
-              <div className="flex justify-between mt-3">
+              <div className="flex flex-col mt-3">
                 <input
                   id="avatar"
                   type="file"
@@ -136,14 +138,14 @@ export default function MyPageContents() {
                 />
                 <button
                   type="submit" // 폼 제출
-                  className="w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                  className="profile-btn w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                 >
                   수정완료
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsEditing(false)} // 수정 종료
-                  className="w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
+                  className="profile-btn w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
                 >
                   취소
                 </button>
@@ -157,7 +159,7 @@ export default function MyPageContents() {
                 >
                   수정하기
                 </button>
-                <button className="profile-btn w-full pr-28 pl-28 py-2.5 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">
+                <button className="profile-btn w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">
                   로그아웃
                 </button>
               </div>

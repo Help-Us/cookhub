@@ -17,6 +17,7 @@ export const getLoginUserInfo = async () => {
 // 유저 세션 가져오기 - 웹 페이지에 머무르는 user
 export const getUserSession = async () => {
   const { data, error } = await supabase.auth.getSession();
+  console.log(data);
   if (error) {
     console.log("유저 세션 에러!");
   }
