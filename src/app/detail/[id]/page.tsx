@@ -52,7 +52,7 @@ const DetailPage = ({ params }: { params: { id: string } }) => {
                         <Cooking />
                     </div>
                     <div className="ml-5">
-                        <Nutrient />
+                        <Nutrient tan={cookrcp.INFO_TAN} dan={cookrcp.INFO_PRO} ge={cookrcp.INFO_FAT} kcal={cookrcp.INFO_CAR} na={cookrcp.INFO_NA}/>
                     </div>
                 </div>
             )}
