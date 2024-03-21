@@ -64,7 +64,10 @@ export const filterData = async (searchKeyword: string | null) => {
   const { data: cookrcp, error }: PostgrestResponse<RecipeType> = await supabase
     .from("cookrcp")
     .select("*")
-    .like("RCP_NAME", `%${searchKeyword}%`);
+    .like(
+      "RCP_NAME",
+      `${searchKeyword === "All" ? `%` : `%${searchKeyword}%`}`
+    );
 
   if (error) {
     console.log("레시피를 불러오는 중 오류가 발생했습니다.", error);

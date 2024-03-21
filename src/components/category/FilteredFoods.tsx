@@ -58,13 +58,23 @@ const FilteredFoods = ({
   return (
     <>
       <div className="flex w-full justify-between text-sm items-center mb-2">
-        <div className="">
-          검색결과{" "}
-          <span className="text-[color:var(--highlightColor1)] font-bold text-lg">
-            {recipeList?.length}
-          </span>
-          건 조회
-        </div>
+        {recipeList?.length === 1000 ? (
+          <div className="">
+            현재{" "}
+            <span className="text-[color:var(--highlightColor1)] font-bold text-lg">
+              {recipeList?.length}
+            </span>
+            건의 레시피가 있습니다.
+          </div>
+        ) : (
+          <div className="">
+            검색결과{" "}
+            <span className="text-[color:var(--highlightColor1)] font-bold text-lg">
+              {recipeList?.length}
+            </span>
+            건 조회
+          </div>
+        )}
         {/* <div className={`flex cursor-pointer  gap-4`}></div> */}
       </div>
       {recipeList?.length === 0 && (

@@ -111,9 +111,15 @@ const Category = ({
           </div>
         </div>
         <div className="mt-16 flex flex-col items-center">
-          <div className="font-bold text-2xl mb-10">
-            <span className="text-rose-500">{searchKeyword}</span> 검색결과
-          </div>
+          {searchKeyword === "All" ? (
+            <div className="font-bold text-2xl mb-10">
+              <span className="">카테고리 탭을 이용하여 어쩌고 해보세용</span>
+            </div>
+          ) : (
+            <div className="font-bold text-2xl mb-10">
+              <span className="text-rose-500">{searchKeyword}</span> 검색결과
+            </div>
+          )}
           <FilteredFoods
             filteredRecipes={filteredRecipes}
             selectedFood={selectedFood}
