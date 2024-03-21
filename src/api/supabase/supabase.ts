@@ -1,5 +1,5 @@
-import { UserDatabaseType, UserProfile } from "@/types";
-import { createClient } from "@supabase/supabase-js";
+import { RecipeType, UserDatabaseType, UserProfile } from "@/types";
+import { PostgrestResponse, createClient } from "@supabase/supabase-js";
 
 // 필요한 부분은 언제든 꺼내 쓸 수 있게
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
@@ -58,4 +58,17 @@ export const uploadImage = async (file: File, imagePath: string) => {
   }
   console.log(data);
   return data;
+};
+
+export const filterData = async (searchKeyword: string | null) => {
+  const { data: cookrcp, error }: PostgrestResponse<RecipeType> = await supabase
+    .from("cookrcp")
+    .select("*")
+    .like("RCP_NAME", `%${searchKeyword}%`);
+
+  if (error) {
+    console.log("레시피를 불러오는 중 오류가 발생했습니다.", error);
+  }
+
+  return cookrcp;
 };
