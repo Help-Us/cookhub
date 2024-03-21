@@ -34,7 +34,7 @@ const DetailPage = ({ params }: { params: { id: string } }) => {
         {cookrcp && (
             <div className="mb-10">
                 <Image
-                    src={cookrcp.RCP_IMG_BIG || '/default-image.jpg'} // 기본 이미지 URL 사용
+                    src={cookrcp.RCP_IMG_BIG} // 기본 이미지 URL 사용
                     alt="food image"
                     width={600}
                     height={600}
@@ -47,7 +47,7 @@ const DetailPage = ({ params }: { params: { id: string } }) => {
             {cookrcp && (
                 <div className="flex">
                     <div className="mr-5">
-                        <FoodName tag={cookrcp.HASH_TAG} name={cookrcp.RCP_NAME} />
+                        <FoodName tag={cookrcp.HASH_TAG} way={cookrcp.RCP_WAY} name={cookrcp.RCP_NAME} />
                         <Ingredients ingre={cookrcp.RCP_INGREDIENT}/>
                         <Cooking />
                     </div>
