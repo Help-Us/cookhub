@@ -6,9 +6,12 @@ export type UserProfile = {
 };
 
 export type Recipe = {
+  id: number;
   image: string;
   name: string;
   type: string;
+  how: string;
+  tip?: string;
 };
 
 export interface UserDatabaseType {
