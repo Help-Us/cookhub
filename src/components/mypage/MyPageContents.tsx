@@ -1,25 +1,32 @@
 "use client";
 
 import {
+  getImageURL,
   getSelectUserInfo,
-  updateTargetUserNickname
+  supabase,
+  updateTargetUserNickname,
+  uploadImage
 } from "@/api/supabase/supabase";
 import React, { useState, useRef, useEffect } from "react";
 import MyPageScrap from "./MyPageScrap";
 import Image from "next/image";
 import "../styles/style.css";
 import { UserDatabaseType } from "@/types";
-import defaultImg from "@/assets/defaultImg.jpg";
+// import defaultImg from "@/assets/defaultImg.jpg";
 import { useQuery } from "@tanstack/react-query";
+
+// 기본 이미지 URL 정의
+const defaultImg = "https://ifh.cc/g/WDVwsQ.png"; // 비숑
+// const defaultImg = "https://ibb.co/R34msc0"; // 종이
 
 export default function MyPageContents() {
   const [userInfo, setUserInfo] = useState<UserDatabaseType[] | null>(null);
   const [nickname, setNickname] = useState("");
-  const [updateNickname, setUpdateNickname] = useState("");
   const imgRef = useRef<HTMLInputElement>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [avatar, setAvatar] = useState(""); // 여기에 defaultImg를 넣어줘야할듯
-  const [uploadFile, setUploadFile] = useState<File>(); // 여기에 defaultImg를 넣어줘야할듯
+  const [avatar, setAvatar] = useState(defaultImg); // 여기에 defaultImg를 넣어줘야할듯
+  const [uploadFile, setUploadFile] = useState<File | null>(null); // 여기에 defaultImg를 넣어줘야할듯
+  const [fileURL, setFileURL] = useState<string | null>(null); // 업로드된 파일 URL
 
   // 첫렌더링
   useEffect(() => {
@@ -27,6 +34,10 @@ export default function MyPageContents() {
       try {
         const data = await getSelectUserInfo(); // 유저 정보를 가져와서 상태에 저장
         setUserInfo(data);
+        // 사용자가 프로필 이미지가 있으면 설정, 없으면 기본 이미지 유지
+        if (data?.[0].avatar) {
+          setAvatar(data?.[0].avatar);
+        }
       } catch (error) {
         console.error("유저 정보 가져오기 실패", error);
       }
@@ -61,7 +72,7 @@ export default function MyPageContents() {
   const onChangeNicknameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsEditing(true);
     setNickname(e.target.value);
-    setUpdateNickname(e.target.value);
+    // setUpdateNickname(e.target.value);
   };
 
   // 수정 완료 버튼 클릭 핸들러
@@ -70,12 +81,13 @@ export default function MyPageContents() {
     // 닉네임 변경
     try {
       await updateTargetUserNickname(nickname, userData?.[0].email);
-      setUpdateNickname(nickname);
+      // setUpdateNickname(nickname);
+      setNickname(nickname);
       setIsEditing(false); // 수정 모드 종료
       // 이미지 변경
-      // if (uploadFile) {
-      //   await uploadImage(uploadFile, userInfo?.[0].email);
-      // }
+      if (uploadFile) {
+        await uploadImage(uploadFile, userData?.[0].email);
+      }
     } catch (error) {
       console.error("닉네임 변경 실패", error);
     }
@@ -93,7 +105,8 @@ export default function MyPageContents() {
           <div className="flex flex-col align-center mb-5">
             {/* 아바타 */}
             <Image
-              src={defaultImg}
+              // src={defaultImg}
+              src={avatar || defaultImg}
               alt="프로필 사진"
               width={300}
               height={300}
@@ -114,7 +127,7 @@ export default function MyPageContents() {
             ) : (
               <div className="text-xl mb-7">
                 <p className="mb-5">Email: {userInfo?.[0].email}</p>
-                {/* <p>Nickname: {userInfo?.[0].nickname}</p> */}
+                <div>Nickname: {userInfo?.[0].nickname}</div>
                 <div>{nickname}</div>
               </div>
             )}
@@ -127,14 +140,11 @@ export default function MyPageContents() {
             {isEditing ? (
               <div className="flex flex-col mt-3">
                 <input
-                  id="avatar"
                   type="file"
                   accept="image/*"
                   ref={imgRef}
-                  onChange={(e) => {
-                    setUploadFile(e.target.files?.[0]);
-                    imgReader();
-                  }}
+                  onChange={imgReader}
+                  // onChange={(e) => onChangeImgHandler(e.target.value) imgReader(); }
                 />
                 <button
                   type="submit" // 폼 제출
