@@ -34,17 +34,15 @@ export const getSelectUserInfo = async () => {
 };
 
 // 유저 정보 업데이트
-// export const updateUserInfo = async () => {
-//   const { data, error } = await supabase
-//     .from("userData")
-//     .update({ other_column: "otherValue" })
-//     .eq("some_column", "someValue")
-//     .select();
-//   if (error) {
-//     console.log("유저 정보 새로 업데이트 실패", error);
-//   }
-//   return data;
-// };
+export const updateUserInform = async (nickname: string, avatar: string) => {
+  const { data, error } = await supabase.auth.updateUser({
+    data: { nickname, avatar }
+  });
+  if (error) {
+    console.error("업데이트를 다시 시도해주세요!");
+  }
+  return data;
+};
 
 // 타겟 유저 닉네임 값 변경
 export const updateTargetUserNickname = async (
@@ -63,58 +61,46 @@ export const updateTargetUserNickname = async (
 };
 
 // storage에서 이미지 다운
-export const downloadImage = async (imagePath: string) => {
+export const downloadImage = async (filePath: string) => {
   const { data, error } = await supabase.storage
     .from("avatars")
-    .download(imagePath);
+    .download(filePath);
   if (error) {
     console.log("이미지 다운로드 실패", error);
   }
   return data;
 };
 
-// 이미지 URL 가져오기
-export const getImageURL = async (imagePath: string) => {
-  try {
-    // Supabase 스토리지에서 이미지 다운로드
-    const { data, error } = await supabase.storage
-      .from("avatars")
-      .download(imagePath);
+// 스토리지에 이미지 업로드 ㅠㅠ
+export const uploadImage = async (filePath: string, image: File) => {
+  const { data, error } = await supabase.storage
+    .from("avatars")
+    .upload(filePath, image, {
+      cacheControl: "3600",
+      upsert: true
+    });
 
-    if (error) {
-      console.error("이미지 다운로드 실패", error);
-      return null;
-    }
-
-    // 다운로드된 이미지의 Blob URL 생성
-    if (data) {
-      const blob = new Blob([data]);
-      const imageURL = URL.createObjectURL(blob);
-      return imageURL;
-    }
-
-    return null;
-  } catch (error) {
-    console.error("이미지 URL 가져오기 실패", error);
-    return null;
+  if (error) {
+    console.error("이미지 업로드 오류", error.message);
   }
+  return data;
 };
 
 // storage에 이미지 업로드
-export const uploadImage = async (file: File, filename: string) => {
-  try {
-    const { data, error } = await supabase.storage
-      .from("avatars") // 사용할 스토리지 버킷 이름
-      .upload(`${filename}`, file); // 파일 경로 및 파일 객체 전달
-    if (error) {
-      console.log("이미지 업로드 실패", error);
-    }
-    console.log(data);
-    return data;
-  } catch (error) {
-    console.error("이미지 업로드 에러", error);
-  }
-};
+// export const uploadImage = async (file: File, filename: string) => {
+//   try {
+//     const { data, error } = await supabase.storage
+//       .from("avatars") // 사용할 스토리지 버킷 이름
+//       .upload(`${filename}`, file); // 파일 경로 및 파일 객체 전달
+//     if (error) {
+//       console.log("이미지 업로드 실패", error);
+//     }
+//     console.log(data);
+//     return data;
+//   } catch (error) {
+//     console.error("이미지 업로드 에러", error);
+//   }
+// };
 
 export const filterData = async (searchKeyword: string | null) => {
   const { data: cookrcp, error }: PostgrestResponse<RecipeType> = await supabase

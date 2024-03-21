@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  getImageURL,
   getSelectUserInfo,
   supabase,
   updateTargetUserNickname,
@@ -85,9 +84,9 @@ export default function MyPageContents() {
       setNickname(nickname);
       setIsEditing(false); // 수정 모드 종료
       // 이미지 변경
-      if (uploadFile) {
-        await uploadImage(uploadFile, userData?.[0].email);
-      }
+      // if (uploadFile) {
+      //   await uploadImage(uploadFile, userData?.[0].email);
+      // }
     } catch (error) {
       console.error("닉네임 변경 실패", error);
     }
