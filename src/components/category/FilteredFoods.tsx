@@ -4,6 +4,7 @@ import { RecipeType } from "@/types";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import logoImage from "../../assets/images/Cookhub_Logo.png.png";
+import { useRouter } from "next/navigation";
 
 const FilteredFoods = ({
   filteredRecipes,
@@ -14,7 +15,7 @@ const FilteredFoods = ({
   selectedFood: string;
   selectedCalorieNumberLevel: number;
 }) => {
-  // 카테고리 선택 취소
+  const router = useRouter();
   //  const calorieNumberList = [200, 400, 700, 701];
   const categoryFilter = () => {
     if (!filteredRecipes) return null; // filteredRecipes가 undefined일 경우 null 반환
@@ -73,7 +74,10 @@ const FilteredFoods = ({
         {/* --------------- 레시피 맵------------------- */}
         {recipeList?.map((item) => {
           return (
-            <div className="mb-8 cursor-pointer w-64 relative">
+            <div
+              className="mb-8 cursor-pointer w-64 relative"
+              onClick={() => router.push(`/detail/${item.RCP_ID}`)}
+            >
               {/* 추천, 인기 스티커 조건 추가 필 */}
               {/* <div className="absolute text-sm top-36 right-16 mr-1 rounded-full bg-[color:var(--highlightColor2)] w-11 h-11 flex items-center justify-center leading-5 text-white">
                 추천
