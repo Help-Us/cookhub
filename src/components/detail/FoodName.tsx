@@ -5,7 +5,7 @@ const FoodName = ({ tag, name, way, type }) => {
 
     return (
         <div className="mb-10">
-            <p className="text-brown text-2xl font-bold mb-2.5">{name}</p>
+            <p className="text-brown text-3xl font-bold mb-4 ml-2">{name}</p>
             
             <div className="flex mt-3">
                 {tag && (

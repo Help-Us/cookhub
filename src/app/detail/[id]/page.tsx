@@ -30,44 +30,48 @@ const DetailPage = ({ params }: { params: { id: string } }) => {
 
     return (
         <main className="flex flex-col items-center">
-        {cookrcp && (
-            <div className="mb-10">
-                <Image
-                    src={cookrcp.RCP_IMG_BIG}
-                    alt="food image"
-                    width={600}
-                    height={600}
-                    className=""
-                    unoptimized={true}
-                />
-            </div>
-        )}
+            {cookrcp && (
+                <div className="mb-10">
+                    <Image
+                        src={cookrcp.RCP_IMG_BIG}
+                        alt="food image"
+                        width={600}
+                        height={600}
+                        className=""
+                        unoptimized={true}
+                    />
+                </div>
+            )}
 
             {cookrcp && (
-                <div className="flex">
-                    <div className="mr-5">
-                        <FoodName tag={cookrcp.HASH_TAG} way={cookrcp.RCP_WAY} type={cookrcp.RCP_TYPE} name={cookrcp.RCP_NAME} />
-                        <Ingredients ingre={cookrcp.RCP_INGREDIENT}/>
-                        <Cooking 
-                        manualIMG1={cookrcp.MANUAL_IMG01}
-                        manualIMG2={cookrcp.MANUAL_IMG02}
-                        manualIMG3={cookrcp.MANUAL_IMG03}
-                        manualIMG4={cookrcp.MANUAL_IMG04}
-                        manualIMG5={cookrcp.MANUAL_IMG05}
-                        manualIMG6={cookrcp.MANUAL_IMG06}
-                        manual1={cookrcp.MANUAL01}
-                        manual2={cookrcp.MANUAL02}
-                        manual3={cookrcp.MANUAL03}
-                        manual4={cookrcp.MANUAL04}
-                        manual5={cookrcp.MANUAL05}
-                        manual6={cookrcp.MANUAL06}
-                        tip={cookrcp.RCP_TIP}
+                <>
+                    <div className="flex">
+                        <div className="mr-5">
+                            <FoodName tag={cookrcp.HASH_TAG} way={cookrcp.RCP_WAY} type={cookrcp.RCP_TYPE} name={cookrcp.RCP_NAME} />
+                            <Ingredients ingre={cookrcp.RCP_INGREDIENT} />
+                        </div>
+                        <div className="ml-5">
+                            <Nutrient tan={cookrcp.INFO_TAN} dan={cookrcp.INFO_PRO} ge={cookrcp.INFO_FAT} kcal={cookrcp.INFO_CAR} na={cookrcp.INFO_NA} />
+                        </div>
+                    </div>
+                    <div className="flex">
+                        <Cooking
+                            manualIMG1={cookrcp.MANUAL_IMG01}
+                            manualIMG2={cookrcp.MANUAL_IMG02}
+                            manualIMG3={cookrcp.MANUAL_IMG03}
+                            manualIMG4={cookrcp.MANUAL_IMG04}
+                            manualIMG5={cookrcp.MANUAL_IMG05}
+                            manualIMG6={cookrcp.MANUAL_IMG06}
+                            manual1={cookrcp.MANUAL01}
+                            manual2={cookrcp.MANUAL02}
+                            manual3={cookrcp.MANUAL03}
+                            manual4={cookrcp.MANUAL04}
+                            manual5={cookrcp.MANUAL05}
+                            manual6={cookrcp.MANUAL06}
+                            tip={cookrcp.RCP_TIP}
                         />
                     </div>
-                    <div className="ml-5">
-                        <Nutrient tan={cookrcp.INFO_TAN} dan={cookrcp.INFO_PRO} ge={cookrcp.INFO_FAT} kcal={cookrcp.INFO_CAR} na={cookrcp.INFO_NA}/>
-                    </div>
-                </div>
+                </>
             )}
 
             <div className="flex ml-5">

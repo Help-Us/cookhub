@@ -3,27 +3,11 @@ import Image from "next/image";
 
 const Cooking = ({ manualIMG1, manualIMG2, manualIMG3, manualIMG4, manualIMG5, manualIMG6, manual1, manual2, manual3, manual4, manual5, manual6, tip }) => {
 
-    const splitText = (text, maxLength) => {
-        var result = [];
-        for (let i = 0; i < text.length; i += maxLength) {
-            result.push(text.substring(i, i + maxLength));
-        }
-        return result;
-    };
-
-    const renderManualText = (text) => {
-        return splitText(text, 48).map((item, index) => (
-            <p className="ml-5" key={index}>
-                {item}
-            </p>
-        ));
-    };
-
     return (
         <div className="flex-col mt-20">
-            <p className="text-brown text-2xl font-bold">만드는 방법</p>
+            <p className="text-brown text-2xl font-bold">만드는 방법 👩🏻‍🍳</p>
             {manualIMG1 && (
-                <div className="flex mt-10">
+                <div className="flex mt-8">
                     <Image
                         src={manualIMG1}
                         alt="step image"
@@ -33,7 +17,7 @@ const Cooking = ({ manualIMG1, manualIMG2, manualIMG3, manualIMG4, manualIMG5, m
                     />
                     <div className="flex-col">
                         <p className="text-xl font-medium ml-10 mb-5 select-none">Step 1</p>
-                        <p className="ml-10">{renderManualText(manual1)}</p>
+                        <p className="ml-10">{manual1}</p>
                     </div>
                 </div>
             )}
@@ -48,7 +32,7 @@ const Cooking = ({ manualIMG1, manualIMG2, manualIMG3, manualIMG4, manualIMG5, m
                     />
                     <div className="flex-col">
                         <p className="text-xl font-medium ml-10 mb-5 select-none">Step 2</p>
-                        <p className="ml-10">{renderManualText(manual2)}</p>
+                        <p className="ml-10">{manual2}</p>
                     </div>
                 </div>
             )}
@@ -63,7 +47,7 @@ const Cooking = ({ manualIMG1, manualIMG2, manualIMG3, manualIMG4, manualIMG5, m
                     />
                     <div className="flex-col">
                         <p className="text-xl font-medium ml-10 mb-5 select-none">Step 3</p>
-                        <p className="ml-10">{renderManualText(manual3)}</p>
+                        <p className="ml-10">{manual3}</p>
                     </div>
                 </div>
             )}
@@ -78,7 +62,7 @@ const Cooking = ({ manualIMG1, manualIMG2, manualIMG3, manualIMG4, manualIMG5, m
                     />
                     <div className="flex-col">
                         <p className="text-xl font-medium ml-10 mb-5 select-none">Step 4</p>
-                        <p className="ml-10">{renderManualText(manual4)}</p>
+                        <p className="ml-10">{manual4}</p>
                     </div>
                 </div>
             )}
@@ -93,7 +77,7 @@ const Cooking = ({ manualIMG1, manualIMG2, manualIMG3, manualIMG4, manualIMG5, m
                     />
                     <div className="flex-col">
                         <p className="text-xl font-medium ml-10 mb-5 select-none">Step 5</p>
-                        <p className="ml-10">{renderManualText(manual5)}</p>
+                        <p className="ml-10">{manual5}</p>
                     </div>
                 </div>
             )}
@@ -108,12 +92,12 @@ const Cooking = ({ manualIMG1, manualIMG2, manualIMG3, manualIMG4, manualIMG5, m
                     />
                     <div className="flex-col">
                         <p className="text-xl font-medium ml-10 mb-5 select-none">Step 6</p>
-                        <p className="ml-10">{renderManualText(manual6)}</p>
+                        <p className="ml-10">{manual6}</p>
                     </div>
                 </div>
             )}
             <div className="mt-12">
-                <p className="text-lg font-semibold">요리 TIP❗️ {tip}</p>
+                <p className="text-lg font-semibold">요리 TIP❗️{tip}</p>
             </div>
         </div>
     );
