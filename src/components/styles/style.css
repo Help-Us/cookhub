@@ -29,3 +29,34 @@
 .border-line {
   border: 1px solid var(--borderLine);
 }
+
+/* 로그인/회원가입 페이지 색상 설정 */
+.login-page-color {
+  background-color: var(--subColor1);
+  border-color: var(--borderColor2);
+  color: var(--titleColor);
+}
+
+.login-page-button-color {
+  background-color: var(--subColor3);
+  color: var(--white);
+}
+
+.login-page-button-style {
+  padding: 1rem 0;
+  border-radius: 0.75rem;
+  font-weight: 600;
+}
+
+.social-login-button-style {
+  padding: 1rem 0.5rem;
+  border: 2px solid var(--subColor2);
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.input-style {
+  padding: 1rem;
+  border-radius: 0.75rem;
+}
