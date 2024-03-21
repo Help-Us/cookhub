@@ -61,6 +61,7 @@ const DetailPage = ({ params }: { params: { id: string } }) => {
                         manual4={cookrcp.MANUAL04}
                         manual5={cookrcp.MANUAL05}
                         manual6={cookrcp.MANUAL06}
+                        tip={cookrcp.RCP_TIP}
                         />
                     </div>
                     <div className="ml-5">
