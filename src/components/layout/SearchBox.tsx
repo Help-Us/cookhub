@@ -2,18 +2,13 @@
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
-interface SearchBoxProps {
-  onSearch: (searchTerm: string) => void;
-}
-
-const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
+const SearchBox: React.FC = () => {
   const router = useRouter();
 
   const [input, setInput] = useState<string>("");
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      onSearch(input);
       router.push(`/category/${input}`);
     }
   };
