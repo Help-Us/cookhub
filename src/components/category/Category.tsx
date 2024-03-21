@@ -46,19 +46,19 @@ const Category = ({
 
   return (
     <>
+      {/* 함수 실행 결과를 전달하는 것이 아니라 함수 자체를 전달 */}
       <SearchBox onSearch={(searchKeyword) => filterData(searchKeyword)} />
-
-      <div className="w-[1048px] m-auto min-w-fit">
-        <div className="flex flex-col justify-center w-full">
+      <div className="w-[1048px] m-auto min-w-fit flex flex-col items-center">
+        <div className="flex flex-col justify-center w-fit mt-8">
           <div className="flex p-2 items-center mb-2 ">
             {/* ------------------ 요리종류 카테고리바 --------------- */}
             <div
-              className={`flex items-center justify-center border border-solid border-[color:var(--highlightColor1)] w-28 h-8 text-md/[10px] rounded-xl bg-[color:var(--subColor1)]`}
+              className={`flex items-center justify-center border border-solid border-[color:var(--borderColor2)] w-28 h-8 text-md/[10px] rounded-xl bg-[color:var(--baseColor)]`}
             >
               요리 종류
             </div>
-            <div className="bg-[color:var(--highlightColor1)] w-1 h-8 ml-4 mr-8"></div>
-            <div className="flex items-center gap-6">
+            <div className="bg-[color:var(--borderColor2)] w-1 h-8 ml-4 mr-8"></div>
+            <div className="flex items-center gap-4">
               {foodList.map((item, index) => {
                 return (
                   <div
@@ -80,46 +80,57 @@ const Category = ({
           {/* ------------------ 칼로리 카테고리바 --------------- */}
           <div className="flex p-2 items-center ">
             <div
-              className={`flex items-center justify-center border border-solid border-[color:var(--highlightColor1)] w-28 h-8 text-md/[10px] rounded-xl bg-[color:var(--subColor1)]`}
+              className={`flex items-center justify-center border border-solid border-[color:var(--borderColor2)] w-28 h-8 text-md/[10px] rounded-xl bg-[color:var(--baseColor)]`}
             >
               칼로리
             </div>
-            <div className="bg-[color:var(--highlightColor1)] w-1 h-8 ml-4 mr-8"></div>
-            {calorieList.map((item, index) => {
-              return (
-                <>
-                  <div
-                    key={index}
-                    onClick={() =>
-                      handleCalorieCategoryClick(item, calorieNumberList[index])
-                    }
-                    className={`text-md pl-4 pr-4 text-center cursor-pointer ${
-                      selectedCalorieLevel === item
-                        ? "text-[color:var(--highlightColor1)] "
-                        : ""
-                    }`}
-                  >
-                    {item}
-                    <br />
-                    {calorieNumberList[index] <= 700 ? (
-                      <span className="text-sm">
-                        (~{calorieNumberList[index]}kcal)
-                      </span>
-                    ) : (
-                      <span className="text-sm">
-                        ({calorieNumberList[index] - 1}kcal 이상)
-                      </span>
-                    )}
-                  </div>
-                </>
-              );
-            })}
+            <div className="bg-[color:var(--borderColor2)] w-1 h-8 ml-4 mr-8"></div>
+            <div className="flex items-center gap-4">
+              {calorieList.map((item, index) => {
+                return (
+                  <>
+                    <div
+                      key={index}
+                      onClick={() =>
+                        handleCalorieCategoryClick(
+                          item,
+                          calorieNumberList[index]
+                        )
+                      }
+                      className={`text-md pl-4 pr-4 text-center cursor-pointer ${
+                        selectedCalorieLevel === item
+                          ? "text-[color:var(--highlightColor1)] "
+                          : ""
+                      }`}
+                    >
+                      {item}
+                      <br />
+                      {calorieNumberList[index] <= 700 ? (
+                        <span className="text-sm">
+                          (~{calorieNumberList[index]}kcal)
+                        </span>
+                      ) : (
+                        <span className="text-sm">
+                          ({calorieNumberList[index] - 1}kcal 이상)
+                        </span>
+                      )}
+                    </div>
+                  </>
+                );
+              })}
+            </div>
           </div>
         </div>
-        <div className="mt-16 flex flex-col items-center">
+        <div className="mt-16 flex flex-col items-center min-w-[1048px]">
           {searchKeyword === "All" ? (
-            <div className="font-bold text-2xl mb-10">
-              <span className="">카테고리 탭을 이용하여 어쩌고 해보세용</span>
+            <div className="text-2xl mb-10 text-center">
+              <span className="">전체 레시피</span>
+              <br />
+              {!selectedFood && !selectedCalorieLevel && (
+                <div className="text-sm font-light text-center mt-3">
+                  카테고리 탭을 활용해 원하는 레시피를 찾아보세요.
+                </div>
+              )}
             </div>
           ) : (
             <div className="font-bold text-2xl mb-10">
