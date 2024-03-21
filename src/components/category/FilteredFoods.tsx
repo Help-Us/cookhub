@@ -3,7 +3,7 @@
 import { RecipeType } from "@/types";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import logoImage from "../../assets/images/Cookhub_Logo.png.png";
+import logoImage from "../../assets/images/Cookhub_Logo.png";
 import { useRouter } from "next/navigation";
 
 const FilteredFoods = ({
