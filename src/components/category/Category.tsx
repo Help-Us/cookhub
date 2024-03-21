@@ -15,9 +15,6 @@ const Category = ({
   filteredRecipes: RecipeType[] | null;
   searchKeyword: string | null;
 }) => {
-  //   console.log(filteredRecipes);
-  useEffect(() => {}, []);
-
   const foodList = ["밥", "반찬", "국&찌개", "후식"];
   const calorieList = [
     "다이어트",
@@ -28,7 +25,7 @@ const Category = ({
   ];
   const calorieNumberList = [100, 250, 350, 450, 500];
 
-  const [selectedFood, setSelectedFood] = useState(""); // 초기값은 선택되지 않음을 의미
+  const [selectedFood, setSelectedFood] = useState("");
   const [selectedCalorieLevel, setSelectedCalorieLevel] = useState("");
   const [selectedCalorieNumberLevel, setSelectedCalorieNumberLevel] =
     useState(0);
