@@ -12,7 +12,7 @@ const Cooking = ({ manualIMG1, manualIMG2, manualIMG3, manualIMG4, manualIMG5, m
                         src={manualIMG1}
                         alt="step image"
                         width={200}
-                        height={10}
+                        height={100}
                         className=""
                     />
                     <div className="flex-col">
