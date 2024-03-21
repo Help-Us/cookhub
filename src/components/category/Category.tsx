@@ -14,14 +14,8 @@ const Category = ({
   searchKeyword: string | null;
 }) => {
   const foodList = ["밥", "반찬", "국&찌개", "후식"];
-  const calorieList = [
-    "다이어트",
-    "간단 한끼",
-    "일반식",
-    "푸짐하게",
-    "오늘만 산다"
-  ];
-  const calorieNumberList = [100, 250, 350, 450, 500];
+  const calorieList = ["다이어트", "일반식", "푸짐하게", "오늘만 산다"];
+  const calorieNumberList = [200, 400, 700, 701];
 
   const [selectedFood, setSelectedFood] = useState("");
   const [selectedCalorieLevel, setSelectedCalorieLevel] = useState("");
@@ -101,9 +95,15 @@ const Category = ({
                   >
                     {item}
                     <br />
-                    <span className="text-sm">
-                      (~{calorieNumberList[index]}kcal)
-                    </span>
+                    {calorieNumberList[index] <= 700 ? (
+                      <span className="text-sm">
+                        (~{calorieNumberList[index]}kcal)
+                      </span>
+                    ) : (
+                      <span className="text-sm">
+                        ({calorieNumberList[index] - 1}kcal 이상)
+                      </span>
+                    )}
                   </div>
                 </>
               );
