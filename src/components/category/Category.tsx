@@ -123,7 +123,7 @@ const Category = ({
         </div>
         <div className="mt-16 flex flex-col items-center min-w-[1048px]">
           {searchKeyword === "All" ? (
-            <div className="text-2xl mb-10 text-center">
+            <div className="text-2xl mb-8 text-center">
               <span className="">전체 레시피</span>
               <br />
               {!selectedFood && !selectedCalorieLevel && (
