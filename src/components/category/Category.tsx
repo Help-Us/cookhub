@@ -4,8 +4,6 @@ import FilteredFoods from "@/components/category/FilteredFoods";
 
 import SearchBox from "@/components/layout/SearchBox";
 import { RecipeType } from "@/types";
-import { createClient } from "@/utils/supabase/server";
-import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Category = ({
