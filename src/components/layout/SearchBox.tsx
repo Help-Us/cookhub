@@ -14,15 +14,17 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       onSearch(input);
-      router.push(`/category/${input}`);
+      router.push(`/category/${input.trim() ? input : "All"}`);
     }
   };
 
   return (
     <>
       <div className="bg-[color:var(--baseColor)] w-screen">
-        <div className="w-full max-w-4xl py-8 mx-auto mt-0">
-          <h1 className="text-2xl font-bold mb-4 text-brown text-center">레시피를 검색해주세요</h1>
+        <div className="w-full max-w-4xl py-12 mx-auto mt-0">
+          <h1 className="text-2xl font-bold mb-6 text-brown text-center">
+            레시피를 검색해보세요!
+          </h1>
           <div className="flex items-center gap-2 justify-center relative">
             <input
               type="text"
@@ -33,7 +35,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
               onKeyDown={handleKeyPress}
             />
             <div className="w-8 cursor-pointer">
-              <img src='https://cdn-icons-png.flaticon.com/512/2866/2866321.png'/>
+              <img src="https://cdn-icons-png.flaticon.com/512/2866/2866321.png" />
             </div>
           </div>
         </div>
