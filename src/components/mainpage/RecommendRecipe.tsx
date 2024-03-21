@@ -25,16 +25,16 @@ const RecommendedRecipe: React.FC<RecommendedRecipesProps> = ({ recipes, searche
         </div>
       ) : (
         // 검색 결과가 있을 때
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4 w-1200 mb-5">
           {recipes.map((recipe) => (
             <Link key={recipe.id} href={`/detail/${recipe.id}`} passHref>
-              <div className="card w-96 bg-base-100 shadow-xl">
+              <div className="card w-96 bg-base-100 shadow-lg rounded-3xl border-2 border-[color:var(--subColor4)] cursor-pointer">
                 <div className="card-body">
-                  <h2 className="card-title">{recipe.name}</h2>
-                  <p className="line-clamp-2">{recipe.tip}</p>
-                  <div className='mb-2'>
-                    <div className="badge badge-ghost">{recipe.type}</div>
-                    <div className="badge badge-outline">{recipe.how}</div>
+                  <h1 className="text-center text-[color:var(--titleColor)] text-xl">{recipe.name}</h1>
+                  <p className="line-clamp-2 text-[color:var(--contentColor)]">{recipe.tip}</p>
+                  <div className='mb-2 flex gap-2 justify-center text-[color:var(--subColor5)]'>
+                    <div>#{recipe.type}</div>
+                    <div>#{recipe.how}</div>
                   </div>
                 </div>
                 {/* <figure>{recipe.image && <img src={recipe.image} alt="Recipe" style={{ width: '400px', height: '300px' }} className="w-full h-auto"/>}</figure> */}

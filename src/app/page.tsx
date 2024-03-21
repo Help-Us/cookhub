@@ -91,7 +91,7 @@ export default function Home() {
           <span className="loading loading-spinner loading-lg"></span>
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center min-h-screen">
+        <div className="flex flex-col items-center justify-center">
           <SearchBox onSearch={fetchRecipe} />
           {searched ? (
             <>
@@ -99,12 +99,12 @@ export default function Home() {
               <RecommendedRecipe recipes={recipes} searched={true}/>
             </>
           ) : (
-            <>
-              <h1 className='text-brown text-2xl font-bold text-left py-5'>스트랩 TOP 레시피</h1>
-              <p>데이터 들어 올 자리</p>
-              <h1 className='text-brown text-2xl font-bold text-left'>추천 레시피</h1>
+            <div className='w-1200'>
+              <h1 className='text-brown text-2xl text-left py-5'>스크랩 TOP 레시피</h1>
               <RecommendedRecipe recipes={recipes} searched={false}/>
-            </>
+              <h1 className='text-brown text-2xl text-left py-5'>추천 레시피</h1>
+              <RecommendedRecipe recipes={recipes} searched={false}/>
+            </div>
           )}
         </div>
       )}
