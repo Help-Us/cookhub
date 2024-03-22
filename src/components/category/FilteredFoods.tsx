@@ -109,13 +109,15 @@ const FilteredFoods = ({
               <div className="absolute text-sm top-36 right-4 rounded-full bg-[color:var(--subColor6)] w-11 h-11 flex items-center justify-center leading-5 text-white">
                 인기
               </div> */}
-              {item.RCP_IMG_SMALL ? (
+              {item.RCP_IMG_SMALL || item.RCP_IMG_BIG ? (
                 <Image
                   width={256}
                   height={176}
                   alt="Recipe Thumbnail Image"
                   className="w-64 h-44 object-cover object-center"
-                  src={item.RCP_IMG_SMALL ? item.RCP_IMG_SMALL : ""}
+                  src={
+                    item.RCP_IMG_SMALL ? item.RCP_IMG_SMALL : item.RCP_IMG_BIG
+                  }
                   quality={100}
                   placeholder="blur"
                   blurDataURL="https://colorate.azurewebsites.net/SwatchColor/E2E2E2"
