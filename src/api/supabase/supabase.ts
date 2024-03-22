@@ -88,6 +88,8 @@ export const scrapRecipe = async (
     console.log("스크랩 인서트 오류", error);
   }
 
+  console.log("스크랩 추가");
+
   return data;
 };
 
@@ -130,4 +132,5 @@ export const cancelScrapRecipe = async (
   if (error) {
     console.log("스크랩 취소 오류", error);
   }
+  console.log("스크랩 취소");
 };
