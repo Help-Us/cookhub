@@ -28,7 +28,7 @@ const DetailPage = ({ params }: { params: { id: string } }) => {
     fetchData();
   }, [id]); // 의존성 배열에 id를 추가하여 id가 변경될 때마다 fetchData를 호출
 
-  console.log("현재 아이디는", id);
+  //   console.log("현재 아이디는", id);
 
   return (
     <main className="flex flex-col items-center">
@@ -44,7 +44,6 @@ const DetailPage = ({ params }: { params: { id: string } }) => {
           />
         </div>
       )}
-
       {cookrcp && (
         <div className="flex">
           <div className="mr-5">
@@ -68,7 +67,6 @@ const DetailPage = ({ params }: { params: { id: string } }) => {
           </div>
         </div>
       )}
-
       <div className="flex ml-5">
         <Comments />
       </div>
