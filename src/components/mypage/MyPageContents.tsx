@@ -117,88 +117,89 @@ export default function MyPageContents() {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <section className="section-base-color flex flex-col justify-center pr-10 pl-10 py-16 rounded-3xl shadow-xl border-line shadow-[#E0C3AE]">
-      <h2 className="header-font-color text-center mb-20 text-3xl ">프로필</h2>
+    <>
+      <section className="section-base-color block w-[1000px] h-[1200px] justify-center flex-nowrap p-16 rounded-3xl shadow-xl border-line shadow-[#E0C3AE]">
+        <h2 className="header-font-color text-center my-20 text-3xl">프로필</h2>
 
-      <div className="flex justify-center gap-5 mb-10">
-        <form onSubmit={onSubmitHandler} className="p-4 content-font-color">
-          <div className="flex flex-col align-center mb-5">
-            {/* 아바타 */}
-            <Image
-              // src={defaultImg}
-              src={avatar || defaultImg}
-              alt="프로필 사진"
-              width={300}
-              height={300}
-            />
-          </div>
+        <div className="flex mb-10 place-content-center">
+          <form
+            onSubmit={onSubmitHandler}
+            className="p-4 content-font-color flex justify-between "
+          >
+            <div className="flex align-center mb-5 px-12">
+              {/* 아바타 */}
+              <Image
+                src={avatar || defaultImg}
+                alt="프로필 사진"
+                width={320}
+                height={320}
+                className="rounded-full border-4 border-solid shadow-lg border-[#E6A4B4] shadow-[#B6856A]"
+              />
+            </div>
 
-          <div className="text-xl mt-3 mb-5">
-            {isEditing ? (
-              <>
-                <p className="mb-5">Email: {userInfo?.[0].email}</p>
-                <input
-                  type="text"
-                  id="nickname"
-                  maxLength={10}
-                  onChange={onChangeNicknameHandler}
-                />
-              </>
-            ) : (
-              <div className="text-xl mb-7">
-                <p className="mb-5">Email: {userInfo?.[0].email}</p>
-                <div>Nickname: {userInfo?.[0].nickname}</div>
-                <div>{nickname}</div>
-              </div>
-            )}
-          </div>
+            <div className="flex flex-col text-xl mt-3 mb-5 px-12 ">
+              {isEditing ? (
+                <>
+                  <p className="mb-5">Email: {userInfo?.[0].email}</p>
+                  <input
+                    type="text"
+                    id="nickname"
+                    maxLength={10}
+                    onChange={onChangeNicknameHandler}
+                  />
+                  <div className="flex flex-col mt-3 ">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      ref={imgRef}
+                      onChange={(e) => handleUploadImg(e)}
+                      // onChange={(e) => onChangeImgHandler(e.target.value) imgReader(); }
+                    />
+                    <button
+                      type="submit" // 폼 제출
+                      className="profile-btn w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                    >
+                      수정완료
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setIsEditing(false)} // 수정 종료
+                      className="profile-btn w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
+                    >
+                      취소
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div className="mb-7">
+                  <p className="text-2xl mb-7">Email: {userInfo?.[0].email}</p>
+                  <div className="text-2xl mb-10">
+                    Nickname: {userInfo?.[0].nickname}
+                  </div>
+                  <div>{nickname}</div>
 
-          <div>
-            {/* <button className=" w-full px-3 py-2 mt-3 text-white bg-yellow-500 rounded-md hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">
-              프로필 사진 변경 완료
-            </button> */}
-            {isEditing ? (
-              <div className="flex flex-col mt-3">
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={imgRef}
-                  onChange={(e) => handleUploadImg(e)}
-                  // onChange={(e) => onChangeImgHandler(e.target.value) imgReader(); }
-                />
-                <button
-                  type="submit" // 폼 제출
-                  className="profile-btn w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                >
-                  수정완료
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsEditing(false)} // 수정 종료
-                  className="profile-btn w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
-                >
-                  취소
-                </button>
-              </div>
-            ) : (
-              <div className="flex flex-col mt-3">
-                <button
-                  type="button"
-                  onClick={() => setIsEditing(true)} // 수정 모드로 전환
-                  className="profile-btn w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
-                >
-                  수정하기
-                </button>
-                <button className="profile-btn w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">
-                  로그아웃
-                </button>
-              </div>
-            )}
-          </div>
-        </form>
-      </div>
+                  <div className="flex flex-col mt-3">
+                    <button
+                      type="button"
+                      onClick={() => setIsEditing(true)} // 수정 모드로 전환
+                      className="profile-btn w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
+                    >
+                      수정하기
+                    </button>
+                    <button className="profile-btn w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">
+                      로그아웃
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </form>
+        </div>
 
-      <MyPageScrap />
-    </section>
+        <div className="flex flex-col mt-40">
+          <MyPageScrap />
+        </div>
+      </section>
+    </>
   );
 }
