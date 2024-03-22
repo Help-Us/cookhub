@@ -96,9 +96,11 @@ const Cooking = ({ manualIMG1, manualIMG2, manualIMG3, manualIMG4, manualIMG5, m
                     </div>
                 </div>
             )}
-            <div className="mt-12">
-                <p className="text-lg font-semibold">요리 TIP❗️{tip}</p>
-            </div>
+            {tip && (
+                <div className="mt-12">
+                    <p className="text-lg font-semibold">요리 TIP❗️{tip}</p>
+                </div>
+            )}
         </div>
     );
 }
