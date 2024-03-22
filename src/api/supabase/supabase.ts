@@ -75,3 +75,13 @@ export const filterData = async (searchKeyword: string | null) => {
 
   return cookrcp;
 };
+
+export const scrapRecipe = async (userId: string, recipeId: string) => {
+  const { data, error } = await supabase
+    .from("scrap")
+    .insert([{ user_id: userId, recipe_id: recipeId }]);
+
+  if (error) {
+    console.log("스크랩 인서트 오류", error);
+  }
+};

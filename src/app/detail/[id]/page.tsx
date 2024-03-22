@@ -64,7 +64,7 @@ const DetailPage = ({ params }: { params: { id: string } }) => {
               kcal={cookrcp.INFO_CAR}
               na={cookrcp.INFO_NA}
             />
-            <Scrap />
+            <Scrap recipeId={id} />
           </div>
         </div>
       )}
