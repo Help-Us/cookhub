@@ -1,4 +1,4 @@
-# [Help-Us project]
+# Help-Us project
 ---
 
 <br>
@@ -87,5 +87,4 @@ CookHub는 다음과 같은 특징을 가지고 있습니다.
 
 ---
 ## 🔍 [Notion](https://teamsparta.notion.site/9-a92aa793f6a9454d88d5a6acef0fb9a4)
-<br>
 ### 💖 이 프로젝트를 방문해주셔서 감사합니다.
