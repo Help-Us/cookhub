@@ -29,7 +29,7 @@ const DetailPage = ({ params }: { params: { id: string } }) => {
 
 
     return (
-        <main className="flex flex-col items-center">
+        <main className="flex flex-col items-center mt-14">
             {cookrcp && (
                 <div className="mb-10">
                     <Image
