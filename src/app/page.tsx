@@ -34,13 +34,11 @@ export default function Home() {
   const fetchTopScrappedRecipes = async () => {
     try {
       setIsLoading(true);
-      const { data: recipesData, error } = await supabase
-        .from('cookrcp')
-        .select('RCP_ID, RCP_WAY, RCP_TYPE, RCP_IMG_BIG, RCP_NAME, RCP_TIP')
-        .order('scrap_count', { ascending: false }) // 스크랩 수에 따라 내림차순 정렬
-        .limit(6); // 상위 6개만 가져옴
+        const { data: recipesData, error } = await supabase
+            .from('cookrcp') // Supabase 테이블
+            .select('RCP_ID, RCP_WAY, RCP_TYPE, RCP_IMG_BIG, RCP_NAME, RCP_TIP')
 
-      if (error) throw error;
+        if (error) throw error;
 
       // 데이터 변환
       const formattedData = recipesData.map(recipe => ({
@@ -52,7 +50,8 @@ export default function Home() {
         tip: recipe.RCP_TIP,
       }));
 
-      setTopScrappedRecipes(formattedData); // 상태 업데이트
+      const randomRecipes = formattedData.sort(() => 0.5 - Math.random()).slice(0, 3);
+      setTopScrappedRecipes(randomRecipes); // 상태 업데이트
     } catch (error) {
       console.error("Failed to fetch top scrapped recipes:", error);
     } finally {
@@ -93,13 +92,13 @@ export default function Home() {
     <>
       {isLoading ? (
         <div className="flex justify-center items-center min-h-screen">
-          <span className="loading loading-spinner loading-lg"></span>
+          <span className="loading loading-infinity loading-lg"></span>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center">
           <SearchBox onSearch={onSearch}/>
           <div className='w-1200'>
-              <h1 className='text-brown text-2xl text-left py-5'>스크랩 TOP 레시피</h1>
+              <h1 className='text-brown text-2xl text-left py-5'>스크랩 TOP3 레시피</h1>
               <ClippingRecipe recipes={topScrappedRecipes}/>
               <h1 className='text-brown text-2xl text-left py-5'>추천 레시피</h1>
               <RecommendedRecipe recipes={recipes}/>
