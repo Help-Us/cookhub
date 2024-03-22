@@ -48,7 +48,7 @@ CookHub는 다음과 같은 특징을 가지고 있습니다.
 
 ## 💻 개발 환경
 ### 🚀  Stacks
-![HTML5](https://img.shields.io/badge/html5-E34F26?style=plastic&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css-1572B6?style=plastic&logo=css3&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=plastic&logo=typescript&logoColor=white) ![React](https://img.shields.io/badge/React-444444?style=plastic&logo=react&logoColor=61DAFB)
+![HTML5](https://img.shields.io/badge/html5-E34F26?style=plastic&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css-1572B6?style=plastic&logo=css3&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=plastic&logo=typescript&logoColor=white) ![React](https://img.shields.io/badge/React-61DAFB?style=plastic&logo=react&logoColor=000000)
 
 ### 🛠  Tools
 ![Figma](https://img.shields.io/badge/Figma-F24E1E?style=plastic&logo=figma&logoColor=white) ![Git](https://img.shields.io/badge/Git-F05032?style=plastic&logo=git&logoColor=white)
