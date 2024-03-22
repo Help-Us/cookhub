@@ -34,6 +34,18 @@ CookHub는 다음과 같은 특징을 가지고 있습니다.
 
 <br>
 
+## 🕺🏻 팀원 소개
+
+|                  **조진훈**                  |             **정보연**             |                 **이지은**                 |               **임혜린**                |                **서지원**                |
+| :------------------------------------------: | :--------------------------------: | :----------------------------------------: | :-------------------------------------: | :--------------------------------------: |
+| ![조진훈](https://github.com/G-NooN.png) | ![정보연](https://github.com/developeryeon.png) | ![이지은](https://github.com/leejieun2023.png) | ![임혜린](https://github.com/limhyerin.png) | ![서지원](https://github.com/seopport.png) |
+| [@G-NooN](https://github.com/G-NooN) | [@developeryeon](https://github.com/developeryeon) | [@leejieun2023](https://github.com/leejieun2023) | [@Hyerin](https://github.com/limhyerin) | [@seopport](https://github.com/seopport) |
+|                     팀장                     |                팀원                |                    팀원                    |                  팀원                   |                   팀원                   |
+|                   Frontend                   |              Frontend              |                  Frontend                  |                Frontend                 |                 Frontend                 |
+
+
+<br>
+
 ## 💻 개발 환경
 ### 🚀  Stacks
 ![HTML5](https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white) ![React](https://img.shields.io/badge/React-444444?style=for-the-badge&logo=react&logoColor=61DAFB)
@@ -46,6 +58,29 @@ CookHub는 다음과 같은 특징을 가지고 있습니다.
 
 ### 📂 Packages & Libraries
 ![Yarn](https://img.shields.io/badge/Yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white) ![React Query](https://img.shields.io/badge/React_Query-FF4154?style=for-the-badge&logo=react-query&logoColor=white) ![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white) ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+
+<br>
+
+
+## 🗒️ 구현 항목
+
+### 🏷️ 로그인 페이지
+
+<br>
+
+### 🏷️ 회원가입 페이지
+
+<br>
+
+### 🏷️ 메인 페이지
+
+<br>
+
+### 🏷️ 카테고리별 페이지
+
+<br>
+
+### 🏷️ 레시피 상세 페이지
 
 <br>
 
