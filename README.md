@@ -59,8 +59,8 @@ CookHub는 다음과 같은 특징을 가지고 있습니다.
 
 ### 📂 Packages & Libraries
 ![Yarn](https://img.shields.io/badge/Yarn-2C8EBB?style=plastic&logo=yarn&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=plastic&logo=tailwind-css&logoColor=white) ![React Query](https://img.shields.io/badge/React_Query-FF4154?style=plastic&logo=react-query&logoColor=white) ![Next.js](https://img.shields.io/badge/Next.js-000000?style=plastic&logo=next.js&logoColor=white) ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=plastic&logo=supabase&logoColor=white) ![Zustand](https://img.shields.io/badge/Zustand-764ABC?style=plastic&logo=react&logoColor=white)
-<br>
 
+<br>
 
 ## 🗒️ 구현 항목
 
