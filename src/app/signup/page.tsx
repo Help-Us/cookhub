@@ -21,26 +21,37 @@ const SignupPage = () => {
   const signUpHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { data: signupUserInfo, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          nickname,
-          avatar_img: defaultImage
+    try {
+      const { data: signupUserInfo, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            nickname,
+            avatar_img: defaultImage
+          }
         }
-      }
-    });
+      });
 
-    if (error) {
-      console.log(error);
-      alert("회원가입 오류가 발생했습니다.");
-    } else {
-      //NOTE - 회원가입 결과 TEST
-      console.log("signupUserInfo", signupUserInfo);
+      if (error) {
+        if (error.name === "AuthWeakPasswordError") {
+          console.log(error.message);
+          alert("숫자와 영문자를 각각 최소 1자 이상 사용하세요.");
+        } else {
+          alert("회원가입 오류가 발생했습니다.");
+        }
+      } else {
+        //NOTE - 회원가입 결과 출력
+        console.log("회원가입한 유저 정보 => ", signupUserInfo);
+        alert("회원가입이 완료되었습니다.");
+      }
+    } catch (error) {
+      console.log("try-catch error => ", error);
+    } finally {
       setEmail("");
       setPassword("");
       setNickname("");
+      router.replace("/login");
     }
   };
   return (
@@ -57,7 +68,8 @@ const SignupPage = () => {
           <input
             className="input-style"
             type="text"
-            placeholder="닉네임"
+            placeholder="닉네임(최대 10자)"
+            maxLength={10}
             required
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
@@ -73,7 +85,8 @@ const SignupPage = () => {
           <input
             className="input-style"
             type="password"
-            placeholder="비밀번호"
+            placeholder="비밀번호(6자 이상, 숫자/영문자 최소 1자 이상)"
+            minLength={6}
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
