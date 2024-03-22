@@ -30,16 +30,23 @@ export default function Home() {
     fetchInitialRecipes(); // 마운트될 때, 추천 레시피 불러옴
   }, []);
 
-  // 스크랩 TOP 레시피 목록
+  // 스크랩 TOP 레시피 목록을 가져오는 함수
   const fetchTopScrappedRecipes = async () => {
     try {
       setIsLoading(true);
-        const { data: recipesData, error } = await supabase
-            .from('cookrcp') // Supabase 테이블
-            .select('RCP_ID, RCP_WAY, RCP_TYPE, RCP_IMG_BIG, RCP_NAME, RCP_TIP')
-
-        if (error) throw error;
-
+      // Supabase 함수 호출을 통해 상위 3개의 recipe_id와 갯수를 가져옵니다.
+      const { data: scrappedData, error: scrappedError } = await supabase
+        .rpc('get_top_scrapped_recipes')
+  
+      if (scrappedError) throw scrappedError;
+  
+      // 가져온 recipe_id를 기반으로 cookrcp 테이블에서 해당 레시피 정보를 가져옵니다.
+      const { data: recipesData, error: recipesError } = await supabase
+        .from('cookrcp')
+        .select('RCP_ID, RCP_WAY, RCP_TYPE, RCP_IMG_BIG, RCP_NAME')
+        .in('RCP_ID', scrappedData.map((item: { recipe_id: number; count: number }) => item.recipe_id))  
+      if (recipesError) throw recipesError;
+  
       // 데이터 변환
       const formattedData = recipesData.map(recipe => ({
         id: recipe.RCP_ID,
@@ -47,17 +54,16 @@ export default function Home() {
         name: recipe.RCP_NAME,
         type: recipe.RCP_TYPE,
         how: recipe.RCP_WAY,
-        tip: recipe.RCP_TIP,
       }));
-
-      const randomRecipes = formattedData.sort(() => 0.5 - Math.random()).slice(0, 3);
-      setTopScrappedRecipes(randomRecipes); // 상태 업데이트
+  
+      setTopScrappedRecipes(formattedData); // 상태 업데이트
     } catch (error) {
       console.error("Failed to fetch top scrapped recipes:", error);
     } finally {
       setIsLoading(false); // API 호출 완료 후 로딩 종료
     }
   };
+  
 
   // 추천 레시피 목록
   const fetchInitialRecipes = async () => {
