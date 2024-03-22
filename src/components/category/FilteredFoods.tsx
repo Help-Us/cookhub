@@ -98,6 +98,7 @@ const FilteredFoods = ({
         {recipeList?.map((item) => {
           return (
             <div
+              key={item.RCP_ID}
               className="mb-8 cursor-pointer w-64 relative"
               onClick={() => router.push(`/detail/${item.RCP_ID}`)}
             >
