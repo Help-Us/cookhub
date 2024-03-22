@@ -84,4 +84,5 @@ CookHub는 다음과 같은 특징을 가지고 있습니다.
 
 <br>
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=BDBDC8&height=150&section=footer" />
+---
+💖 이 프로젝트를 방문해주셔서 감사합니다.
