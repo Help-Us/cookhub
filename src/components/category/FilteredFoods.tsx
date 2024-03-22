@@ -115,6 +115,9 @@ const FilteredFoods = ({
                   alt="Recipe Thumbnail Image"
                   className="w-64 h-44 object-cover object-center"
                   src={item.RCP_IMG_SMALL ? item.RCP_IMG_SMALL : ""}
+                  quality={100}
+                  placeholder="blur"
+                  blurDataURL="https://colorate.azurewebsites.net/SwatchColor/E2E2E2"
                 />
               ) : (
                 <Image
