@@ -6,7 +6,7 @@ import {
   updateTargetUserNickname,
   uploadImage
 } from "@/api/supabase/supabase";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 import MyPageScrap from "./MyPageScrap";
 import Image from "next/image";
 import "../styles/style.css";
@@ -64,6 +64,27 @@ export default function MyPageContents() {
         setAvatar(reader.result as string);
       };
       setUploadFile(imgRef.current.files[0]);
+    }
+  };
+
+  // 이미지 storage에 넣기!!
+  const handleUploadImg = async (e: ChangeEvent<HTMLInputElement>) => {
+    let file;
+
+    if (e.target.files) {
+      file = e.target.files[0];
+      // 이미지 미리보기
+      imgReader();
+    }
+
+    const { data, error } = await supabase.storage
+      .from("avatars")
+      .upload(`${userData?.[0].uid}/` + file?.name, file as File);
+    //  유저의 email or uid로 폴더를 만들어서 이미지를 저장 (확인 O)
+    if (data) {
+      console.log(data);
+    } else if (error) {
+      console.log(error);
     }
   };
 
@@ -142,7 +163,7 @@ export default function MyPageContents() {
                   type="file"
                   accept="image/*"
                   ref={imgRef}
-                  onChange={imgReader}
+                  onChange={(e) => handleUploadImg(e)}
                   // onChange={(e) => onChangeImgHandler(e.target.value) imgReader(); }
                 />
                 <button
