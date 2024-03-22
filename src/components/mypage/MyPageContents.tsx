@@ -3,8 +3,7 @@
 import {
   getSelectUserInfo,
   supabase,
-  updateTargetUserNickname,
-  uploadImage
+  updateTargetUserNickname
 } from "@/api/supabase/supabase";
 import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 import MyPageScrap from "./MyPageScrap";
@@ -27,7 +26,7 @@ export default function MyPageContents() {
   const [uploadFile, setUploadFile] = useState<File | null>(null); // 여기에 defaultImg를 넣어줘야할듯
   const [fileURL, setFileURL] = useState<string | null>(null); // 업로드된 파일 URL
 
-  // 첫렌더링
+  // 첫 렌더링
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -77,6 +76,7 @@ export default function MyPageContents() {
       imgReader();
     }
 
+    // 프로필 이미지 업데이트
     const { data, error } = await supabase.storage
       .from("avatars")
       .upload(`${userData?.[0].uid}/` + file?.name, file as File);
