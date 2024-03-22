@@ -36,12 +36,15 @@ CookHub는 다음과 같은 특징을 가지고 있습니다.
 
 ## 💻 개발 환경
 ### 🚀  Stacks
-
-
+![HTML5](https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 
 ### 🛠  Tools
 
 
+### 👥  Collaboration
+
+
+### 📂 Packages & Libraries
 <br>
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=BDBDC8&height=150&section=footer" />
