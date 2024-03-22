@@ -74,7 +74,7 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
         className="bg-[color:var(--subColor7)] cursor-pointer text-[color:var(--subColor8)] h-16 w-full mx-auto flex justify-center items-center rounded-lg shadow-[1px_4px_4px_0px_rgba(0,0,0,0.15)] border border-solid border-[color:var(--highlightColor1)]"
       >
         <p className="text-md mr-1 font-semibold flex items-center ">
-          {isScrapped ? "스크랩하기" : "스크랩된 레시피"}
+          {!isScrapped ? "스크랩하기" : "스크랩된 레시피"}
         </p>
         <IoBookmarkOutline size={18} />
       </div>
