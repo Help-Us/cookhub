@@ -3,7 +3,7 @@
 <br>
 
 ## 📌 프로젝트 명
-**CookHub 🌿**
+### **CookHub 🌿**
 
 
 <br>
