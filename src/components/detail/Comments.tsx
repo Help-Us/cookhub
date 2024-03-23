@@ -136,7 +136,7 @@ const Comments = ({ post_id }: { post_id: string }) => {
             </div>
             <div>
                 {comments.length > 0 ? (
-                    <div className="flex flex-col min-h-[300px] w-950 mt-5 rounded-3xl border-2 border-peach text-xl shadow-lg shadow-black-500">
+                    <div className="flex flex-col min-h-[300px] w-950 mt-5 pb-8 rounded-3xl border-2 border-peach text-xl shadow-lg shadow-black-500">
                         {comments.map((comment) => (
                             <div key={comment.comment_id} className="m-5 h-54">
                                 <div className="flex items-center mt-5">
@@ -152,7 +152,7 @@ const Comments = ({ post_id }: { post_id: string }) => {
                                 {editingCommentId === comment.comment_id ? (
                                     <div>
                                         <div className="p-4 border-2 rounded-br-lg m-5">
-                                            <input className="w-full text-xl" type="text" value={editText} onChange={(e) => setEditText(e.target.value)}/>
+                                            <input className="w-full text-xl" type="text" value={editText} onChange={(event) => setEditText(event.target.value)}/>
                                         </div>
                                         <div className="flex justify-end ml-10">
                                             <button className="mr-10" onClick={() => submitEditComment(comment.comment_id)}>수정 완료</button>

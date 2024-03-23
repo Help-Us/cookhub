@@ -220,7 +220,7 @@ export const updateComment = async (comment_id, user_id, newContent) => {
   // 사용자가 댓글 작성자와 동일할 경우, 댓글 내용 업데이트 진행
   const { error: updateError } = await supabase
     .from("comments")
-    .update({ content: newContent })
+    .update({ content: newContent, updated_at: new Date().toISOString() })
     .eq("comment_id", comment_id);
 
   if (updateError) {
