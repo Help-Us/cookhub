@@ -1,138 +1,231 @@
 "use client";
 
-import { getSelectUserInfo } from "@/api/supabase/supabase";
-import React, { useState, useRef, useEffect } from "react";
-import MyPageScrap from "./MyPageScrap";
-import Image from "next/image";
+import { supabase, updateUserInform } from "@/api/supabase/supabase";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import "../styles/style.css";
-import { UserDatabaseType } from "@/types";
-import MyPageImage from "./MyPageImage";
 import { useQuery } from "@tanstack/react-query";
+import { getCurrentLoginUserInfo } from "@/utils/supabase/checkLoginUser";
+import Image from "next/image";
+import MyPageUpload from "./MyPageUpload";
 
 export default function MyPageContents() {
-  const [userInfo, setUserInfo] = useState<UserDatabaseType[] | null>(null);
-  const [nickname, setNickname] = useState("");
-
-  const imgRef = useRef<HTMLInputElement>(null);
+  const defaultAvatarUrl = "https://ifh.cc/g/WDVwsQ.png"; // 비숑
+  // 로그인 확인
+  const [isLogin, setIsLogin] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
-  const [avatar, setAvatar] = useState(""); // 여기에 defaultImg를 넣어줘야할듯
-  const [uploadFile, setUploadFile] = useState<File>(); // 여기에 defaultImg를 넣어줘야할듯
+  const [nickname, setNickname] = useState("");
+  const [email, setEmail] = useState("");
+  // 이미지 URL
+  // const [avatarUrl, setAvatarUrl] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState("");
 
-  const [datas, setDatas] = useState();
-  // const { isLoading, isError } = useQuery("users");
+  const [userInfo, setUserInfo] = useState({
+    email: "",
+    avatarUrl: "",
+    nickname: ""
+  });
+  // 업로드된 파일 URL
+  const [imgFile, setImgFile] = useState<File | null>(null);
 
+  // 첫 렌더링
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getSelectUserInfo(); // 유저 정보를 가져와서 상태에 저장
-        setUserInfo(data);
-      } catch (error) {
-        console.error("유저 정보 가져오기 실패", error);
-      }
-    };
     fetchData();
   }, []);
 
-  // 아바타 이미지 등록
-  const onAddImgHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    if (uploadFile === null) {
-      return false;
-    }
+  const fetchData = async () => {
+    setIsLogin(true);
+    try {
+      const userFetchData = await getCurrentLoginUserInfo();
+      console.log(userFetchData);
+      console.log("아바타 이미지 ==>", userFetchData?.user_metadata.avatar_img);
 
-    const imgFile = event.target.files?.[0];
-    if (imgFile) {
-      setUploadFile(imgFile);
-      let img = URL.createObjectURL(imgFile);
-      setAvatar(img);
+      // 사용자의 프로필 이미지 URL
+      const user_avatar =
+        userFetchData?.user_metadata?.avatar_img || defaultAvatarUrl;
+      // 가져온 프로필 이미지 URL을 avatarUrl 상태에 저장
+      setAvatarUrl(user_avatar);
+
+      // userData 객체에서 email 값을 가져와서 상태에 설정
+      if (userFetchData && userFetchData.email) {
+        setEmail(userFetchData.email);
+      }
+
+      if (userFetchData && userFetchData?.user_metadata) {
+        const user_nickname = userFetchData.user_metadata.nickname;
+        const user_avatar = userFetchData.user_metadata.avatar_img;
+        setNickname(user_nickname);
+        setAvatarUrl(user_avatar);
+      }
+
+      let avatarUrl = "";
+
+      const avatarUrlData = await supabase.storage
+        .from("avatars")
+        .download(`${userFetchData?.id}/avatar.jpg`); ////
+      console.log("아바타 데이터", avatarUrlData?.data);
+
+      if (avatarUrlData.error) {
+        // 에러나면 디폴트 넣어줘
+        avatarUrl = defaultAvatarUrl; ////
+      } else {
+        avatarUrl = URL.createObjectURL(avatarUrlData?.data);
+      }
+      setAvatarUrl(avatarUrl);
+
+      const nickname = userFetchData?.user_metadata.nickname;
+      updateUserInform(nickname, avatarUrl);
+
+      console.log("업데이트 유저 인폼에 들어가는 => ", nickname, avatarUrl);
+    } catch (error) {
+      console.error("유저 정보 가져오기 실패", error);
+    } finally {
+      setIsLogin(false);
     }
   };
 
-  if (!userInfo) return <div>Loading...</div>;
+  const {
+    data: userData,
+    isLoading,
+    isError
+  } = useQuery({
+    queryKey: ["userData"],
+    queryFn: getCurrentLoginUserInfo
+  });
+
+  // console.log(userData);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error...</div>;
+
+  // 이미지 미리보기
+  const onChangeImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectFile = e.target.files?.[0];
+
+    if (selectFile) {
+      setImgFile(selectFile);
+      const imageUrl = URL.createObjectURL(selectFile);
+      console.log(imageUrl);
+      setAvatarUrl(imageUrl);
+    } else {
+      console.log("이미지를 선택해주세요!");
+    }
+  };
+
+  const uploadProfile = async () => {
+    try {
+      // 유저 정보
+      const userFetchData = await getCurrentLoginUserInfo();
+      console.log(
+        "업로드 유저 닉네임 정보 ",
+        userFetchData?.user_metadata.nickname
+      );
+      const userFetchId = userFetchData?.id;
+      console.log("업로드 유저 아이디 정보 ", userFetchId);
+
+      if (!imgFile && nickname === userFetchData?.user_metadata.nickname) {
+        return;
+      }
+
+      let newAvatarImg = avatarUrl;
+
+      // 이미지 파일 고르고 아바타에 덮어쓰기
+      if (imgFile) {
+        const { data, error } = await supabase.storage
+          .from("avatars")
+          .upload(`${userFetchId}/avatar.jpg`, imgFile!, {
+            upsert: true
+          });
+        console.log("data 이미지 파일 고르면", data);
+        if (error) {
+          console.error("아바타 업로드 실패ㅠㅠ", error);
+          return;
+        }
+        // 새로운 아바타 URL 저장
+        newAvatarImg = data?.path;
+        console.log("newAvatarImg", newAvatarImg);
+      }
+      setAvatarUrl(newAvatarImg);
+
+      const { error: nicknameError } = await supabase.auth.updateUser({
+        data: {
+          uid: userFetchId,
+          nickname: nickname
+        }
+      });
+
+      if (nicknameError) {
+        console.error("닉네임 업데이트 실패~~~~~", nicknameError);
+        return;
+      }
+
+      const { data: nicknameChangeResult, error: nicknameChangeError } =
+        await supabase
+          .from("loginUserList")
+          .update({ nickname: nickname })
+          .eq("uid", userFetchId)
+          .select();
+      console.log("닉네임 변경 결과 => ", nicknameChangeResult);
+
+      if (nicknameChangeError) {
+        console.log("닉네임 DB 수정 에러");
+        return;
+      }
+
+      setIsEditing(false);
+
+      fetchData();
+    } catch (error) {
+      console.error("프로필 업데이트 실패", error);
+    }
+  };
+
+  const onChangeNicknameHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
+  };
+
+  const handleUploadImg = async (e: ChangeEvent<HTMLInputElement>) => {
+    let file;
+
+    if (e.target.files) {
+      file = e.target.files[0];
+      // 이미지 미리보기
+      // onChangeImageHandler(e);
+    }
+
+    // 프로필 이미지 업데이트
+    const { data, error } = await supabase.storage
+      .from("avatars")
+      .upload(`${userData?.id}/` + file?.name, file as File);
+    //  유저의 email or uid로 폴더를 만들어서 이미지를 저장 (확인 O)
+    if (data) {
+      console.log(data);
+    } else if (error) {
+      console.log(error);
+    }
+  };
+
+  const onChangeEditingHandler = () => {
+    setIsEditing(!isEditing);
+  };
 
   return (
-    <section className="section-base-color flex flex-col justify-center pr-10 pl-10 py-16 rounded-3xl shadow-xl border-line shadow-[#E0C3AE]">
-      <h2 className="header-font-color text-center mb-20 text-3xl ">프로필</h2>
-
-      <div className="flex justify-center gap-5 mb-10">
-        <div className="flex flex-col align-center mb-5">
-          {/* 아바타 */}
-          <Image src={avatar} alt="프로필 사진" width={300} height={300} />
-          {/* 파일선택 */}
-          <input
-            type="file"
-            id="avatar"
-            accept="image/*"
-            onChange={onAddImgHandler}
+    <div>
+      {isLogin ? (
+        <div></div>
+      ) : (
+        <div>
+          <MyPageUpload
+            isEditing={isEditing}
+            onChangeEditingHandler={onChangeEditingHandler}
+            avatarUrl={avatarUrl}
+            nickname={nickname}
+            email={email}
+            uploadProfile={uploadProfile}
+            onChangeImageHandler={onChangeImageHandler}
+            onChangeNicknameHandler={onChangeNicknameHandler}
           />
         </div>
-
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            // 수정 완료 후 수정 종료
-            setIsEditing(false);
-          }}
-          className="p-4 content-font-color"
-        >
-          <div className="text-xl mt-3 mb-5">
-            {isEditing ? (
-              <input
-                type="text"
-                id="nickname"
-                maxLength={10}
-                value={nickname}
-                // onChange={onChangeImgHandler}
-              />
-            ) : (
-              <div></div>
-            )}
-          </div>
-
-          <div className="text-xl mb-7">
-            <p className="mb-5">Email: {userInfo[0].email}</p>
-            <p>Nickname: {userInfo[0].nickname}</p>
-          </div>
-
-          <div>
-            {/* <button className=" w-full px-3 py-2 mt-3 text-white bg-yellow-500 rounded-md hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">
-              프로필 사진 변경 완료
-            </button> */}
-            {!isEditing ? (
-              <div className="flex flex-col mt-3">
-                <button
-                  type="button"
-                  onClick={() => setIsEditing(true)} // 수정 모드로 전환
-                  className="profile-btn w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
-                >
-                  수정하기
-                </button>
-                <button className="profile-btn w-full pr-28 pl-28 py-2.5 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">
-                  로그아웃
-                </button>
-              </div>
-            ) : (
-              <div className="flex justify-between mt-3">
-                <button
-                  type="submit" // 폼 제출
-                  className="w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                >
-                  수정완료
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsEditing(false)} // 수정 종료
-                  className="w-full pr-28 pl-28 py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
-                >
-                  취소
-                </button>
-              </div>
-            )}
-          </div>
-        </form>
-      </div>
-
-      <MyPageScrap />
-    </section>
+      )}
+    </div>
   );
 }

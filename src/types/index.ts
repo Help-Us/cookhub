@@ -1,9 +1,10 @@
-export type UserProfile = {
+export interface UserDatabaseType {
   uid: string;
   nickname: string;
   email: string;
   avatar_img: string;
-};
+  id: string;
+}
 
 export type Recipe = {
   id: number;
@@ -14,18 +15,16 @@ export type Recipe = {
   tip?: string;
 };
 
-export interface UserDatabaseType {
-  uid: string;
-  nickname: string;
+export type ProfileDataType = {
+  isEditing: boolean;
+  avatarUrl: string;
   email: string;
-  avatar_img: string;
-  id: string;
-}
-
-export interface UserImageUrlType {
-  uploadedFileUrl: string[];
-  setUploadedFileUrl: React.Dispatch<React.SetStateAction<string[]>>;
-}
+  nickname: string;
+  onChangeEditingHandler: () => void;
+  onChangeNicknameHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  uploadProfile: () => Promise<void>;
+  onChangeImageHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
 export type RecipeType = {
   HASH_TAG: string;
