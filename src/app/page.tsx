@@ -31,48 +31,30 @@ export default function Home() {
   }, []);
 
   // 스크랩 TOP 레시피 목록을 가져오는 함수
+  // 스크랩 TOP 레시피 불러오는 함수
   const fetchTopScrappedRecipes = async () => {
     try {
-      setIsLoading(true);
-      // 스크랩 테이블에서 최신 순으로 recipe_id를 가져옵니다.
-      // 중복을 고려하여 더 많은 데이터를 가져옵니다.
-      const { data: scrapData, error: scrapError } = await supabase
-        .from('scrap')
-        .select('recipe_id, created_at')
-        .order('created_at', { ascending: false })
-        .limit(10); // 예시로 10개를 가져옵니다. 상황에 따라 조정이 필요할 수 있습니다.
-  
-      if (scrapError) throw scrapError;
-  
-      // 중복 제거 후 최신순으로 3개의 고유 recipe_id를 선택합니다.
-      const uniqueRecipeIds = Array.from(new Map(scrapData.map(item => [item.recipe_id, item])).values())
-        .slice(0, 3)
-        .map(item => item.recipe_id);
-  
-      // 가져온 recipe_id를 사용하여 cookrcp 테이블에서 해당 레시피 정보를 조회합니다.
-      const { data: recipesData, error: recipesError } = await supabase
-        .from('cookrcp')
+      const { data, error } = await supabase
+        .rpc('fetch_top_scrapped_recipes') // 이 부분은 나중에 SQL 함수를 만들어주어야 합니다.
         .select('RCP_ID, RCP_WAY, RCP_TYPE, RCP_IMG_BIG, RCP_NAME')
-        .in('RCP_ID', uniqueRecipeIds);
-  
-      if (recipesError) throw recipesError;
-  
+
+      if (error) throw error;
+
       // 데이터 변환
-      const formattedData = recipesData.map(recipe => ({
+      const formattedData = data.map(recipe => ({
         id: recipe.RCP_ID,
         image: recipe.RCP_IMG_BIG,
         name: recipe.RCP_NAME,
         type: recipe.RCP_TYPE,
         how: recipe.RCP_WAY,
       }));
-  
-      setTopScrappedRecipes(formattedData); // 상태 업데이트
+
+      setTopScrappedRecipes(formattedData);
     } catch (error) {
       console.error("Failed to fetch top scrapped recipes:", error);
-    } finally {
-      setIsLoading(false); // API 호출 완료 후 로딩 종료
     }
   };
+
 
   // 추천 레시피 목록
   const fetchInitialRecipes = async () => {
@@ -95,11 +77,11 @@ export default function Home() {
         }));
 
         const randomRecipes = formattedData.sort(() => 0.5 - Math.random()).slice(0, 6);
-        setRecipes(randomRecipes); // 상태 업데이트
+        setRecipes(randomRecipes);
     } catch (error) {
         console.error("Failed to fetch initial recipes:", error);
     } finally {
-        setIsLoading(false); // API 호출 완료 후 로딩 종료
+        setIsLoading(false); 
     }
   };
 
@@ -113,7 +95,7 @@ export default function Home() {
         <div className="flex flex-col items-center justify-center">
           <SearchBox onSearch={onSearch}/>
           <div className='w-1200'>
-              <h1 className='text-brown text-2xl text-left py-5'>최근 주목받는 레시피</h1>
+              <h1 className='text-brown text-2xl text-left py-5'>스크랩 TOP3 레시피</h1>
               <ClippingRecipe recipes={topScrappedRecipes}/>
               <h1 className='text-brown text-2xl text-left py-5'>추천 레시피</h1>
               <RecommendedRecipe recipes={recipes}/>
