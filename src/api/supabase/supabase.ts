@@ -94,7 +94,7 @@ export const addScrap = async ({
   console.log("스크랩 추가");
 };
 
-export const checkIsScrraped = async ({
+export const checkIsScrapped = async ({
   userId,
   recipeId
 }: {

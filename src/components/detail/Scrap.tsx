@@ -1,11 +1,12 @@
 "use client";
 
-import { checkIsScrraped } from "@/api/supabase/supabase";
+import { checkIsScrapped } from "@/api/supabase/supabase";
 import { QueryKeys } from "@/constants/QueryKeys";
 import {
   useAddScrapMutation,
   useCancelScrapMutation
 } from "@/hooks/mutateScrap";
+import { useCheckIsScrappedQuery } from "@/hooks/useQueryScrap";
 import { getCurrentLoginUserInfo } from "@/utils/supabase/checkLoginUser";
 import { User } from "@supabase/supabase-js";
 import { useQuery } from "@tanstack/react-query";
@@ -19,19 +20,11 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
   const cancelScrapMutation = useCancelScrapMutation();
 
   const [currentUserInfo, setCurrentUserInfo] = useState<User | null>();
-  // const [isScrapped, setIsScrapped] = useState<boolean>(false); // 스크랩 여부 상태 추가
   const userId = currentUserInfo?.id;
 
-  const {
-    data: isScrapped,
-    isLoading,
-    isError
-  } = useQuery({
-    queryKey: [QueryKeys.scrap],
-    queryFn: () => checkIsScrraped({ userId, recipeId })
-  });
+  const { data: isScrapped } = useCheckIsScrappedQuery({ userId, recipeId });
 
-  console.log(isScrapped);
+  console.log("현재스크랩 상태 : ", isScrapped);
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -42,7 +35,7 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
       if (currentLoginUserInfo) {
         // userId를 넣게되면 마운트될때 userId는 undefined이므로 함수 내에 있는 데이터인
         // currentLoginUserInfo의 id를 넣어주면 undefined가 나오지 않는다.
-        const isScrappedRecipe = await checkIsScrraped({
+        const isScrappedRecipe = await checkIsScrapped({
           userId: currentLoginUserInfo.id,
           recipeId
         });
@@ -59,7 +52,7 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
       return;
     }
 
-    const isScrappedRecipe = await checkIsScrraped({ userId, recipeId });
+    const isScrappedRecipe = await checkIsScrapped({ userId, recipeId });
 
     // 스크랩하지 않은 레시피일때
     if (!isScrappedRecipe) {
@@ -81,7 +74,7 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
   };
 
   const check = async () => {
-    const checkScrap = await checkIsScrraped({ userId, recipeId });
+    const checkScrap = await checkIsScrapped({ userId, recipeId });
     console.log(checkScrap);
   };
 
