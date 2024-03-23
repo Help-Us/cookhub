@@ -1,10 +1,10 @@
 "use client";
 
 import {
-  cancelScrapRecipe,
-  checkIsScrraped,
-  scrapRecipe
-} from "@/api/supabase/supabase";
+  useAddScrapMutation,
+  useCancelScrapMutation
+} from "@/hooks/mutateScrap";
+import { useCheckIsScrappedQuery } from "@/hooks/useQueryScrap";
 import { getCurrentLoginUserInfo } from "@/utils/supabase/checkLoginUser";
 import { User } from "@supabase/supabase-js";
 import React, { useEffect, useState } from "react";
@@ -13,79 +13,73 @@ import { IoBookmark } from "react-icons/io5";
 
 const Scrap = ({ recipeId }: { recipeId: string }) => {
   // 필요한거 유저아이디, 레시피아이디,
+  const addScrapMutation = useAddScrapMutation();
+  const cancelScrapMutation = useCancelScrapMutation();
 
   const [currentUserInfo, setCurrentUserInfo] = useState<User | null>();
-  const [isScrapped, setIsScrapped] = useState<boolean>(false); // 스크랩 여부 상태 추가
   const userId = currentUserInfo?.id;
-  // if (!userId) return;
+
+  // 스크랩 여부 체크
+  const { data: isScrapped, isLoading } = useCheckIsScrappedQuery({
+    userId,
+    recipeId
+  });
 
   useEffect(() => {
     const getUserInfo = async () => {
       const currentLoginUserInfo = await getCurrentLoginUserInfo();
       setCurrentUserInfo(currentLoginUserInfo);
-
-      if (currentLoginUserInfo) {
-        const isScrappedRecipe = await checkIsScrraped(
-          // userId를 넣게되면 마운트될때 userId는 undefined이므로 함수 내에 있는 데이터인
-          // currentLoginUserInfo의 id를 넣어주면 undefined가 나오지 않는다.
-          currentLoginUserInfo.id,
-          recipeId
-        );
-        setIsScrapped(isScrappedRecipe); // 스크랩 여부 업데이트
-      }
     };
 
     getUserInfo();
   }, []);
 
-  console.log(isScrapped);
-
   const handleScrapStatusToggle = async () => {
-    const isScrappedRecipe = await checkIsScrraped(userId, recipeId);
+    if (!userId) {
+      alert("로그인 정보가 유효하지 않습니다.");
+      return;
+    }
 
     // 스크랩하지 않은 레시피일때
-    if (!isScrappedRecipe) {
+    if (!isScrapped) {
       try {
-        await scrapRecipe(userId, recipeId);
+        addScrapMutation.mutate({ userId, recipeId });
       } catch (error) {
-        console.log("스크랩 인서트 오류", error);
+        alert("일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
       }
 
       //스크랩한 레시피일때
     } else {
       try {
-        await cancelScrapRecipe(userId, recipeId);
+        cancelScrapMutation.mutate({ userId, recipeId });
       } catch (error) {
-        console.log("스크랩 취소 오류", error);
+        alert("일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
       }
     }
-    console.log(userId, recipeId);
-  };
-
-  const check = async () => {
-    const checkScrap = await checkIsScrraped(userId, recipeId);
-    console.log(checkScrap);
   };
 
   return (
-    <>
-      <div
-        onClick={handleScrapStatusToggle}
-        className="bg-[color:var(--subColor7)] cursor-pointer text-[color:var(--subColor8)] h-16 w-full mx-auto flex justify-center items-center rounded-lg shadow-[1px_4px_4px_0px_rgba(0,0,0,0.15)] border border-solid border-[color:var(--highlightColor1)]"
-      >
-        <p className="text-md mr-1 font-semibold flex items-center ">
-          {!isScrapped ? "스크랩하기" : "스크랩된 레시피"}
-        </p>
-        <IoBookmarkOutline size={18} />
-      </div>
-      <div onClick={check}> 스크랩 체크</div>
-      <div className="bg-[color:var(--subColor4)] text-white h-16 w-full mx-auto flex justify-center items-center rounded-lg shadow-[1px_4px_4px_0px_rgba(0,0,0,0.15)] border border-solid border-[color:var(--highlightColor1)]">
-        <p className="text-md mr-1 font-semibold flex items-center ">
-          스크랩된 레시피
-        </p>
-        <IoBookmark size={18} />
-      </div>
-    </>
+    <div
+      onClick={handleScrapStatusToggle}
+      className={`${isScrapped ? "" : " hover:bg-[color:var(--subColor4)] hover:text-white"} 
+        transition duration-200 ease-in-out bg-[color:var(--subColor7)] text-[color:var(--subColor8)]
+        cursor-pointer  h-16 w-full mx-auto flex justify-center items-center rounded-lg shadow-[1px_4px_4px_0px_rgba(0,0,0,0.15)] border border-solid border-[color:var(--highlightColor1)]`}
+    >
+      {isLoading ? (
+        "스크랩 정보 로딩중"
+      ) : (
+        <>
+          <p className="font-semibold mr-0.5">
+            {!isScrapped ? "스크랩하기" : "스크랩된 레시피"}
+          </p>
+          {isScrapped ? (
+            <IoBookmark className="mt-0.5" size={18} />
+          ) : (
+            <IoBookmarkOutline className="mt-0.5" size={18} />
+          )}
+        </>
+      )}
+    </div>
   );
 };
 
