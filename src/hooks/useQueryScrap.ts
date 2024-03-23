@@ -20,11 +20,17 @@ export const useCheckIsScrappedQuery = ({
 export const usefilterRecipeQuery = ({
   searchKeyword
 }: {
-  searchKeyword: string | null;
+  searchKeyword: string;
 }) => {
-  return useQuery({
-    queryKey: [QueryKeys.scrap],
+  const {
+    data: filteredRecipes,
+    isError: isFilterError,
+    isLoading: isFilterLoading
+  } = useQuery({
+    queryKey: [QueryKeys.filterRecipe],
     queryFn: () => filterRecipe({ searchKeyword }),
     enabled: !!searchKeyword
   });
+
+  return { filteredRecipes, isFilterError, isFilterLoading };
 };

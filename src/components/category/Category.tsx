@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import SearchBox from "../layout/SearchBox";
 import { filterRecipe } from "@/api/supabase/supabase";
 
-const Category = ({ searchKeyword }: { searchKeyword: string | null }) => {
+const Category = ({ searchKeyword }: { searchKeyword: string }) => {
   const foodList = ["밥", "반찬", "국&찌개", "특별식", "후식"];
   const calorieList = ["다이어트", "일반식", "푸짐하게", "오늘만 산다"];
   const calorieNumberList = [200, 400, 700, 701];

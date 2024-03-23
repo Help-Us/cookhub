@@ -63,7 +63,7 @@ export const uploadImage = async (file: File, imagePath: string) => {
 export const filterRecipe = async ({
   searchKeyword
 }: {
-  searchKeyword: string | null;
+  searchKeyword: string;
 }) => {
   const { data: cookrcp, error }: PostgrestResponse<RecipeType> = await supabase
     .from("cookrcp")

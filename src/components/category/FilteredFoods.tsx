@@ -14,23 +14,20 @@ const FilteredFoods = ({
 }: {
   selectedFood: string;
   selectedCalorieNumberLevel: number;
-  searchKeyword: string | null;
+  searchKeyword: string;
 }) => {
   const router = useRouter();
   const [recipeList, setRecipeList] = useState<RecipeType[]>();
 
   // 레시피 불러오기
-  const {
-    isLoading,
-    data: filteredRecipes,
-    isError
-  } = usefilterRecipeQuery({ searchKeyword });
+  const { filteredRecipes, isFilterError, isFilterLoading } =
+    usefilterRecipeQuery({ searchKeyword });
 
   useEffect(() => {
     setRecipeList(categoryFilter());
   }, [selectedFood, selectedCalorieNumberLevel, filteredRecipes]);
 
-  if (isError) {
+  if (isFilterError) {
     alert(
       "레시피를 불러오는 도중 문제가 발생했습니다. 잠시 후 다시 시도해주세요."
     );
@@ -74,13 +71,16 @@ const FilteredFoods = ({
         : true;
       return filterByFood && filterByCalories;
     });
+
     return filterByCategoryRecipes;
   };
 
   return (
     <>
-      {isLoading && (
-        <span className="loading loading-infinity loading-lg mt-12"></span>
+      {isFilterLoading && (
+        <span className="loading loading-infinity loading-lg mt-12">
+          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        </span>
       )}
       <div className="flex w-full justify-between text-sm items-center mb-2">
         {recipeList && recipeList?.length >= 1000 ? (
