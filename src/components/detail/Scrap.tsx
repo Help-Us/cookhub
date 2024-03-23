@@ -61,16 +61,13 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
     console.log(userId, recipeId);
   };
 
-  const check = async () => {
-    const checkScrap = await checkIsScrapped({ userId, recipeId });
-    console.log(checkScrap);
-  };
-
   return (
     <>
       <div
         onClick={handleScrapStatusToggle}
-        className={`${isScrapped ? "bg-[color:var(--subColor4)] text-white" : "bg-[color:var(--subColor7)] text-[color:var(--subColor8)]"} cursor-pointer  h-16 w-full mx-auto flex justify-center items-center rounded-lg shadow-[1px_4px_4px_0px_rgba(0,0,0,0.15)] border border-solid border-[color:var(--highlightColor1)]`}
+        className={`${isScrapped ? "bg-[color:var(--subColor4)] text-white " : "bg-[color:var(--subColor7)] text-[color:var(--subColor8)] hover:bg-[color:var(--subColor4)] hover:text-white"} 
+        transition duration-200 ease-in-out
+        cursor-pointer  h-16 w-full mx-auto flex justify-center items-center rounded-lg shadow-[1px_4px_4px_0px_rgba(0,0,0,0.15)] border border-solid border-[color:var(--highlightColor1)]`}
       >
         <p className="text-md mr-1 font-semibold flex items-center ">
           {!isScrapped ? "스크랩하기" : "스크랩된 레시피"}
@@ -80,12 +77,6 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
         ) : (
           <IoBookmarkOutline size={18} />
         )}
-      </div>
-      <div onClick={check}> 스크랩 체크</div>
-      <div className="h-16 w-full mx-auto flex justify-center items-center rounded-lg shadow-[1px_4px_4px_0px_rgba(0,0,0,0.15)] border border-solid border-[color:var(--highlightColor1)]">
-        <p className="text-md mr-1 font-semibold flex items-center ">
-          스크랩된 레시피
-        </p>
       </div>
     </>
   );
