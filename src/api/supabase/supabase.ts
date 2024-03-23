@@ -60,7 +60,12 @@ export const uploadImage = async (file: File, imagePath: string) => {
   return data;
 };
 
-export const filterData = async (searchKeyword: string | null) => {
+export const filterRecipe = async ({
+  searchKeyword
+}: {
+  searchKeyword: string | null;
+}) => {
+  console.log(searchKeyword);
   const { data: cookrcp, error }: PostgrestResponse<RecipeType> = await supabase
     .from("cookrcp")
     .select("*")
@@ -144,7 +149,7 @@ export const addComment = async (
   const { data, error } = await supabase
     .from("comments") //
     .insert([
-      { 
+      {
         user_id: user_id, // 댓글을 작성한 사용자 ID
         post_id: post_id, // 댓글이 속한 게시물 ID
         content: content // 댓글 내용
@@ -157,7 +162,7 @@ export const addComment = async (
   }
 
   console.log("댓글 추가 성공");
-  console.log(user_id)
+  console.log(user_id);
   return data; // 성공 시 추가된 댓글의 데이터 반환
 };
 

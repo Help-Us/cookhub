@@ -5,27 +5,49 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import logoImage from "../../assets/images/Cookhub_Logo.png";
 import { useRouter } from "next/navigation";
+import { usefilterRecipeQuery } from "@/hooks/useQueryScrap";
 
 const FilteredFoods = ({
-  filteredRecipes,
   selectedFood,
-  selectedCalorieNumberLevel
+  selectedCalorieNumberLevel,
+  searchKeyword
 }: {
-  filteredRecipes: RecipeType[] | null;
   selectedFood: string;
   selectedCalorieNumberLevel: number;
+  searchKeyword: string | null;
 }) => {
   const router = useRouter();
-  //  const calorieNumberList = [200, 400, 700, 701];
-  const categoryFilter = () => {
-    if (!filteredRecipes) return null; // filteredRecipes가 undefined일 경우 null 반환
+  const [recipeList, setRecipeList] = useState<RecipeType[]>();
 
+  // 레시피 불러오기
+  const {
+    isLoading,
+    data: filteredRecipes,
+    isError
+  } = usefilterRecipeQuery({ searchKeyword });
+
+  useEffect(() => {
+    setRecipeList(categoryFilter());
+  }, [selectedFood, selectedCalorieNumberLevel, filteredRecipes]);
+
+  if (isError) {
+    alert(
+      "레시피를 불러오는 도중 문제가 발생했습니다. 잠시 후 다시 시도해주세요."
+    );
+
+    return;
+  }
+
+  // 카테고리 필터링 함수
+  const categoryFilter = () => {
+    // 요리 종류 필터링
     const filterFoodType = (item: RecipeType, selectedFood: string) => {
       if (selectedFood === "특별식") {
         return item.RCP_TYPE === "일품" || item.RCP_TYPE === "기타";
       } else return item.RCP_TYPE === selectedFood;
     };
 
+    // 칼로리 레벨 필터링
     const switchCaloriesLevel = (
       item: RecipeType,
       selectedCalorieNumberLevel: number
@@ -38,11 +60,11 @@ const FilteredFoods = ({
         case 700:
           return item.INFO_CAR > 400 && item.INFO_CAR <= 700;
         case 701:
-          return item.INFO_CAR > 700;
+          return item.INFO_CAR >= 700;
       }
     };
 
-    const filterByCategoryRecipes = filteredRecipes.filter((item) => {
+    const filterByCategoryRecipes = filteredRecipes?.filter((item) => {
       // 카테고리를 선택했으면 필터조건추가, 아니면 true로 필터링 조건 무시(모든 아이템이 통과)
       const filterByFood = selectedFood
         ? filterFoodType(item, selectedFood)
@@ -55,16 +77,11 @@ const FilteredFoods = ({
     return filterByCategoryRecipes;
   };
 
-  const [recipeList, setRecipeList] = useState<RecipeType[] | null>(
-    filteredRecipes
-  );
-
-  useEffect(() => {
-    setRecipeList(categoryFilter());
-  }, [selectedFood, selectedCalorieNumberLevel, filteredRecipes]);
-
   return (
     <>
+      {isLoading && (
+        <span className="loading loading-infinity loading-lg mt-12"></span>
+      )}
       <div className="flex w-full justify-between text-sm items-center mb-2">
         {recipeList && recipeList?.length >= 1000 ? (
           <div className="">
@@ -85,11 +102,8 @@ const FilteredFoods = ({
             </div>
           )
         )}
-        {/* <div className={`flex cursor-pointer  gap-4`}></div> */}
       </div>
-      {!filteredRecipes && (
-        <span className="loading loading-spinner loading-lg mt-12"></span>
-      )}
+
       {recipeList?.length === 0 && (
         <div className="w-full mt-12 text-center">검색결과가 없습니다.</div>
       )}
