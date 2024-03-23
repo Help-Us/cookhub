@@ -119,10 +119,10 @@ const FilteredFoods = ({
               {/* 추천, 인기 스티커 조건 추가 필 */}
               {/* <div className="absolute text-sm top-36 right-16 mr-1 rounded-full bg-[color:var(--highlightColor2)] w-11 h-11 flex items-center justify-center leading-5 text-white">
                 추천
-              </div>
-              <div className="absolute text-sm top-36 right-4 rounded-full bg-[color:var(--subColor6)] w-11 h-11 flex items-center justify-center leading-5 text-white">
-                인기
               </div> */}
+              <div className="absolute text-sm top-36 right-4 rounded-full bg-[color:var(--highlightColor2)] w-11 h-11 flex items-center justify-center leading-5 text-white">
+                인기
+              </div>
               {item.RCP_IMG_SMALL || item.RCP_IMG_BIG ? (
                 <Image
                   width={256}
@@ -147,14 +147,20 @@ const FilteredFoods = ({
               )}
 
               <div
-                className={`mt-1 ${item.RCP_NAME.length >= 13 ? "text-md" : "text-lg"} font-bold mt-4`}
+                className={`mt-3 ${item.RCP_NAME.length >= 13 ? "text-md" : "text-lg"} font-bold`}
               >
                 {item.RCP_NAME}
               </div>
-              <div className="flex text-sm text-gray-600 gap-2 mt-1">
-                {item.HASH_TAG && <span>#{item.HASH_TAG}</span>}
+              <div className="flex mt-1 text-gray-900 gap-1">
+                {item.HASH_TAG && (
+                  <div
+                    className={`w-fit px-2 h-5 text-xs  bg-[color:var(--subColor1)] border border-solid border-yellow-500 rounded-full flex justify-center items-center `}
+                  >
+                    #{item.HASH_TAG}
+                  </div>
+                )}
                 <div
-                  className={`ml-auto text-gray-900 text-xs mr-3 bg-[color:var(--subColor1)] border border-solid border-yellow-500 rounded-full flex justify-center items-center ${item.INFO_CAR.toString().length < 4 ? "w-14" : "w-[70px]"} h-5`}
+                  className={`w-fit px-2 h-5 text-gray-900 text-xs bg-[color:var(--subColor1)] border border-solid border-yellow-500 rounded-full flex justify-center items-center `}
                 >
                   {item.INFO_CAR}kcal
                 </div>

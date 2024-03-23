@@ -65,7 +65,6 @@ export const filterRecipe = async ({
 }: {
   searchKeyword: string | null;
 }) => {
-  console.log(searchKeyword);
   const { data: cookrcp, error }: PostgrestResponse<RecipeType> = await supabase
     .from("cookrcp")
     .select("*")
