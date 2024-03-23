@@ -232,48 +232,47 @@ export const deleteComment = async (comment_id: any, user_id: any) => {
 
 // --- 댓글 수정 함수
 export const updateComment = async (comment_id, user_id, newContent) => {
-    // 댓글의 user_id를 확인하기 위해 먼저 조회
-    const { data: commentData, error: commentError } = await supabase
-      .from("comments")
-      .select("user_id")
-      .eq("comment_id", comment_id)
-      .single(); // single()을 사용하여 단일 결과를 얻음
+  // 댓글의 user_id를 확인하기 위해 먼저 조회
+  const { data: commentData, error: commentError } = await supabase
+    .from("comments")
+    .select("user_id")
+    .eq("comment_id", comment_id)
+    .single(); // single()을 사용하여 단일 결과를 얻음
 
-    if (commentError || !commentData) {
-      console.log("댓글 조회 오류", commentError);
-      return false;
-    }
+  if (commentError || !commentData) {
+    console.log("댓글 조회 오류", commentError);
+    return false;
+  }
 
-    // 현재 로그인한 사용자가 댓글 작성자와 동일한지 확인
-    if (commentData.user_id !== user_id) {
-      console.log("댓글 작성자가 아님, 수정 권한 없음");
-      return false;
-    }
+  // 현재 로그인한 사용자가 댓글 작성자와 동일한지 확인
+  if (commentData.user_id !== user_id) {
+    console.log("댓글 작성자가 아님, 수정 권한 없음");
+    return false;
+  }
 
-    // 사용자가 댓글 작성자와 동일할 경우, 댓글 내용 업데이트 진행
-    const { error: updateError } = await supabase
-      .from("comments")
-      .update({ content: newContent, updated_at: new Date().toISOString() })
-      .eq("comment_id", comment_id);
+  // 사용자가 댓글 작성자와 동일할 경우, 댓글 내용 업데이트 진행
+  const { error: updateError } = await supabase
+    .from("comments")
+    .update({ content: newContent, updated_at: new Date().toISOString() })
+    .eq("comment_id", comment_id);
 
-    if (updateError) {
-      console.log("댓글 수정 오류", updateError);
-      return false;
-    }
+  if (updateError) {
+    console.log("댓글 수정 오류", updateError);
+    return false;
+  }
 
-    console.log("댓글 수정 성공");
-    return true;
-  };
+  console.log("댓글 수정 성공");
+  return true;
+};
 
-  export const fetchTopScrappedRecipes = async () => {
-    const { data: topSrcappedRecipes, error } = await supabase
-      .rpc("fetch_top_scrapped_recipes") // 이 부분은 나중에 SQL 함수를 만들어주어야 합니다.
-      .select("RCP_ID, RCP_WAY, RCP_TYPE, RCP_IMG_BIG, RCP_NAME");
+export const fetchTopScrappedRecipes = async () => {
+  const { data: topSrcappedRecipes, error } = await supabase
+    .rpc("fetch_top_scrapped_recipes") // 이 부분은 나중에 SQL 함수를 만들어주어야 합니다.
+    .select("RCP_ID, RCP_WAY, RCP_TYPE, RCP_IMG_BIG, RCP_NAME");
 
-    if (error) {
-      console.log("상위 스크랩 레시피 fetch 오류", error);
-    }
+  if (error) {
+    console.log("상위 스크랩 레시피 fetch 오류", error);
+  }
 
-    return topSrcappedRecipes;
-  };
+  return topSrcappedRecipes;
 };
