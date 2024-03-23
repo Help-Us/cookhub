@@ -10,7 +10,7 @@ interface RecommendedRecipesProps {
 
 const RecommendedRecipe: React.FC<RecommendedRecipesProps> = ({ recipes }) => {
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    e.currentTarget.src = defaultImage.src; // e.target 대신 e.currentTarget 사용 권장
+    e.currentTarget.src = defaultImage.src;
   };
 
   return (
