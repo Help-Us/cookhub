@@ -120,10 +120,13 @@ export const checkIsScrraped = async (
   } else return false;
 };
 
-export const cancelScrap = async (
-  userId: string | undefined,
-  recipeId: string
-) => {
+export const cancelScrap = async ({
+  userId,
+  recipeId
+}: {
+  userId: string | undefined;
+  recipeId: string;
+}) => {
   const { error } = await supabase
     .from("scrap")
     .delete()

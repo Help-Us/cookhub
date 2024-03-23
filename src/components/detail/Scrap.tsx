@@ -65,7 +65,7 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
       //스크랩한 레시피일때
     } else {
       try {
-        await cancelScrap(userId, recipeId);
+        cancelScrapMutation.mutate({ userId, recipeId });
       } catch (error) {
         console.log("스크랩 취소 오류", error);
       }
