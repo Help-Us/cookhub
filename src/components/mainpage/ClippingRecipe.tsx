@@ -12,16 +12,15 @@ const RecommendedRecipe: React.FC<RecommendedRecipesProps> = ({ recipes }) => {
       <div className="grid grid-cols-3 gap-4 w-1200 mb-5">
           {recipes.map((recipe) => (
             <Link key={recipe.id} href={`/detail/${recipe.id}`} passHref>
-              <div className="card w-96 bg-base-100 shadow-xl cursor-pointer border border-[color:var(--borderColor2)] transition duration-300 ease-in-out hover:border-[color:var(--borderColor1)] hover:shadow-2xl">
-                <div className="card-body">
-                  <h1 className="text-[color:var(--titleColor)] text-xl font-bold">{recipe.name}</h1>
-                  <p className="line-clamp-2 text-[color:var(--contentColor)]">{recipe.tip}</p>
-                  <div className='mb-2'>
+              <div className="card w-96 h-64 bg-base-100 shadow-xl cursor-pointer transition duration-500 ease-in-out hover:shadow-2xl hover:bg-gray-800 overflow-hidden rounded-lg relative transform hover:-translate-y-1 hover:scale-102">
+                <div className="absolute inset-0 bg-cover bg-center transition duration-500 ease-in-out" style={{ backgroundImage: `url(${recipe.image})` }}></div>
+                <div className="card-body bg-opacity-30 bg-black text-white absolute bottom-0 w-full p-4 transition duration-500 ease-in-out hover:bg-opacity-40">
+                  <h1 className="text-xl font-bold mb-2">{recipe.name}</h1>
+                  <div className='mb-1'>
                     {recipe.type && <div className="badge badge-ghost">{recipe.type}</div>}
                     {recipe.how && <div className="badge badge-outline">{recipe.how}</div>}
                   </div>
                 </div>
-                <figure>{recipe.image && <img src={recipe.image} alt="Recipe" style={{ width: '400px', height: '300px' }} className="w-full h-auto"/>}</figure>
               </div>
             </Link>
           ))}

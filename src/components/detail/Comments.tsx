@@ -54,7 +54,14 @@ const Comments = ({ post_id }: { post_id: string }) => {
     };
 
     const handleDeleteComment = async (comment_id) => {
-        const isDelete = await deleteComment(comment_id);
+        const currentLoginUserInfo = await getCurrentLoginUserInfo();
+        if (!currentLoginUserInfo) {
+            console.log("로그인한 사용자 정보를 가져올 수 없음");
+            return;
+        }
+        const { id: userId } = currentLoginUserInfo;
+    
+        const isDelete = await deleteComment(comment_id, userId);
         if (isDelete) {
             setComments(comments.filter(comment => comment.comment_id !== comment_id));
         } else {

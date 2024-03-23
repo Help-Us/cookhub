@@ -18,6 +18,10 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
     }
   };
 
+  const handleClick = () => {
+    router.push(`/category/${input}`);
+  }
+
   return (
     <>
       <div className="bg-[color:var(--baseColor)] w-screen">
@@ -34,7 +38,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyPress}
             />
-            <div className="w-8 cursor-pointer">
+            <div className="w-8 cursor-pointer" onClick={handleClick}>
               <img src="https://cdn-icons-png.flaticon.com/512/2866/2866321.png" />
             </div>
           </div>

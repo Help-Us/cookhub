@@ -76,27 +76,32 @@ export const filterData = async (searchKeyword: string | null) => {
   return cookrcp;
 };
 
-export const scrapRecipe = async (
-  userId: string | undefined,
-  recipeId: string
-) => {
-  const { data, error } = await supabase
+export const addScrap = async ({
+  userId,
+  recipeId
+}: {
+  userId: string | undefined;
+  recipeId: string;
+}) => {
+  const { error } = await supabase
     .from("scrap")
     .insert([{ user_id: userId, recipe_id: recipeId }]);
 
   if (error) {
-    console.log("스크랩 인서트 오류", error);
+    console.log("스크랩 추가 오류", error);
   }
-
-  console.log("스크랩 추가");
-
-  return data;
 };
 
-export const checkIsScrraped = async (
-  userId: string | undefined,
-  recipeId: string
-) => {
+export const checkIsScrapped = async ({
+  userId,
+  recipeId
+}: {
+  userId: string | undefined;
+  recipeId: string;
+}) => {
+  // 유저 정보 없을 시 return
+  if (!userId) return;
+
   const { data: scrapId, error } = await supabase
     .from("scrap")
     .select("scrap_id")
@@ -104,25 +109,20 @@ export const checkIsScrraped = async (
     .eq("recipe_id", recipeId);
   //eq를 두번 사용하여 AND 로직 사용
 
-  console.log(scrapId);
-
   if (error) {
-    console.log("스크랩 체크 함수 에러", error);
+    console.log("스크랩 체크 함수 오류", error);
   }
 
-  // 유저정보를 모두 불러와서 거기서 find로 레시피아이디와 일치하는것이 있으면 true로 체크하는 방식
-  // const check = data?.find((item) => item.recipe_id === Number(recipeId));
-  // console.log(check);
-
-  if (scrapId?.length !== 0) {
-    return true;
-  } else return false;
+  return Boolean(scrapId?.length);
 };
 
-export const cancelScrapRecipe = async (
-  userId: string | undefined,
-  recipeId: string
-) => {
+export const cancelScrap = async ({
+  userId,
+  recipeId
+}: {
+  userId: string | undefined;
+  recipeId: string;
+}) => {
   const { error } = await supabase
     .from("scrap")
     .delete()
@@ -132,7 +132,6 @@ export const cancelScrapRecipe = async (
   if (error) {
     console.log("스크랩 취소 오류", error);
   }
-  console.log("스크랩 취소");
 };
 
 // --- 댓글기능
@@ -164,17 +163,36 @@ export const addComment = async (
 
 // --- 댓글 삭제 함수
 
-export const deleteComment = async (comment_id) => {
-  const { data, error } = await supabase
+export const deleteComment = async (comment_id, user_id) => {
+  // 댓글의 user_id를 확인하기 위해 먼저 조회
+  const { data: commentData, error: commentError } = await supabase
+    .from("comments")
+    .select("user_id")
+    .eq("comment_id", comment_id)
+    .single(); // single()을 사용하여 단일 결과를 얻음
+
+  if (commentError || !commentData) {
+    console.log("댓글 조회 오류", commentError);
+    return false;
+  }
+
+  // 현재 로그인한 사용자가 댓글 작성자와 동일한지 확인
+  if (commentData.user_id !== user_id) {
+    console.log("댓글 작성자가 아님, 삭제 권한 없음");
+    return false;
+  }
+
+  // 사용자가 댓글 작성자와 동일할 경우 삭제 진행
+  const { error } = await supabase
     .from("comments")
     .delete()
     .match({ comment_id: comment_id });
 
-    if (error) {
-      console.log("댓글 삭제 오류", error);
-      return false; // 오류 발생 시 false 반환
-    }
+  if (error) {
+    console.log("댓글 삭제 오류", error);
+    return false;
+  }
 
-    console.log("댓글 삭제 성공");
-    return true;
+  console.log("댓글 삭제 성공");
+  return true;
 };
