@@ -60,6 +60,7 @@ export const uploadImage = async (file: File, imagePath: string) => {
   return data;
 };
 
+// 검색어를 바탕으로 레시피 필터링
 export const filterRecipe = async ({
   searchKeyword
 }: {
@@ -80,6 +81,7 @@ export const filterRecipe = async ({
   return cookrcp;
 };
 
+// 스크랩 추가
 export const addScrap = async ({
   userId,
   recipeId
@@ -96,6 +98,7 @@ export const addScrap = async ({
   }
 };
 
+// 스크랩 체크
 export const checkIsScrapped = async ({
   userId,
   recipeId
@@ -120,6 +123,7 @@ export const checkIsScrapped = async ({
   return Boolean(scrapId?.length);
 };
 
+// 스크랩 취소
 export const cancelScrap = async ({
   userId,
   recipeId
