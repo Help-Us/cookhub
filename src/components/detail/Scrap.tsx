@@ -1,7 +1,5 @@
 "use client";
 
-import { checkIsScrapped } from "@/api/supabase/supabase";
-import { QueryKeys } from "@/constants/QueryKeys";
 import {
   useAddScrapMutation,
   useCancelScrapMutation
@@ -9,7 +7,6 @@ import {
 import { useCheckIsScrappedQuery } from "@/hooks/useQueryScrap";
 import { getCurrentLoginUserInfo } from "@/utils/supabase/checkLoginUser";
 import { User } from "@supabase/supabase-js";
-import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { IoBookmark } from "react-icons/io5";
