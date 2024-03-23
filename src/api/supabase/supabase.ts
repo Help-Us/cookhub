@@ -139,7 +139,9 @@ export const cancelScrap = async ({
 export const addComment = async (
   user_id: string | undefined,
   post_id: string,
-  content: string
+  content: string,
+  nickname: string,
+  avatar_img: string
 ) => {
   const { data, error } = await supabase
     .from("comments") //
@@ -147,17 +149,20 @@ export const addComment = async (
       { 
         user_id: user_id, // 댓글을 작성한 사용자 ID
         post_id: post_id, // 댓글이 속한 게시물 ID
-        content: content // 댓글 내용
+        content: content, // 댓글 내용
+        nickname: nickname, // 작성자 닉네임
+        avatar_img: avatar_img  // 작성자 프로필사진
       }
-    ]);
+    ])
+    .select();
 
   if (error) {
     console.log("댓글 추가 오류", error);
     return null; // 오류 발생 시 null 반환
   }
 
-  console.log("댓글 추가 성공");
-  console.log(user_id)
+  // console.log("댓글 추가 성공");
+  console.log("입력한 댓글 정보 => ", data);
   return data; // 성공 시 추가된 댓글의 데이터 반환
 };
 
@@ -197,7 +202,7 @@ export const deleteComment = async (comment_id, user_id) => {
   return true;
 };
 
-// 댓글 수정 함수
+// --- 댓글 수정 함수
 export const updateComment = async (comment_id, user_id, newContent) => {
   // 댓글의 user_id를 확인하기 위해 먼저 조회
   const { data: commentData, error: commentError } = await supabase
