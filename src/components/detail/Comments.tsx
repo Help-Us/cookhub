@@ -61,13 +61,22 @@ const Comments = ({ post_id }: { post_id: string }) => {
         }
         const { id: userId } = currentLoginUserInfo;
     
+    // 댓글 삭제 전 확인 메시지를 표시
+    const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
+    if (isConfirmed) {
+        // 사용자가 '예'를 선택한 경우, 댓글 삭제 로직 실행
         const isDelete = await deleteComment(comment_id, userId);
         if (isDelete) {
+            // 삭제 성공 시, 댓글 목록에서 해당 댓글 제거
             setComments(comments.filter(comment => comment.comment_id !== comment_id));
         } else {
             console.log("댓글 삭제 실패");
         }
+    } else {
+        // 사용자가 '아니오'를 선택한 경우, 아무런 작업도 수행하지 않음
+        console.log("댓글 삭제 취소");
     }
+}
 
     return (
         <div className="flex-col mt-28">
