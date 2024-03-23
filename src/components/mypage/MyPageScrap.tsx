@@ -53,7 +53,9 @@ export default function MyPageScrap() {
         내가 레시피
       </p>
 
-      <section className="flex flex-col items-center text-lg">
+      <section
+        className={`flex flex-col items-center text-lg ${userComments.length > 3 ? "commentsContainer" : ""}`}
+      >
         {userComments.map((comment, index) => (
           <div
             key={index}
