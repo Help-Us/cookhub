@@ -23,9 +23,10 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
   const userId = currentUserInfo?.id;
 
   // 스크랩 여부 체크
-  const { data: isScrapped } = useCheckIsScrappedQuery({ userId, recipeId });
-
-  console.log("현재스크랩 상태 : ", isScrapped);
+  const { data: isScrapped, isLoading } = useCheckIsScrappedQuery({
+    userId,
+    recipeId
+  });
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -58,27 +59,30 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
         alert("일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
       }
     }
-    console.log(userId, recipeId);
   };
 
   return (
-    <>
-      <div
-        onClick={handleScrapStatusToggle}
-        className={`${isScrapped ? "bg-[color:var(--subColor4)] text-white " : "bg-[color:var(--subColor7)] text-[color:var(--subColor8)] hover:bg-[color:var(--subColor4)] hover:text-white"} 
-        transition duration-200 ease-in-out
+    <div
+      onClick={handleScrapStatusToggle}
+      className={`${isScrapped ? "" : " hover:bg-[color:var(--subColor4)] hover:text-white"} 
+        transition duration-200 ease-in-out bg-[color:var(--subColor7)] text-[color:var(--subColor8)]
         cursor-pointer  h-16 w-full mx-auto flex justify-center items-center rounded-lg shadow-[1px_4px_4px_0px_rgba(0,0,0,0.15)] border border-solid border-[color:var(--highlightColor1)]`}
-      >
-        <p className="text-md mr-1 font-semibold flex items-center ">
-          {!isScrapped ? "스크랩하기" : "스크랩된 레시피"}
-        </p>
-        {isScrapped ? (
-          <IoBookmark size={18} />
-        ) : (
-          <IoBookmarkOutline size={18} />
-        )}
-      </div>
-    </>
+    >
+      {isLoading ? (
+        "스크랩 정보 로딩중"
+      ) : (
+        <>
+          <p className="font-semibold mr-0.5">
+            {!isScrapped ? "스크랩하기" : "스크랩된 레시피"}
+          </p>
+          {isScrapped ? (
+            <IoBookmark className="mt-0.5" size={18} />
+          ) : (
+            <IoBookmarkOutline className="mt-0.5" size={18} />
+          )}
+        </>
+      )}
+    </div>
   );
 };
 

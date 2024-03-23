@@ -88,10 +88,8 @@ export const addScrap = async ({
     .insert([{ user_id: userId, recipe_id: recipeId }]);
 
   if (error) {
-    console.log("스크랩 인서트 오류", error);
+    console.log("스크랩 추가 오류", error);
   }
-
-  console.log("스크랩 추가");
 };
 
 export const checkIsScrapped = async ({
@@ -111,15 +109,11 @@ export const checkIsScrapped = async ({
     .eq("recipe_id", recipeId);
   //eq를 두번 사용하여 AND 로직 사용
 
-  console.log(scrapId);
-
   if (error) {
-    console.log("스크랩 체크 함수 에러", error);
+    console.log("스크랩 체크 함수 오류", error);
   }
 
-  if (scrapId?.length !== 0) {
-    return true;
-  } else return false;
+  return Boolean(scrapId?.length);
 };
 
 export const cancelScrap = async ({
@@ -138,5 +132,4 @@ export const cancelScrap = async ({
   if (error) {
     console.log("스크랩 취소 오류", error);
   }
-  console.log("스크랩 취소");
 };
