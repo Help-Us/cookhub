@@ -34,7 +34,7 @@ export default function Home() {
   const fetchTopScrappedRecipes = async () => {
     try {
       const { data, error } = await supabase
-        .rpc('fetch_top_scrapped_recipes')
+        .rpc('scrapped_recipes_count')
         .select('RCP_ID, RCP_WAY, RCP_TYPE, RCP_IMG_BIG, RCP_NAME')
 
       if (error) throw error;
