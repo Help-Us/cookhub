@@ -5,6 +5,10 @@ import {
   cancelScrap,
   checkIsScrraped
 } from "@/api/supabase/supabase";
+import {
+  useAddScrapMutation,
+  useCancelScrapMutation
+} from "@/hooks/mutateScrap";
 import { getCurrentLoginUserInfo } from "@/utils/supabase/checkLoginUser";
 import { User } from "@supabase/supabase-js";
 import React, { useEffect, useState } from "react";
@@ -13,6 +17,8 @@ import { IoBookmark } from "react-icons/io5";
 
 const Scrap = ({ recipeId }: { recipeId: string }) => {
   // 필요한거 유저아이디, 레시피아이디,
+  const addScrapMutation = useAddScrapMutation();
+  const cancelScrapMutation = useCancelScrapMutation();
 
   const [currentUserInfo, setCurrentUserInfo] = useState<User | null>();
   const [isScrapped, setIsScrapped] = useState<boolean>(false); // 스크랩 여부 상태 추가
@@ -41,12 +47,17 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
   console.log(isScrapped);
 
   const handleScrapStatusToggle = async () => {
+    if (!userId) {
+      alert("로그인 정보가 유효하지 않습니다.");
+      return;
+    }
+
     const isScrappedRecipe = await checkIsScrraped(userId, recipeId);
 
     // 스크랩하지 않은 레시피일때
     if (!isScrappedRecipe) {
       try {
-        await addScrap(userId, recipeId);
+        addScrapMutation.mutate({ userId, recipeId });
       } catch (error) {
         console.log("스크랩 인서트 오류", error);
       }

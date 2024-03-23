@@ -76,10 +76,13 @@ export const filterData = async (searchKeyword: string | null) => {
   return cookrcp;
 };
 
-export const addScrap = async (
-  userId: string | undefined,
-  recipeId: string
-) => {
+export const addScrap = async ({
+  userId,
+  recipeId
+}: {
+  userId: string | undefined;
+  recipeId: string;
+}) => {
   const { error } = await supabase
     .from("scrap")
     .insert([{ user_id: userId, recipe_id: recipeId }]);
