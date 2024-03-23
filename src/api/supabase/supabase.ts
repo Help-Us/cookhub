@@ -1,4 +1,4 @@
-import { RecipeType, UserDatabaseType, UserProfile } from "@/types";
+import { RecipeType } from "@/types";
 import { PostgrestResponse, createClient } from "@supabase/supabase-js";
 
 // 필요한 부분은 언제든 꺼내 쓸 수 있게
@@ -204,7 +204,7 @@ export const addComment = async (
   const { data, error } = await supabase
     .from("comments") //
     .insert([
-      { 
+      {
         user_id: user_id, // 댓글을 작성한 사용자 ID
         post_id: post_id, // 댓글이 속한 게시물 ID
         content: content // 댓글 내용
@@ -217,13 +217,13 @@ export const addComment = async (
   }
 
   console.log("댓글 추가 성공");
-  console.log(user_id)
+  console.log(user_id);
   return data; // 성공 시 추가된 댓글의 데이터 반환
 };
 
 // --- 댓글 삭제 함수
 
-export const deleteComment = async (comment_id, user_id) => {
+export const deleteComment = async (comment_id: any, user_id: any) => {
   // 댓글의 user_id를 확인하기 위해 먼저 조회
   const { data: commentData, error: commentError } = await supabase
     .from("comments")
@@ -258,7 +258,11 @@ export const deleteComment = async (comment_id, user_id) => {
 };
 
 // 댓글 수정 함수
-export const updateComment = async (comment_id, user_id, newContent) => {
+export const updateComment = async (
+  comment_id: any,
+  user_id: any,
+  newContent: any
+) => {
   // 댓글의 user_id를 확인하기 위해 먼저 조회
   const { data: commentData, error: commentError } = await supabase
     .from("comments")

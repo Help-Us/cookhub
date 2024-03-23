@@ -24,7 +24,7 @@ export const getCurrentLoggedInUserList = async (): Promise<void | any[]> => {
 };
 
 // DB에 데이터를 추가함 (data: 객체 형태)
-export const insertCurrentLoginUser = async (data) => {
+export const insertCurrentLoginUser = async (data: any) => {
   const { error: insertUserError } = await supabase
     .from("loginUserList")
     .insert(data);
@@ -36,7 +36,7 @@ export const insertCurrentLoginUser = async (data) => {
 };
 
 // DB에서 유저의 정보를 삭제함
-export const removeCurrentLoginUser = async (data) => {
+export const removeCurrentLoginUser = async (data: any) => {
   const { error: removeUserError } = await supabase
     .from("loginUserList")
     .delete()
@@ -46,4 +46,18 @@ export const removeCurrentLoginUser = async (data) => {
     console.log("DB에서 유저 정보를 삭제하는 동안 문제가 발생했습니다.");
     return console.log("removeUserError", removeUserError);
   }
+};
+
+export const uploadImage = async (filePath: any, image: any) => {
+  const { data, error } = await supabase.storage
+    .from("avatars")
+    .upload(filePath, image, {
+      cacheControl: "3600",
+      upsert: true
+    });
+
+  if (error) {
+    console.log("파일 업데이트 에러..!");
+  }
+  return data;
 };
