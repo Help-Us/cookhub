@@ -34,7 +34,7 @@ export type RecipeType = {
   INFO_NA: number;
   INFO_PRO: number;
   INFO_TAN: number;
-  INFO_WEIGHT: number;
+  INFO_WEIGHT?: number | null;
   MANUAL01?: string | null;
   MANUAL02?: string | null;
   MANUAL03?: string | null;
