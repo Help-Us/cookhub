@@ -10,7 +10,6 @@ import naverLogo from "@/assets/naverLogo.jpg";
 import { FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useUserInfoStore } from "@/shared/zustand/userInfoStore";
-// import { useLoginStateStore } from "@/shared/zustand/loginStateStore";
 import { supabase } from "@/api/supabase/supabase";
 import {
   getCurrentLoggedInUserList,
@@ -21,68 +20,60 @@ import {
 const LoginPage = () => {
   const router = useRouter();
   const { email, password, setEmail, setPassword } = useUserInfoStore();
-  // const { loginState, login } = useLoginStateStore();
 
   const loginHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { data: loginUserInfo, error } =
-      await supabase.auth.signInWithPassword({
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
         email,
         password
       });
 
-    if (error) {
-      console.log(error);
-      alert("로그인 오류가 발생했습니다.");
-    } else {
-      // 1. 지금 로그인하려는 유저의 정보를 가져옴
-      const currentLoginUserInfo = await getCurrentLoginUserInfo();
-      console.log("currentLoginUserInfo", currentLoginUserInfo);
-      // 2. 현재 로그인 상태인 유저 LIST를 DB로부터 가져옴
-      const currentUserList = await getCurrentLoggedInUserList();
-      console.log("currentUserList", currentUserList);
-
-      const { id: uid, email } = currentLoginUserInfo || {};
-      const { avatar_img, nickname } =
-        currentLoginUserInfo?.user_metadata || {};
-      console.log("{id, email, nickname, avatar_img }", {
-        uid,
-        email,
-        nickname,
-        avatar_img
-      });
-
-      const currentUserEmailList = currentUserList?.map((user) => user.email);
-
-      // 3. 지금 로그인하려는 유저의 정보가 DB에 있는가?
-      const isCurrentUserLoggedIn = currentUserEmailList?.includes(email);
-
-      // 3-1. 로그인된 상태!!
-      if (isCurrentUserLoggedIn) {
-        console.error("Error: 이미 로그인된 유저입니다.");
-        return alert("이미 로그인한 유저입니다.");
+      if (error) {
+        if (error.name === "AuthApiError") {
+          console.log(error.message);
+          alert("이메일 또는 비밀번호가 올바르지 않습니다.");
+        } else {
+          console.log(error);
+          alert("회원가입 오류가 발생했습니다.");
+        }
+      } else {
+        // 1. 지금 로그인하려는 유저의 정보를 가져옴
+        const currentLoginUserInfo = await getCurrentLoginUserInfo();
+        // 2. 현재 로그인 상태인 유저 LIST를 DB로부터 가져옴
+        const currentUserList = await getCurrentLoggedInUserList();
+        const currentUserEmailList = currentUserList?.map((user) => user.email);
+        const { id: uid, email } = currentLoginUserInfo || {};
+        const { avatar_img, nickname } =
+          currentLoginUserInfo?.user_metadata || {};
+        // 3. 지금 로그인하려는 유저의 정보가 DB에 있는가?
+        const isCurrentUserLoggedIn = currentUserEmailList?.includes(email);
+        // 3-1. 로그인된 상태!!
+        if (isCurrentUserLoggedIn) {
+          console.error("Error: 이미 로그인된 유저입니다.");
+          return alert("이미 로그인한 유저입니다.");
+        }
+        // 3-2. 로그인 안된 상태!! 로그인 가능!!
+        else {
+          // 새로운 유저의 정보 객체 생성
+          const newLoginUser = {
+            uid,
+            email,
+            nickname,
+            avatar_img
+          };
+          // DB에 지금 로그인하는 유저의 정보를 입력
+          await insertCurrentLoginUser(newLoginUser);
+          alert("로그인 되었습니다.");
+          // router.replace("/");
+        }
       }
-      // 3-2. 로그인 안된 상태!! 로그인 가능!!
-      else {
-        // 새로운 유저의 정보 객체 생성
-        const newLoginUser = {
-          uid,
-          email,
-          nickname,
-          avatar_img
-        };
-        // DB에 지금 로그인하는 유저의 정보를 입력
-        await insertCurrentLoginUser(newLoginUser);
-        setEmail("");
-        setPassword("");
-        // 로그인 처리 필요
-        // login();
-        alert("로그인 되었습니다.");
-        // console.log("현재 로그인 상태", loginState);
-        // getLocalStorageJSON();
-        router.replace("/");
-      }
+    } catch (error) {
+      console.log("try-catch error => ", error);
+    } finally {
+      setEmail("");
+      setPassword("");
     }
   };
 
