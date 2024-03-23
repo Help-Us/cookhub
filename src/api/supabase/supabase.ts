@@ -1,4 +1,4 @@
-import { RecipeType, UserDatabaseType, UserProfile } from "@/types";
+import { RecipeType } from "@/types";
 import { PostgrestResponse, createClient } from "@supabase/supabase-js";
 
 // 필요한 부분은 언제든 꺼내 쓸 수 있게
@@ -7,58 +7,78 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
-// 유저 정보 가져오기
-export const getLoginUserInfo = async () => {
-  const { data } = await supabase.auth.getUser();
-  console.log(data);
-  return data;
-};
+// 마이페이지 --------------
 
-// 내가 넣은 유저 정보 fetch 가져오기
-export const getSelectUserInfo = async () => {
-  let { data, error } = await supabase.from("userData").select("*");
+// 유저 정보 업데이트
+export const updateUserInform = async (nickname: string, avatar: string) => {
+  const { data, error } = await supabase.auth.updateUser({
+    data: { nickname, avatar }
+  });
   if (error) {
-    console.log("오류로 인해 정보를 받아오지 못 하고 있습니다.");
+    console.error("업데이트를 다시 시도해주세요!");
   }
   return data;
 };
 
-// 유저 정보 업데이트
-export const updateUserInfo = async () => {
+// 유저 닉네임 변경(테이블용)
+export const updateTableNickname = async (uid: string, newNickname: string) => {
   const { data, error } = await supabase
-    .from("userData")
-    .update({ other_column: "otherValue" })
-    .eq("some_column", "someValue")
+    .from("loginUserList")
+    .update({ nickname: newNickname })
+    .eq("uid", uid)
     .select();
+  console.log("닉네임 변경 결과 => ", data);
+
   if (error) {
-    console.log("유저 정보 새로 업데이트 실패", error);
+    console.log("닉네임 DB 변경 에러");
+    throw error;
+  }
+  return data;
+};
+
+// 스토리지에 프로필 이미지 업로드
+export const uploadImage = async (filePath: any, image: any) => {
+  const { data, error } = await supabase.storage
+    .from("avatars")
+    .upload(filePath, image, {
+      cacheControl: "3600",
+      upsert: true
+    });
+
+  if (error) {
+    console.log("파일 업데이트 에러..!");
   }
   return data;
 };
 
 // storage에서 이미지 다운
-export const downloadImage = async (imagePath: string) => {
-  const { data, error } = await supabase.storage
-    .from("avatars")
-    .download(imagePath);
+export const downloadImage = async (uid: string) => {
+  const { data, error } = await supabase.storage.from("avatars").download(uid);
   if (error) {
     console.log("이미지 다운로드 실패", error);
   }
   return data;
 };
 
-// storage에 이미지 업로드
-export const uploadImage = async (file: File, imagePath: string) => {
-  const { data, error } = await supabase.storage
-    .from("avatars") // 사용할 스토리지 버킷 이름
-    .upload(`${file.name}`, file); // 파일 경로 및 파일 객체 전달
-
-  if (error) {
-    console.log("이미지 업로드 실패", error);
+// 프로필 사진 public url 받아오기 ( userData 테이블에 넣어줄 url string)
+export const imgPublicUrl = async (uid: string) => {
+  try {
+    const { data } = supabase.storage.from("avatars").getPublicUrl(`${uid}`);
+    return data;
+  } catch (error) {
+    console.error("이미지 url 가져오기 실패", error);
   }
-  console.log(data);
-  return data;
 };
+
+// 유저 프로필 사진 url auth에 넣어주기
+export const updateUserProfile = async (url: string) => {
+  const { data, error } = await supabase.auth.updateUser({
+    data: { avatar_img: `${url}` }
+  });
+  console.error("프로필 사진 url 넣어주기 실패", error);
+};
+
+// 레시피 -------------------
 
 // 검색어를 바탕으로 레시피 필터링
 export const filterRecipe = async ({
@@ -159,7 +179,7 @@ export const addComment = async (
         post_id: post_id, // 댓글이 속한 게시물 ID
         content: content, // 댓글 내용
         nickname: nickname, // 작성자 닉네임
-        avatar_img: avatar_img  // 작성자 프로필사진
+        avatar_img: avatar_img // 작성자 프로필사진
       }
     ])
     .select();
@@ -169,14 +189,14 @@ export const addComment = async (
     return null; // 오류 발생 시 null 반환
   }
 
-  console.log("입력한 댓글 정보 => ", data);
-
+  console.log("댓글 추가 성공");
+  console.log(user_id);
   return data; // 성공 시 추가된 댓글의 데이터 반환
 };
 
 // --- 댓글 삭제 함수
 
-export const deleteComment = async (comment_id, user_id) => {
+export const deleteComment = async (comment_id: any, user_id: any) => {
   // 댓글의 user_id를 확인하기 위해 먼저 조회
   const { data: commentData, error: commentError } = await supabase
     .from("comments")

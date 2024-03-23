@@ -6,7 +6,9 @@ const nextConfig = {
       "lh3.googleusercontent.com",
       "images.pexels.com",
       "www.foodsafetykorea.go.kr",
-      "i.pinimg.com",
+      "i.ibb.co",
+      "ibb.co",
+      "ifh.cc"
     ]
   }
 };
