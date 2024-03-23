@@ -22,6 +22,7 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
   const [currentUserInfo, setCurrentUserInfo] = useState<User | null>();
   const userId = currentUserInfo?.id;
 
+  // 스크랩 여부 체크
   const { data: isScrapped } = useCheckIsScrappedQuery({ userId, recipeId });
 
   console.log("현재스크랩 상태 : ", isScrapped);
@@ -30,17 +31,6 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
     const getUserInfo = async () => {
       const currentLoginUserInfo = await getCurrentLoginUserInfo();
       setCurrentUserInfo(currentLoginUserInfo);
-
-      // 스크랩 여부 체크
-      if (currentLoginUserInfo) {
-        // userId를 넣게되면 마운트될때 userId는 undefined이므로 함수 내에 있는 데이터인
-        // currentLoginUserInfo의 id를 넣어주면 undefined가 나오지 않는다.
-        const isScrappedRecipe = await checkIsScrapped({
-          userId: currentLoginUserInfo.id,
-          recipeId
-        });
-        // setIsScrapped(isScrappedRecipe);
-      }
     };
 
     getUserInfo();
@@ -52,14 +42,12 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
       return;
     }
 
-    const isScrappedRecipe = await checkIsScrapped({ userId, recipeId });
-
     // 스크랩하지 않은 레시피일때
-    if (!isScrappedRecipe) {
+    if (!isScrapped) {
       try {
         addScrapMutation.mutate({ userId, recipeId });
       } catch (error) {
-        console.log("스크랩 인서트 오류", error);
+        alert("일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
       }
 
       //스크랩한 레시피일때
@@ -67,7 +55,7 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
       try {
         cancelScrapMutation.mutate({ userId, recipeId });
       } catch (error) {
-        console.log("스크랩 취소 오류", error);
+        alert("일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
       }
     }
     console.log(userId, recipeId);
