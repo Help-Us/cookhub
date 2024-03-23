@@ -1,28 +1,63 @@
 "use client";
 
-import React, { useState, ChangeEvent, KeyboardEvent } from "react";
+import React, { useState, useEffect, ChangeEvent, KeyboardEvent } from "react";
 import Image from "next/image";
+import { supabase } from "@/api/supabase/supabase";
+import { getCurrentLoginUserInfo } from "@/utils/supabase/checkLoginUser";
 
-const Comments = () => {
-
+const Comments = ({ recipeId }: { recipeId: string }) => {
     const [inputText, setInputText] = useState('');
-    const [comments, setComments] = useState<string[]>([]);
+    // 댓글 데이터를 저장할 상태를 배열 대신 객체 배열로 변경
+    const [comments, setComments] = useState<{ id: string, content: string, nickname: string, avatar_url: string }[]>([]);
 
-    const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "Enter" && inputText.trim() !== '' && inputText.length <= 100) {
-            setComments([...comments, inputText]);
-            setInputText('');
+    // 페이지 로드 시 댓글 데이터를 불러오는 함수
+    const fetchComments = async () => {
+        
+        const { data, error } = await supabase
+        
+            .from('comments')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (data) {
+            setComments(data);
+        }
+    };
+
+    useEffect(() => {
+        fetchComments();
+    }, []);
+
+    const handleKeyPress = async (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter" && inputText.trim() !== '') {
+            const currentLoginUserInfo = await getCurrentLoginUserInfo();
+            if (currentLoginUserInfo) {
+                const { id: id, user_metadata } = currentLoginUserInfo;
+                const { data, error } = await supabase
+                    .from('comments')
+                    .insert([
+                        { project_id: recipeId, content: inputText, user_id: id, nickname: user_metadata.nickname, avatar_url: user_metadata.avatar_url }
+                    ]);
+                    
+
+                if (data) {
+                    setComments([data[0], ...comments]);
+                    setInputText('');
+                }
+
+                if (error) {
+                    console.error("댓글 추가 오류:", error.message);
+                }
+
+                console.log(currentLoginUserInfo);
+            }
         }
     };
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const newText = event.target.value
-        if (newText.length > 100) {
-            alert("100자 이내로 작성해주세요.");
-        } else {
-            setInputText(newText);
-        }
-    }
+        setInputText(event.target.value);
+    };
+
 
     return (
         <div className="flex-col mt-28">
@@ -43,20 +78,20 @@ const Comments = () => {
             <div>
                 {comments.length > 0 ? (
                     <div className="flex flex-col min-h-[300px] w-950 mt-5 rounded-3xl border-2 border-peach text-xl shadow-lg shadow-black-500">
-                        {comments.map((comment, index) => (
-                            <div className="m-5 h-54">
+                        {comments.map((comment) => (
+                            <div key={recipeId} className="m-5 h-54">
                                 <div className="flex items-center mt-5">
                                     <Image
-                                        src={'https://i.pinimg.com/280x280_RS/ce/6c/fc/ce6cfc73ef62f44510a64bc62937328f.jpg'}
-                                        alt="food image"
+                                        src={comment.avatar_url}
+                                        alt="user image"
                                         width={60}
                                         height={60}
                                         className="rounded-full ml-5"
                                     />
-                                    <p className="text-black text-xl font-bold ml-5">닉네임</p>
+                                    <p className="text-black text-xl font-bold ml-5">{comment.nickname}</p>
                                 </div>
-                                <div key={index} className="p-4 border-2 rounded-br-lg m-5">
-                                    <p className="">{comment}</p>
+                                <div className="p-4 border-2 rounded-br-lg m-5">
+                                    <p className="">{comment.content}</p>
                                 </div>
                                 <div className="flex justify-end ml-10">
                                     <button className="mr-10">수정</button>
