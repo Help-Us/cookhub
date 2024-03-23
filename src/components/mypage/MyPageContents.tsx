@@ -8,7 +8,7 @@ import { getCurrentLoginUserInfo } from "@/utils/supabase/checkLoginUser";
 import Image from "next/image";
 import MyPageUpload from "./MyPageUpload";
 
-export default function MyPageContents() {
+export default function MyPageContents({ params }: { params: { id: string } }) {
   const defaultAvatarUrl = "https://ifh.cc/g/WDVwsQ.png"; // 비숑
   // 로그인 확인
   const [isLogin, setIsLogin] = useState(true);
@@ -181,27 +181,6 @@ export default function MyPageContents() {
 
   const onChangeNicknameHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
-  };
-
-  const handleUploadImg = async (e: ChangeEvent<HTMLInputElement>) => {
-    let file;
-
-    if (e.target.files) {
-      file = e.target.files[0];
-      // 이미지 미리보기
-      // onChangeImageHandler(e);
-    }
-
-    // 프로필 이미지 업데이트
-    const { data, error } = await supabase.storage
-      .from("avatars")
-      .upload(`${userData?.id}/` + file?.name, file as File);
-    //  유저의 email or uid로 폴더를 만들어서 이미지를 저장 (확인 O)
-    if (data) {
-      console.log(data);
-    } else if (error) {
-      console.log(error);
-    }
   };
 
   const onChangeEditingHandler = () => {
