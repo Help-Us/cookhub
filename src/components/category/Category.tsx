@@ -2,18 +2,11 @@
 
 import FilteredFoods from "@/components/category/FilteredFoods";
 
-import { RecipeType } from "@/types";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SearchBox from "../layout/SearchBox";
-import { filterData } from "@/api/supabase/supabase";
+import { filterRecipe } from "@/api/supabase/supabase";
 
-const Category = ({
-  filteredRecipes,
-  searchKeyword
-}: {
-  filteredRecipes: RecipeType[] | null;
-  searchKeyword: string | null;
-}) => {
+const Category = ({ searchKeyword }: { searchKeyword: string }) => {
   const foodList = ["밥", "반찬", "국&찌개", "특별식", "후식"];
   const calorieList = ["다이어트", "일반식", "푸짐하게", "오늘만 산다"];
   const calorieNumberList = [200, 400, 700, 701];
@@ -47,7 +40,9 @@ const Category = ({
   return (
     <>
       {/* 함수 실행 결과를 전달하는 것이 아니라 함수 자체를 전달 */}
-      <SearchBox onSearch={(searchKeyword) => filterData(searchKeyword)} />
+      <SearchBox
+        onSearch={(searchKeyword) => filterRecipe({ searchKeyword })}
+      />
       <div className="w-[1048px] m-auto min-w-fit flex flex-col items-center">
         <div className="flex flex-col justify-center w-fit mt-8">
           <div className="flex p-2 items-center mb-2 ">
@@ -135,9 +130,9 @@ const Category = ({
 
           {/* 레시피들 컴포넌트 */}
           <FilteredFoods
-            filteredRecipes={filteredRecipes}
             selectedFood={selectedFood}
             selectedCalorieNumberLevel={selectedCalorieNumberLevel}
+            searchKeyword={searchKeyword}
           />
         </div>
       </div>

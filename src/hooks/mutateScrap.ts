@@ -9,7 +9,7 @@ export const useAddScrapMutation = () => {
     mutationFn: addScrap,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QueryKeys.scrap]
+        queryKey: [QueryKeys.SCRAP]
       });
     }
   });
@@ -24,7 +24,7 @@ export const useCancelScrapMutation = () => {
     mutationFn: cancelScrap,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QueryKeys.scrap]
+        queryKey: [QueryKeys.SCRAP]
       });
     }
   });
