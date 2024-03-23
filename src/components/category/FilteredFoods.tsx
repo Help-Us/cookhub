@@ -5,7 +5,10 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import logoImage from "../../assets/images/Cookhub_Logo.png";
 import { useRouter } from "next/navigation";
-import { usefilterRecipeQuery } from "@/hooks/useQueryScrap";
+import {
+  useFetchTopScrappedRecipes,
+  usefilterRecipeQuery
+} from "@/hooks/useQuery";
 
 const FilteredFoods = ({
   selectedFood,
@@ -23,6 +26,9 @@ const FilteredFoods = ({
   const { filteredRecipes, isFilterError, isFilterLoading } =
     usefilterRecipeQuery({ searchKeyword });
 
+  const { topRecipes, isFetchTopRecipesError } = useFetchTopScrappedRecipes();
+  console.log(topRecipes);
+
   useEffect(() => {
     setRecipeList(categoryFilter());
   }, [selectedFood, selectedCalorieNumberLevel, filteredRecipes]);
@@ -35,6 +41,12 @@ const FilteredFoods = ({
     return;
   }
 
+  if (isFetchTopRecipesError) {
+    console.log(
+      "상위 스크랩된 레시피를 불러오는 중 오류가 발생",
+      isFetchTopRecipesError
+    );
+  }
   // 카테고리 필터링 함수
   const categoryFilter = () => {
     // 요리 종류 필터링
@@ -78,9 +90,7 @@ const FilteredFoods = ({
   return (
     <>
       {isFilterLoading && (
-        <span className="loading loading-infinity loading-lg mt-12">
-          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        </span>
+        <span className="loading loading-infinity loading-lg mt-12"></span>
       )}
       <div className="flex w-full justify-between text-sm items-center mb-2">
         {recipeList && recipeList?.length >= 1000 ? (
@@ -116,13 +126,14 @@ const FilteredFoods = ({
               className="mb-8 cursor-pointer w-64 relative"
               onClick={() => router.push(`/detail/${item.RCP_ID}`)}
             >
-              {/* 추천, 인기 스티커 조건 추가 필 */}
-              {/* <div className="absolute text-sm top-36 right-16 mr-1 rounded-full bg-[color:var(--highlightColor2)] w-11 h-11 flex items-center justify-center leading-5 text-white">
-                추천
-              </div> */}
-              <div className="absolute text-sm top-36 right-4 rounded-full bg-[color:var(--highlightColor2)] w-11 h-11 flex items-center justify-center leading-5 text-white">
-                인기
-              </div>
+              {/* 탑 레시피 배열의 RCP_ID들 중에 item.RCP_ID가 있으면 true를 반환 */}
+              {topRecipes?.some(
+                (topRecipes) => topRecipes.RCP_ID === item.RCP_ID
+              ) && (
+                <div className="absolute text-sm top-36 right-6 rounded-full bg-[color:var(--highlightColor2)] w-11 h-11 flex items-center justify-center leading-5 text-white">
+                  인기
+                </div>
+              )}
               {item.RCP_IMG_SMALL || item.RCP_IMG_BIG ? (
                 <Image
                   width={256}

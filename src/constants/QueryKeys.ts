@@ -1,4 +1,5 @@
 export const QueryKeys = {
   filterRecipe: "filterRecipe",
-  scrap: "scrap"
+  scrap: "scrap",
+  fetchTopScrap: "fetchTopScrap"
 };

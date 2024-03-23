@@ -235,3 +235,15 @@ export const updateComment = async (comment_id, user_id, newContent) => {
   console.log("댓글 수정 성공");
   return true;
 };
+
+export const fetchTopScrappedRecipes = async () => {
+  const { data: topSrcappedRecipes, error } = await supabase
+    .rpc("fetch_top_scrapped_recipes") // 이 부분은 나중에 SQL 함수를 만들어주어야 합니다.
+    .select("RCP_ID, RCP_WAY, RCP_TYPE, RCP_IMG_BIG, RCP_NAME");
+
+  if (error) {
+    console.log("상위 스크랩 레시피 fetch 오류", error);
+  }
+
+  return topSrcappedRecipes;
+};

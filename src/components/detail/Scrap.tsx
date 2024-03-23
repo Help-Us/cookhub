@@ -4,7 +4,7 @@ import {
   useAddScrapMutation,
   useCancelScrapMutation
 } from "@/hooks/mutateScrap";
-import { useCheckIsScrappedQuery } from "@/hooks/useQueryScrap";
+import { useCheckIsScrappedQuery } from "@/hooks/useQuery";
 import { getCurrentLoginUserInfo } from "@/utils/supabase/checkLoginUser";
 import { User } from "@supabase/supabase-js";
 import React, { useEffect, useState } from "react";

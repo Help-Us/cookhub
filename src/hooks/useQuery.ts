@@ -1,4 +1,8 @@
-import { checkIsScrapped, filterRecipe } from "@/api/supabase/supabase";
+import {
+  checkIsScrapped,
+  fetchTopScrappedRecipes,
+  filterRecipe
+} from "@/api/supabase/supabase";
 import { QueryKeys } from "@/constants/QueryKeys";
 import { useQuery } from "@tanstack/react-query";
 
@@ -33,4 +37,13 @@ export const usefilterRecipeQuery = ({
   });
 
   return { filteredRecipes, isFilterError, isFilterLoading };
+};
+
+export const useFetchTopScrappedRecipes = () => {
+  const { data: topRecipes, isError: isFetchTopRecipesError } = useQuery({
+    queryKey: [QueryKeys.fetchTopScrap],
+    queryFn: () => fetchTopScrappedRecipes()
+  });
+
+  return { topRecipes, isFetchTopRecipesError };
 };
