@@ -56,13 +56,14 @@ export default function MyPageUpload({
             {isEditing ? (
               <div className="flex flex-col mt-3">
                 <button
-                  className="profile-btn w-[250px] py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-blue-500 focus:ring-opacity-50"
+                  // className="profile-btn w-[250px] py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-blue-500 focus:ring-opacity-50"
+                  className="my-page-button-style profile-btn"
                   onClick={() => uploadProfile()}
                 >
                   수정완료
                 </button>
                 <button
-                  className="profile-btn w-[250px] py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-pink-500 focus:ring-opacity-50"
+                  className="profile-btn my-page-button-style"
                   onClick={() => onChangeEditingHandler()}
                 >
                   취소
@@ -71,12 +72,13 @@ export default function MyPageUpload({
             ) : (
               <div className="flex flex-col mt-3">
                 <button
-                  className="profile-btn w-[250px] py-2.5 mb-3 text-white rounded-md focus:outline-none  focus:ring-pink-500 focus:ring-opacity-50"
+                  // className="profile-btn w-[250px] py-2.5 mb-3 text-white rounded-md focus:outline-none  focus:ring-pink-500 focus:ring-opacity-50"
+                  className="my-page-button-style profile-btn"
                   onClick={() => onChangeEditingHandler()}
                 >
                   수정하기
                 </button>
-                <button className="profile-btn w-[250px] py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-pink-500 focus:ring-opacity-50">
+                <button className="my-page-button-style profile-btn">
                   로그아웃
                 </button>
               </div>

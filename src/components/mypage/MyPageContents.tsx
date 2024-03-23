@@ -1,26 +1,23 @@
 "use client";
 
-import {
-  supabase,
-  updateTableNickname,
-  updateUserInform
-} from "@/api/supabase/supabase";
-import React, { useState, useRef, useEffect, ChangeEvent } from "react";
+import { supabase, updateUserInform } from "@/api/supabase/supabase";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import "../styles/style.css";
 import { useQuery } from "@tanstack/react-query";
 import { getCurrentLoginUserInfo } from "@/utils/supabase/checkLoginUser";
+import Image from "next/image";
 import MyPageUpload from "./MyPageUpload";
 
-const defaultImg = "https://ifh.cc/g/WDVwsQ.png"; // 비숑
-
 export default function MyPageContents() {
+  const defaultAvatarUrl = "https://ifh.cc/g/WDVwsQ.png"; // 비숑
   // 로그인 확인
   const [isLogin, setIsLogin] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   // 이미지 URL
-  const [avatarUrl, setAvatarUrl] = useState("");
+  // const [avatarUrl, setAvatarUrl] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState(defaultAvatarUrl);
 
   const [userInfo, setUserInfo] = useState({
     email: "",
@@ -39,8 +36,14 @@ export default function MyPageContents() {
     setIsLogin(true);
     try {
       const userFetchData = await getCurrentLoginUserInfo();
-      // console.log(userFetchData)
-      // console.log(userFetchData?.user_metadata.nickname)
+      console.log(userFetchData);
+      console.log("아바타 이미지 ==>", userFetchData?.user_metadata.avatar_img);
+
+      // 사용자의 프로필 이미지 URL
+      const user_avatar =
+        userFetchData?.user_metadata?.avatar_img || defaultAvatarUrl;
+      // 가져온 프로필 이미지 URL을 avatarUrl 상태에 저장
+      setAvatarUrl(user_avatar);
 
       // userData 객체에서 email 값을 가져와서 상태에 설정
       if (userFetchData && userFetchData.email) {
@@ -60,9 +63,10 @@ export default function MyPageContents() {
         .from("avatars")
         .download(`${userFetchData?.id}/avatar.jpg`); ////
       console.log("아바타 데이터", avatarUrlData?.data);
+
       if (avatarUrlData.error) {
         // 에러나면 디폴트 넣어줘
-        avatarUrl = "/defaultImg.png"; ////
+        avatarUrl = defaultAvatarUrl; ////
       } else {
         avatarUrl = URL.createObjectURL(avatarUrlData?.data);
       }
@@ -119,7 +123,6 @@ export default function MyPageContents() {
       console.log("업로드 유저 아이디 정보 ", userFetchId);
 
       if (!imgFile && nickname === userFetchData?.user_metadata.nickname) {
-        console.log("변경된 사항이 없어요");
         return;
       }
 
@@ -154,8 +157,6 @@ export default function MyPageContents() {
         console.error("닉네임 업데이트 실패~~~~~", nicknameError);
         return;
       }
-
-      updateTableNickname(userFetchId!, nickname);
 
       const { data: nicknameChangeResult, error: nicknameChangeError } =
         await supabase
