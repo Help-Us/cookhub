@@ -130,7 +130,7 @@ const FilteredFoods = ({
               {topRecipes?.some(
                 (topRecipes) => topRecipes.RCP_ID === item.RCP_ID
               ) && (
-                <div className="absolute text-sm top-36 right-6 rounded-full bg-[color:var(--highlightColor2)] w-11 h-11 flex items-center justify-center leading-5 text-white border-[color:var(--subColor3)] border border-solid">
+                <div className="absolute text-sm top-36 right-6 rounded-full bg-[color:var(--highlightColor2)] w-11 h-11 flex items-center justify-center leading-5 text-white border-[color:var(--subColor7)] border border-solid">
                   인기
                 </div>
               )}
