@@ -21,7 +21,7 @@ export type ProfileDataType = {
   email: string;
   nickname: string;
   onChangeEditingHandler: () => void;
-  setNickname: React.Dispatch<React.SetStateAction<string>>;
+  onChangeNicknameHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
   uploadProfile: () => Promise<void>;
   onChangeImageHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };

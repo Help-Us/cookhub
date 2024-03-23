@@ -8,7 +8,7 @@ export default function MyPageUpload({
   nickname,
   email,
   avatarUrl,
-  setNickname,
+  onChangeNicknameHandler,
   onChangeEditingHandler,
   uploadProfile,
   onChangeImageHandler
@@ -45,7 +45,7 @@ export default function MyPageUpload({
               type="text"
               value={nickname}
               maxLength={10}
-              onChange={(e) => setNickname(e.target.value)}
+              onChange={onChangeNicknameHandler}
               className="mt-10 text-lg"
             />
           ) : (

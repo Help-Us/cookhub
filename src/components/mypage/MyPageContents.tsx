@@ -1,6 +1,6 @@
 "use client";
 
-import { supabase } from "@/api/supabase/supabase";
+import { supabase, updateUserInform } from "@/api/supabase/supabase";
 import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 import "../styles/style.css";
 import { useQuery } from "@tanstack/react-query";
@@ -34,7 +34,7 @@ export default function MyPageContents() {
   const fetchData = async () => {
     setIsLogin(true);
     try {
-      const userFetchData = await getCurrentLoginUserInfo(); // 유저 정보를 가져와서 상태에 저장
+      const userFetchData = await getCurrentLoginUserInfo();
       // console.log(userFetchData)
       // console.log(userFetchData?.user_metadata.nickname)
 
@@ -44,9 +44,9 @@ export default function MyPageContents() {
       }
 
       if (userFetchData && userFetchData?.user_metadata) {
-        setNickname(userFetchData.user_metadata.nickname);
-        setAvatarUrl(userFetchData.user_metadata.avatar_img);
-        setEmail(userFetchData.user_metadata.email);
+        userFetchData.user_metadata.nickname;
+        userFetchData.user_metadata.avatar_img;
+        userFetchData.user_metadata.email;
       }
 
       let avatarUrl = "";
@@ -54,13 +54,19 @@ export default function MyPageContents() {
       const avatarUrlData = await supabase.storage
         .from("avatars")
         .download(`${userFetchData?.id}/avatar.jpg`); ////
-      console.log("파일 다운로드", userFetchData?.id, avatarUrlData);
+      console.log("아바타 데이터", avatarUrlData?.data);
       if (avatarUrlData.error) {
+        // 에러나면 디폴트 넣어줘
         avatarUrl = "/defaultImg.png"; ////
       } else {
         avatarUrl = URL.createObjectURL(avatarUrlData?.data);
       }
       setAvatarUrl(avatarUrl);
+
+      const nickname = userFetchData?.user_metadata.nickname;
+      updateUserInform(nickname, avatarUrl);
+
+      console.log("업데이트 유저 인폼에 들어가는 => ", nickname, avatarUrl);
     } catch (error) {
       console.error("유저 정보 가져오기 실패", error);
     } finally {
@@ -100,12 +106,13 @@ export default function MyPageContents() {
     try {
       // 유저 정보
       const userFetchData = await getCurrentLoginUserInfo();
+      const userInform = await updateUserInform(nickname, avatarUrl);
+      console.log("userInform", userInform);
       console.log(
         "업로드 유저 닉네임 정보 ",
         userFetchData?.user_metadata.nickname
       );
       const userFetchId = userFetchData?.id;
-      const userFetchNickname = userFetchData?.user_metadata.nickname;
 
       if (!imgFile && nickname === userFetchData?.user_metadata.nickname) {
         console.log("변경된 사항이 없어욤ㅁ");
@@ -151,6 +158,11 @@ export default function MyPageContents() {
     }
   };
 
+  const onChangeNicknameHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setNickname(e.target.value);
+  };
+
   const handleUploadImg = async (e: ChangeEvent<HTMLInputElement>) => {
     let file;
 
@@ -190,8 +202,7 @@ export default function MyPageContents() {
             email={email}
             uploadProfile={uploadProfile}
             onChangeImageHandler={onChangeImageHandler}
-            // handleUploadImg={handleUploadImg}
-            setNickname={setNickname}
+            onChangeNicknameHandler={onChangeNicknameHandler}
           />
         </div>
       )}

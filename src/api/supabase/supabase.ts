@@ -9,7 +9,7 @@ export const supabase = createClient(supabaseUrl, supabaseKey);
 
 // 마이페이지 --------------
 
-// 유저 정보 업데이트 x
+// 유저 정보 업데이트
 export const updateUserInform = async (nickname: string, avatar: string) => {
   const { data, error } = await supabase.auth.updateUser({
     data: { nickname, avatar }
