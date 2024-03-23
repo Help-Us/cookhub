@@ -14,7 +14,7 @@ export const useCheckIsScrappedQuery = ({
   recipeId: string;
 }) => {
   return useQuery({
-    queryKey: [QueryKeys.scrap],
+    queryKey: [QueryKeys.SCRAP],
     queryFn: () => checkIsScrapped({ userId, recipeId }),
     enabled: !!userId && !!recipeId // userId와 recipeId가 존재할때만 쿼리 실행
     // !! 연산자는 값을 불리언(boolean) 타입으로 강제 변환
@@ -31,7 +31,7 @@ export const usefilterRecipeQuery = ({
     isError: isFilterError,
     isLoading: isFilterLoading
   } = useQuery({
-    queryKey: [QueryKeys.filterRecipe],
+    queryKey: [QueryKeys.FILTER_RECIPE],
     queryFn: () => filterRecipe({ searchKeyword }),
     enabled: !!searchKeyword
   });
@@ -41,7 +41,7 @@ export const usefilterRecipeQuery = ({
 
 export const useFetchTopScrappedRecipes = () => {
   const { data: topRecipes, isError: isFetchTopRecipesError } = useQuery({
-    queryKey: [QueryKeys.fetchTopScrap],
+    queryKey: [QueryKeys.FETCH_TOP_SCRAP],
     queryFn: () => fetchTopScrappedRecipes()
   });
 
