@@ -17,7 +17,7 @@ export default function MyPageContents() {
   const [email, setEmail] = useState("");
   // 이미지 URL
   // const [avatarUrl, setAvatarUrl] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState(defaultAvatarUrl);
+  const [avatarUrl, setAvatarUrl] = useState("");
 
   const [userInfo, setUserInfo] = useState({
     email: "",
