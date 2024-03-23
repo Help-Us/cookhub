@@ -1,7 +1,15 @@
 import React from "react";
 import Scrap from "./Scrap";
 
-const Nutrient = ({ tan, dan, ge, kcal, na }) => {
+interface NutrientProps {
+  tan: number;
+  dan: number;
+  ge: number;
+  kcal: number;
+  na: number;
+}
+
+const Nutrient: React.FC<NutrientProps> = ({ tan, dan, ge, kcal, na }) => {
   return (
     <div className="bg-hotpink h-56 w-60 text-white font-medium rounded-lg mb-1.5 shadow-[1px_4px_4px_0px_rgba(0,0,0,0.15)]">
       <div className="p-1">

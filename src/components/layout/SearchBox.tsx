@@ -1,6 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import searchImage from "@/assets/search.png";
+import Image from "next/image";
 
 interface SearchBoxProps {
   onSearch: (searchTerm: string) => void;
@@ -19,7 +21,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
   };
 
   const handleClick = () => {
-    router.push(`/category/${input}`);
+    router.push(`/category/${input.trim() ? input : "All"}`);
   }
 
   return (
@@ -39,7 +41,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
               onKeyDown={handleKeyPress}
             />
             <div className="w-8 cursor-pointer" onClick={handleClick}>
-              <img src="https://cdn-icons-png.flaticon.com/512/2866/2866321.png" />
+              <Image alt="SearchImage" src={searchImage}/>
             </div>
           </div>
         </div>

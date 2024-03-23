@@ -15,13 +15,22 @@ const RecommendedRecipe: React.FC<RecommendedRecipesProps> = ({ recipes }) => {
               <div className="card w-96 bg-base-100 shadow-xl cursor-pointer border border-[color:var(--borderColor2)] transition duration-300 ease-in-out hover:border-[color:var(--borderColor1)] hover:shadow-2xl">
                 <div className="card-body">
                   <h1 className="text-[color:var(--titleColor)] text-xl font-bold">{recipe.name}</h1>
-                  <p className="line-clamp-2 text-[color:var(--contentColor)]">{recipe.tip}</p>
+                  <p className="line-clamp-2 text-[color:var(--contentColor)]">
+                    {recipe.tip ? recipe.tip : "제공된 정보가 없습니다"}
+                  </p>
                   <div className='mb-2'>
                     {recipe.type && <div className="badge badge-ghost">{recipe.type}</div>}
                     {recipe.how && <div className="badge badge-outline">{recipe.how}</div>}
                   </div>
                 </div>
-                <figure>{recipe.image && <img src={recipe.image} alt="Recipe" style={{ width: '400px', height: '300px' }} className="w-full h-auto"/>}</figure>
+                <figure>
+                {/* 이미지가 없거나 로드에 실패하면 defaultImage를 사용 */}
+                {recipe.image ? (
+                  <img src={recipe.image} alt="Recipe" style={{ width: '400px', height: '300px' }} className="w-full h-auto"/>
+                ) : (
+                  <img src="../../assets/images/Cookhub_Logo.png" alt="Default" style={{ width: '400px', height: '300px' }} className="w-full h-auto"/>
+                )}
+              </figure>
               </div>
             </Link>
           ))}
