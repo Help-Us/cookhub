@@ -83,7 +83,6 @@ const Comments = ({ post_id }: { post_id: string }) => {
         }
     }
 
-    // 댓글 수정
     // 댓글 수정 시작
     const startEditComment = (commentId: string, currentContent: string) => {
         setEditingCommentId(commentId);
