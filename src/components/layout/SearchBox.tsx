@@ -1,8 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import searchImage from "@/assets/search.png";
 import Image from "next/image";
+import searchImage from "@/assets/search.png";
 
 interface SearchBoxProps {
   onSearch: (searchTerm: string) => void;
