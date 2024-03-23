@@ -1,3 +1,5 @@
+"use client";
+
 import { downloadImage } from "@/api/supabase/supabase";
 import { ProfileDataType } from "@/types";
 import React, { useState } from "react";
