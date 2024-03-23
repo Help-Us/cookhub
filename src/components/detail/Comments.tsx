@@ -4,12 +4,12 @@ import React, { useState, useEffect, ChangeEvent, KeyboardEvent } from "react";
 import Image from "next/image";
 import { supabase } from "@/api/supabase/supabase";
 import { getCurrentLoginUserInfo } from "@/utils/supabase/checkLoginUser";
+import { addComment } from "@/api/supabase/supabase";
 
-const Comments = ({ recipeId }: { recipeId: string }) => {
+const Comments = ({ post_id }: { post_id: string }) => {
     const [inputText, setInputText] = useState('');
     // 댓글 데이터를 저장할 상태를 배열 대신 객체 배열로 변경
-    const [comments, setComments] = useState<{ id: string, content: string, nickname: string, avatar_url: string }[]>([]);
-
+    const [comments, setComments] = useState<{ comment_id: string, post_id: string, user_id: string, content: string, nickname: string, avatar_url: string }[]>([]);
     // 페이지 로드 시 댓글 데이터를 불러오는 함수
     const fetchComments = async () => {
         
@@ -28,28 +28,22 @@ const Comments = ({ recipeId }: { recipeId: string }) => {
         fetchComments();
     }, []);
 
+
     const handleKeyPress = async (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter" && inputText.trim() !== '') {
             const currentLoginUserInfo = await getCurrentLoginUserInfo();
             if (currentLoginUserInfo) {
-                const { id: id, user_metadata } = currentLoginUserInfo;
-                const { data, error } = await supabase
-                    .from('comments')
-                    .insert([
-                        { project_id: recipeId, content: inputText, user_id: id, nickname: user_metadata.nickname, avatar_url: user_metadata.avatar_url }
-                    ]);
-                    
-
-                if (data) {
-                    setComments([data[0], ...comments]);
-                    setInputText('');
+                const { id: userId, user_metadata } = currentLoginUserInfo;
+                const result = await addComment(userId, post_id, inputText);
+    
+                if (result) {
+                    // 성공적으로 댓글이 추가되면 댓글 목록 상태를 업데이트
+                    setComments([result[0], ...comments]);
+                    setInputText(''); // 입력 필드 초기화
+                } else {
+                    console.error("댓글 추가 실패");
+                    console.log(post_id)
                 }
-
-                if (error) {
-                    console.error("댓글 추가 오류:", error.message);
-                }
-
-                console.log(currentLoginUserInfo);
             }
         }
     };
@@ -79,7 +73,7 @@ const Comments = ({ recipeId }: { recipeId: string }) => {
                 {comments.length > 0 ? (
                     <div className="flex flex-col min-h-[300px] w-950 mt-5 rounded-3xl border-2 border-peach text-xl shadow-lg shadow-black-500">
                         {comments.map((comment) => (
-                            <div key={recipeId} className="m-5 h-54">
+                            <div key={post_id} className="m-5 h-54">
                                 <div className="flex items-center mt-5">
                                     <Image
                                         src={comment.avatar_url}

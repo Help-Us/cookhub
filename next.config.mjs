@@ -9,7 +9,6 @@ const nextConfig = {
       "i.pinimg.com",
     ]
   }
-
 };
 
 export default nextConfig;

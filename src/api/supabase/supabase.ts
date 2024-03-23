@@ -75,3 +75,90 @@ export const filterData = async (searchKeyword: string | null) => {
 
   return cookrcp;
 };
+
+export const scrapRecipe = async (
+  userId: string | undefined,
+  recipeId: string
+) => {
+  const { data, error } = await supabase
+    .from("scrap")
+    .insert([{ user_id: userId, recipe_id: recipeId }]);
+
+  if (error) {
+    console.log("스크랩 인서트 오류", error);
+  }
+
+  console.log("스크랩 추가");
+
+  return data;
+};
+
+export const checkIsScrraped = async (
+  userId: string | undefined,
+  recipeId: string
+) => {
+  const { data: scrapId, error } = await supabase
+    .from("scrap")
+    .select("scrap_id")
+    .eq("user_id", userId)
+    .eq("recipe_id", recipeId);
+  //eq를 두번 사용하여 AND 로직 사용
+
+  console.log(scrapId);
+
+  if (error) {
+    console.log("스크랩 체크 함수 에러", error);
+  }
+
+  // 유저정보를 모두 불러와서 거기서 find로 레시피아이디와 일치하는것이 있으면 true로 체크하는 방식
+  // const check = data?.find((item) => item.recipe_id === Number(recipeId));
+  // console.log(check);
+
+  if (scrapId?.length !== 0) {
+    return true;
+  } else return false;
+};
+
+export const cancelScrapRecipe = async (
+  userId: string | undefined,
+  recipeId: string
+) => {
+  const { error } = await supabase
+    .from("scrap")
+    .delete()
+    .eq("user_id", userId)
+    .eq("recipe_id", recipeId);
+
+  if (error) {
+    console.log("스크랩 취소 오류", error);
+  }
+  console.log("스크랩 취소");
+};
+
+// --- 댓글기능
+
+export const addComment = async (
+  user_id: string | undefined,
+  post_id: string,
+  content: string
+) => {
+  const { data, error } = await supabase
+    .from("comments") //
+    .insert([
+      { 
+        user_id: user_id, // 댓글을 작성한 사용자 ID
+        post_id: post_id, // 댓글이 속한 게시물 ID
+        content: content // 댓글 내용
+      }
+    ]);
+
+  if (error) {
+    console.log("댓글 추가 오류", error);
+    console.log(post_id)
+    return null; // 오류 발생 시 null 반환
+  }
+
+  console.log("댓글 추가 성공");
+  return data; // 성공 시 추가된 댓글의 데이터 반환
+};
+

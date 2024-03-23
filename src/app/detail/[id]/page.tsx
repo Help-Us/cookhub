@@ -8,25 +8,25 @@ import Cooking from "@/components/detail/Cooking";
 import Comments from "@/components/detail/Comments";
 import Image from "next/image";
 import { supabase } from "@/api/supabase/supabase";
+import Scrap from "@/components/detail/Scrap";
 
 const DetailPage = ({ params }: { params: { id: string } }) => {
-    const { id } = params;
-    // 데이터를 저장할 상태를 useState를 통해 생성
-    const [cookrcp, setCookrcp] = useState<any | null>(null);
+  const { id } = params;
+  // 데이터를 저장할 상태를 useState를 통해 생성
+  const [cookrcp, setCookrcp] = useState<any | null>(null);
 
-    const fetchData = async () => {
-        let { data: cookrcp, error } = await supabase
-            .from('cookrcp')
-            .select('*')
-            .eq('RCP_ID', id);
-        if (error) console.error("데이터를 불러오는데 실패했습니다.", error);
-        else setCookrcp(cookrcp[0]); // 데이터를 상태에 저장
-    };
+  const fetchData = async () => {
+    let { data: cookrcp, error } = await supabase
+      .from("cookrcp")
+      .select("*")
+      .eq("RCP_ID", id);
+    if (error) console.error("데이터를 불러오는데 실패했습니다.", error);
+    else setCookrcp(cookrcp[0]); // 데이터를 상태에 저장
+  };
 
-    useEffect(() => {
-        fetchData();
-    }, [id]); // 의존성 배열에 id를 추가하여 id가 변경될 때마다 fetchData를 호출
-
+  useEffect(() => {
+    fetchData();
+  }, [id]); // 의존성 배열에 id를 추가하여 id가 변경될 때마다 fetchData를 호출
 
     return (
         <main className="flex flex-col items-center mt-14">

@@ -88,34 +88,29 @@ const Category = ({
             <div className="flex items-center gap-4">
               {calorieList.map((item, index) => {
                 return (
-                  <>
-                    <div
-                      key={index}
-                      onClick={() =>
-                        handleCalorieCategoryClick(
-                          item,
-                          calorieNumberList[index]
-                        )
-                      }
-                      className={`text-md pl-4 pr-4 text-center cursor-pointer ${
-                        selectedCalorieLevel === item
-                          ? "text-[color:var(--highlightColor1)] "
-                          : ""
-                      }`}
-                    >
-                      {item}
-                      <br />
-                      {calorieNumberList[index] <= 700 ? (
-                        <span className="text-sm">
-                          (~{calorieNumberList[index]}kcal)
-                        </span>
-                      ) : (
-                        <span className="text-sm">
-                          ({calorieNumberList[index] - 1}kcal 이상)
-                        </span>
-                      )}
-                    </div>
-                  </>
+                  <div
+                    key={index}
+                    onClick={() =>
+                      handleCalorieCategoryClick(item, calorieNumberList[index])
+                    }
+                    className={`text-md pl-4 pr-4 text-center cursor-pointer ${
+                      selectedCalorieLevel === item
+                        ? "text-[color:var(--highlightColor1)] "
+                        : ""
+                    }`}
+                  >
+                    {item}
+                    <br />
+                    {calorieNumberList[index] <= 700 ? (
+                      <span className="text-sm">
+                        (~{calorieNumberList[index]}kcal)
+                      </span>
+                    ) : (
+                      <span className="text-sm">
+                        ({calorieNumberList[index] - 1}kcal 이상)
+                      </span>
+                    )}
+                  </div>
                 );
               })}
             </div>
