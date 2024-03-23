@@ -1,3 +1,3 @@
-const QueryKeys = {
+export const QueryKeys = {
   scrap: "scrap"
 };

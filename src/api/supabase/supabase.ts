@@ -94,10 +94,16 @@ export const addScrap = async ({
   console.log("스크랩 추가");
 };
 
-export const checkIsScrraped = async (
-  userId: string | undefined,
-  recipeId: string
-) => {
+export const checkIsScrraped = async ({
+  userId,
+  recipeId
+}: {
+  userId: string | undefined;
+  recipeId: string;
+}) => {
+  // 유저 정보 없을 시 return
+  if (!userId) return;
+
   const { data: scrapId, error } = await supabase
     .from("scrap")
     .select("scrap_id")
@@ -110,10 +116,6 @@ export const checkIsScrraped = async (
   if (error) {
     console.log("스크랩 체크 함수 에러", error);
   }
-
-  // 유저정보를 모두 불러와서 거기서 find로 레시피아이디와 일치하는것이 있으면 true로 체크하는 방식
-  // const check = data?.find((item) => item.recipe_id === Number(recipeId));
-  // console.log(check);
 
   if (scrapId?.length !== 0) {
     return true;

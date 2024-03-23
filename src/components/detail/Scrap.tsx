@@ -1,16 +1,14 @@
 "use client";
 
-import {
-  addScrap,
-  cancelScrap,
-  checkIsScrraped
-} from "@/api/supabase/supabase";
+import { checkIsScrraped } from "@/api/supabase/supabase";
+import { QueryKeys } from "@/constants/QueryKeys";
 import {
   useAddScrapMutation,
   useCancelScrapMutation
 } from "@/hooks/mutateScrap";
 import { getCurrentLoginUserInfo } from "@/utils/supabase/checkLoginUser";
 import { User } from "@supabase/supabase-js";
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { IoBookmark } from "react-icons/io5";
@@ -21,30 +19,39 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
   const cancelScrapMutation = useCancelScrapMutation();
 
   const [currentUserInfo, setCurrentUserInfo] = useState<User | null>();
-  const [isScrapped, setIsScrapped] = useState<boolean>(false); // 스크랩 여부 상태 추가
+  // const [isScrapped, setIsScrapped] = useState<boolean>(false); // 스크랩 여부 상태 추가
   const userId = currentUserInfo?.id;
-  // if (!userId) return;
+
+  const {
+    data: isScrapped,
+    isLoading,
+    isError
+  } = useQuery({
+    queryKey: [QueryKeys.scrap],
+    queryFn: () => checkIsScrraped({ userId, recipeId })
+  });
+
+  console.log(isScrapped);
 
   useEffect(() => {
     const getUserInfo = async () => {
       const currentLoginUserInfo = await getCurrentLoginUserInfo();
       setCurrentUserInfo(currentLoginUserInfo);
 
+      // 스크랩 여부 체크
       if (currentLoginUserInfo) {
-        const isScrappedRecipe = await checkIsScrraped(
-          // userId를 넣게되면 마운트될때 userId는 undefined이므로 함수 내에 있는 데이터인
-          // currentLoginUserInfo의 id를 넣어주면 undefined가 나오지 않는다.
-          currentLoginUserInfo.id,
+        // userId를 넣게되면 마운트될때 userId는 undefined이므로 함수 내에 있는 데이터인
+        // currentLoginUserInfo의 id를 넣어주면 undefined가 나오지 않는다.
+        const isScrappedRecipe = await checkIsScrraped({
+          userId: currentLoginUserInfo.id,
           recipeId
-        );
-        setIsScrapped(isScrappedRecipe); // 스크랩 여부 업데이트
+        });
+        // setIsScrapped(isScrappedRecipe);
       }
     };
 
     getUserInfo();
   }, []);
-
-  console.log(isScrapped);
 
   const handleScrapStatusToggle = async () => {
     if (!userId) {
@@ -52,7 +59,7 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
       return;
     }
 
-    const isScrappedRecipe = await checkIsScrraped(userId, recipeId);
+    const isScrappedRecipe = await checkIsScrraped({ userId, recipeId });
 
     // 스크랩하지 않은 레시피일때
     if (!isScrappedRecipe) {
@@ -74,7 +81,7 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
   };
 
   const check = async () => {
-    const checkScrap = await checkIsScrraped(userId, recipeId);
+    const checkScrap = await checkIsScrraped({ userId, recipeId });
     console.log(checkScrap);
   };
 

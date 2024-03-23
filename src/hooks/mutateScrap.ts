@@ -1,4 +1,5 @@
 import { addScrap, cancelScrap } from "@/api/supabase/supabase";
+import { QueryKeys } from "@/constants/QueryKeys";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useAddScrapMutation = () => {
