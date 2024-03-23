@@ -22,7 +22,7 @@ const SignupPage = () => {
     e.preventDefault();
 
     try {
-      const { data: signupUserInfo, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -38,11 +38,10 @@ const SignupPage = () => {
           console.log(error.message);
           alert("숫자와 영문자를 각각 최소 1자 이상 사용하세요.");
         } else {
+          console.log(error);
           alert("회원가입 오류가 발생했습니다.");
         }
       } else {
-        //NOTE - 회원가입 결과 출력
-        console.log("회원가입한 유저 정보 => ", signupUserInfo);
         alert("회원가입이 완료되었습니다.");
       }
     } catch (error) {
