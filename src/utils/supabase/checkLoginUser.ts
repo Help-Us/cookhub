@@ -47,17 +47,3 @@ export const removeCurrentLoginUser = async (data: any) => {
     return console.log("removeUserError", removeUserError);
   }
 };
-
-export const uploadImage = async (filePath: any, image: any) => {
-  const { data, error } = await supabase.storage
-    .from("avatars")
-    .upload(filePath, image, {
-      cacheControl: "3600",
-      upsert: true
-    });
-
-  if (error) {
-    console.log("파일 업데이트 에러..!");
-  }
-  return data;
-};

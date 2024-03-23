@@ -1,9 +1,7 @@
 "use client";
 
-import { supabase, updateTargetUserNickname } from "@/api/supabase/supabase";
+import { supabase } from "@/api/supabase/supabase";
 import React, { useState, useRef, useEffect, ChangeEvent } from "react";
-import MyPageScrap from "./MyPageScrap";
-import Image from "next/image";
 import "../styles/style.css";
 import { useQuery } from "@tanstack/react-query";
 import { getCurrentLoginUserInfo } from "@/utils/supabase/checkLoginUser";
@@ -102,8 +100,12 @@ export default function MyPageContents() {
     try {
       // 유저 정보
       const userFetchData = await getCurrentLoginUserInfo();
-      console.log("업로드 유저 정보 ", userFetchData?.id);
+      console.log(
+        "업로드 유저 닉네임 정보 ",
+        userFetchData?.user_metadata.nickname
+      );
       const userFetchId = userFetchData?.id;
+      const userFetchNickname = userFetchData?.user_metadata.nickname;
 
       if (!imgFile && nickname === userFetchData?.user_metadata.nickname) {
         console.log("변경된 사항이 없어욤ㅁ");

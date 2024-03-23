@@ -7,24 +7,7 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
-// 유저 세션 가져오기 - 웹 페이지에 머무르는 user
-export const getUserSession = async () => {
-  const { data, error } = await supabase.auth.getSession();
-  console.log(data);
-  if (error) {
-    console.log("유저 세션 에러!");
-  }
-  return data;
-};
-
-// 내가 넣은 유저 정보 fetch 가져오기 o
-export const getSelectUserInfo = async () => {
-  let { data, error } = await supabase.from("userData").select("*");
-  if (error) {
-    console.log("오류로 인해 정보를 받아오지 못 하고 있습니다.");
-  }
-  return data;
-};
+// 마이페이지 --------------
 
 // 유저 정보 업데이트 x
 export const updateUserInform = async (nickname: string, avatar: string) => {
@@ -37,19 +20,18 @@ export const updateUserInform = async (nickname: string, avatar: string) => {
   return data;
 };
 
-// 타겟 유저 닉네임 값 변경
-export const updateTargetUserNickname = async (
-  newNickname: string,
-  uid: string
-) => {
-  const { data, error } = await supabase
-    .from("userData")
-    .update({ nickname: newNickname })
-    .eq("email", uid); // 현재 로그인한 유저의 id
+// 스토리지에 프로필 이미지 업로드
+export const uploadImage = async (filePath: any, image: any) => {
+  const { data, error } = await supabase.storage
+    .from("avatars")
+    .upload(filePath, image, {
+      cacheControl: "3600",
+      upsert: true
+    });
+
   if (error) {
-    console.log("닉네임 변경 실패", error);
+    console.log("파일 업데이트 에러..!");
   }
-  console.log("updateTargetUser => ", data);
   return data;
 };
 
@@ -58,46 +40,6 @@ export const downloadImage = async (uid: string) => {
   const { data, error } = await supabase.storage.from("avatars").download(uid);
   if (error) {
     console.log("이미지 다운로드 실패", error);
-  }
-  return data;
-};
-
-// 스토리지에 프로필 이미지 업로드
-export const uploadStorageProfileImg = async (uid: string, file: File) => {
-  const { data, error } = await supabase.storage
-    .from("avatars")
-    .upload(`${uid}`, file, {
-      cacheControl: "3600",
-      upsert: true
-    });
-
-  if (error) {
-    console.error("이미지 업로드 오류", error.message);
-  }
-  return data;
-};
-
-// 프로필 사진 삭제
-export const deleteStorageProfileImg = async (uid: string) => {
-  const { data, error } = await supabase.storage
-    .from("avatars")
-    .remove([`${uid}`]);
-  if (error) {
-    console.error("이미지 삭제 오류", error.message);
-  }
-  return data;
-};
-
-// 테이블에 유저 프로필 사진 업로드
-export const insertProfileImg = async (uid: string, url: string) => {
-  const { data, error } = await supabase
-    .from("userData")
-    .update({
-      avatar_img: url
-    })
-    .eq("id", uid);
-  if (error) {
-    console.error("프로필 이미지 업로드 오류", error.message);
   }
   return data;
 };
@@ -119,6 +61,8 @@ export const updateUserProfile = async (url: string) => {
   });
   console.error("프로필 사진 url 넣어주기 실패", error);
 };
+
+// 레시피 -------------------
 
 export const filterData = async (searchKeyword: string | null) => {
   const { data: cookrcp, error }: PostgrestResponse<RecipeType> = await supabase
