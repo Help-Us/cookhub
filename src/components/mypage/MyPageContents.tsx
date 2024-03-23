@@ -1,6 +1,10 @@
 "use client";
 
-import { supabase, updateUserInform } from "@/api/supabase/supabase";
+import {
+  supabase,
+  updateTableNickname,
+  updateUserInform
+} from "@/api/supabase/supabase";
 import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 import "../styles/style.css";
 import { useQuery } from "@tanstack/react-query";
@@ -44,9 +48,10 @@ export default function MyPageContents() {
       }
 
       if (userFetchData && userFetchData?.user_metadata) {
-        userFetchData.user_metadata.nickname;
-        userFetchData.user_metadata.avatar_img;
-        userFetchData.user_metadata.email;
+        const user_nickname = userFetchData.user_metadata.nickname;
+        const user_avatar = userFetchData.user_metadata.avatar_img;
+        setNickname(user_nickname);
+        setAvatarUrl(user_avatar);
       }
 
       let avatarUrl = "";
@@ -106,16 +111,15 @@ export default function MyPageContents() {
     try {
       // 유저 정보
       const userFetchData = await getCurrentLoginUserInfo();
-      const userInform = await updateUserInform(nickname, avatarUrl);
-      console.log("userInform", userInform);
       console.log(
         "업로드 유저 닉네임 정보 ",
         userFetchData?.user_metadata.nickname
       );
       const userFetchId = userFetchData?.id;
+      console.log("업로드 유저 아이디 정보 ", userFetchId);
 
       if (!imgFile && nickname === userFetchData?.user_metadata.nickname) {
-        console.log("변경된 사항이 없어욤ㅁ");
+        console.log("변경된 사항이 없어요");
         return;
       }
 
@@ -141,7 +145,7 @@ export default function MyPageContents() {
 
       const { error: nicknameError } = await supabase.auth.updateUser({
         data: {
-          // avatar_img: newAvatarImg,
+          uid: userFetchId,
           nickname: nickname
         }
       });
@@ -150,6 +154,22 @@ export default function MyPageContents() {
         console.error("닉네임 업데이트 실패~~~~~", nicknameError);
         return;
       }
+
+      updateTableNickname(userFetchId!, nickname);
+
+      const { data: nicknameChangeResult, error: nicknameChangeError } =
+        await supabase
+          .from("loginUserList")
+          .update({ nickname: nickname })
+          .eq("uid", userFetchId)
+          .select();
+      console.log("닉네임 변경 결과 => ", nicknameChangeResult);
+
+      if (nicknameChangeError) {
+        console.log("닉네임 DB 수정 에러");
+        return;
+      }
+
       setIsEditing(false);
 
       fetchData();
@@ -159,7 +179,6 @@ export default function MyPageContents() {
   };
 
   const onChangeNicknameHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
     setNickname(e.target.value);
   };
 

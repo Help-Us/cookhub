@@ -20,6 +20,22 @@ export const updateUserInform = async (nickname: string, avatar: string) => {
   return data;
 };
 
+// 유저 닉네임 변경(테이블용)
+export const updateTableNickname = async (uid: string, newNickname: string) => {
+  const { data, error } = await supabase
+    .from("loginUserList")
+    .update({ nickname: newNickname })
+    .eq("uid", uid)
+    .select();
+  console.log("닉네임 변경 결과 => ", data);
+
+  if (error) {
+    console.log("닉네임 DB 변경 에러");
+    throw error;
+  }
+  return data;
+};
+
 // 스토리지에 프로필 이미지 업로드
 export const uploadImage = async (filePath: any, image: any) => {
   const { data, error } = await supabase.storage
