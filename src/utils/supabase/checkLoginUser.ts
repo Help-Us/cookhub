@@ -24,7 +24,7 @@ export const getCurrentLoggedInUserList = async (): Promise<void | any[]> => {
 };
 
 // DB에 데이터를 추가함 (data: 객체 형태)
-export const insertCurrentLoginUser = async (data:any) => {
+export const insertCurrentLoginUser = async (data) => {
   const { error: insertUserError } = await supabase
     .from("loginUserList")
     .insert(data);
@@ -36,7 +36,7 @@ export const insertCurrentLoginUser = async (data:any) => {
 };
 
 // DB에서 유저의 정보를 삭제함
-export const removeCurrentLoginUser = async (data:any) => {
+export const removeCurrentLoginUser = async (data) => {
   const { error: removeUserError } = await supabase
     .from("loginUserList")
     .delete()
