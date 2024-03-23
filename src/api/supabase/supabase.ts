@@ -80,7 +80,12 @@ export const updateUserProfile = async (url: string) => {
 
 // 레시피 -------------------
 
-export const filterData = async (searchKeyword: string | null) => {
+// 검색어를 바탕으로 레시피 필터링
+export const filterRecipe = async ({
+  searchKeyword
+}: {
+  searchKeyword: string;
+}) => {
   const { data: cookrcp, error }: PostgrestResponse<RecipeType> = await supabase
     .from("cookrcp")
     .select("*")
@@ -96,6 +101,7 @@ export const filterData = async (searchKeyword: string | null) => {
   return cookrcp;
 };
 
+// 스크랩 추가
 export const addScrap = async ({
   userId,
   recipeId
@@ -112,6 +118,7 @@ export const addScrap = async ({
   }
 };
 
+// 스크랩 체크
 export const checkIsScrapped = async ({
   userId,
   recipeId
@@ -136,6 +143,7 @@ export const checkIsScrapped = async ({
   return Boolean(scrapId?.length);
 };
 
+// 스크랩 취소
 export const cancelScrap = async ({
   userId,
   recipeId
@@ -159,7 +167,9 @@ export const cancelScrap = async ({
 export const addComment = async (
   user_id: string | undefined,
   post_id: string,
-  content: string
+  content: string,
+  nickname: string,
+  avatar_img: string
 ) => {
   const { data, error } = await supabase
     .from("comments") //
@@ -167,9 +177,12 @@ export const addComment = async (
       {
         user_id: user_id, // 댓글을 작성한 사용자 ID
         post_id: post_id, // 댓글이 속한 게시물 ID
-        content: content // 댓글 내용
+        content: content, // 댓글 내용
+        nickname: nickname, // 작성자 닉네임
+        avatar_img: avatar_img // 작성자 프로필사진
       }
-    ]);
+    ])
+    .select();
 
   if (error) {
     console.log("댓글 추가 오류", error);
@@ -217,41 +230,50 @@ export const deleteComment = async (comment_id: any, user_id: any) => {
   return true;
 };
 
-// 댓글 수정 함수
-export const updateComment = async (
-  comment_id: any,
-  user_id: any,
-  newContent: any
-) => {
-  // 댓글의 user_id를 확인하기 위해 먼저 조회
-  const { data: commentData, error: commentError } = await supabase
-    .from("comments")
-    .select("user_id")
-    .eq("comment_id", comment_id)
-    .single(); // single()을 사용하여 단일 결과를 얻음
+// --- 댓글 수정 함수
+export const updateComment = async (comment_id, user_id, newContent) => {
+    // 댓글의 user_id를 확인하기 위해 먼저 조회
+    const { data: commentData, error: commentError } = await supabase
+      .from("comments")
+      .select("user_id")
+      .eq("comment_id", comment_id)
+      .single(); // single()을 사용하여 단일 결과를 얻음
 
-  if (commentError || !commentData) {
-    console.log("댓글 조회 오류", commentError);
-    return false;
-  }
+    if (commentError || !commentData) {
+      console.log("댓글 조회 오류", commentError);
+      return false;
+    }
 
-  // 현재 로그인한 사용자가 댓글 작성자와 동일한지 확인
-  if (commentData.user_id !== user_id) {
-    console.log("댓글 작성자가 아님, 수정 권한 없음");
-    return false;
-  }
+    // 현재 로그인한 사용자가 댓글 작성자와 동일한지 확인
+    if (commentData.user_id !== user_id) {
+      console.log("댓글 작성자가 아님, 수정 권한 없음");
+      return false;
+    }
 
-  // 사용자가 댓글 작성자와 동일할 경우, 댓글 내용 업데이트 진행
-  const { error: updateError } = await supabase
-    .from("comments")
-    .update({ content: newContent })
-    .eq("comment_id", comment_id);
+    // 사용자가 댓글 작성자와 동일할 경우, 댓글 내용 업데이트 진행
+    const { error: updateError } = await supabase
+      .from("comments")
+      .update({ content: newContent, updated_at: new Date().toISOString() })
+      .eq("comment_id", comment_id);
 
-  if (updateError) {
-    console.log("댓글 수정 오류", updateError);
-    return false;
-  }
+    if (updateError) {
+      console.log("댓글 수정 오류", updateError);
+      return false;
+    }
 
-  console.log("댓글 수정 성공");
-  return true;
+    console.log("댓글 수정 성공");
+    return true;
+  };
+
+  export const fetchTopScrappedRecipes = async () => {
+    const { data: topSrcappedRecipes, error } = await supabase
+      .rpc("fetch_top_scrapped_recipes") // 이 부분은 나중에 SQL 함수를 만들어주어야 합니다.
+      .select("RCP_ID, RCP_WAY, RCP_TYPE, RCP_IMG_BIG, RCP_NAME");
+
+    if (error) {
+      console.log("상위 스크랩 레시피 fetch 오류", error);
+    }
+
+    return topSrcappedRecipes;
+  };
 };
