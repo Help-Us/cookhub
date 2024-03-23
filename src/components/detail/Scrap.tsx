@@ -1,9 +1,9 @@
 "use client";
 
 import {
-  cancelScrapRecipe,
-  checkIsScrraped,
-  scrapRecipe
+  addScrap,
+  cancelScrap,
+  checkIsScrraped
 } from "@/api/supabase/supabase";
 import { getCurrentLoginUserInfo } from "@/utils/supabase/checkLoginUser";
 import { User } from "@supabase/supabase-js";
@@ -46,7 +46,7 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
     // 스크랩하지 않은 레시피일때
     if (!isScrappedRecipe) {
       try {
-        await scrapRecipe(userId, recipeId);
+        await addScrap(userId, recipeId);
       } catch (error) {
         console.log("스크랩 인서트 오류", error);
       }
@@ -54,7 +54,7 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
       //스크랩한 레시피일때
     } else {
       try {
-        await cancelScrapRecipe(userId, recipeId);
+        await cancelScrap(userId, recipeId);
       } catch (error) {
         console.log("스크랩 취소 오류", error);
       }

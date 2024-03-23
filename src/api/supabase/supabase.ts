@@ -76,11 +76,11 @@ export const filterData = async (searchKeyword: string | null) => {
   return cookrcp;
 };
 
-export const scrapRecipe = async (
+export const addScrap = async (
   userId: string | undefined,
   recipeId: string
 ) => {
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("scrap")
     .insert([{ user_id: userId, recipe_id: recipeId }]);
 
@@ -89,8 +89,6 @@ export const scrapRecipe = async (
   }
 
   console.log("스크랩 추가");
-
-  return data;
 };
 
 export const checkIsScrraped = async (
@@ -119,7 +117,7 @@ export const checkIsScrraped = async (
   } else return false;
 };
 
-export const cancelScrapRecipe = async (
+export const cancelScrap = async (
   userId: string | undefined,
   recipeId: string
 ) => {

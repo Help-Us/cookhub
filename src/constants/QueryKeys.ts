@@ -1,0 +1,3 @@
+const QueryKeys = {
+  scrap: "scrap"
+};
