@@ -154,11 +154,27 @@ export const addComment = async (
 
   if (error) {
     console.log("댓글 추가 오류", error);
-    console.log(post_id)
     return null; // 오류 발생 시 null 반환
   }
 
   console.log("댓글 추가 성공");
+  console.log(user_id)
   return data; // 성공 시 추가된 댓글의 데이터 반환
 };
 
+// --- 댓글 삭제 함수
+
+export const deleteComment = async (comment_id) => {
+  const { data, error } = await supabase
+    .from("comments")
+    .delete()
+    .match({ comment_id: comment_id });
+
+    if (error) {
+      console.log("댓글 삭제 오류", error);
+      return false; // 오류 발생 시 false 반환
+    }
+
+    console.log("댓글 삭제 성공");
+    return true;
+};

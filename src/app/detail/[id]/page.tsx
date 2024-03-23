@@ -75,7 +75,7 @@ const DetailPage = ({ params }: { params: { id: string } }) => {
             )}
 
             <div className="flex ml-5">
-                <Comments />
+                <Comments post_id={id}/>
             </div>
         </main>
     );
