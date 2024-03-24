@@ -2,28 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb: 255, 255, 255;
+  --baseColor: #F5EEE6;
+  --subColor1: #FFF8E3;
+  --subColor2: #F3D7CA;
+  --subColor3: #E6A4B4;
+  --subColor4: #D14D72;
+  --subColor5: #67729D;
+  --subColor6: #F49700;
+  --subColor7: #FCCCD4; 
+  --subColor8: #D62E4C;
+  --highlightColor1: #F6465F;
+  --highlightColor2: #ED4043;
+  --borderColor1: #C70000;
+  --borderColor2:#E0C3AE;
+  --titleColor: #784B31;
+  --contentColor: #B6856A;
+  --white: #ffffff;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --foreground-rgb: ;
+    --background-start-rgb: ;
+    --background-end-rgb: ;
   }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  box-sizing: border-box;
 }
 
 @layer utilities {

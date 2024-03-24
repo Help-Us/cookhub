@@ -1,0 +1,78 @@
+.font-roboto{
+  font-family: 'Roboto';
+  font-style: normal;
+}
+
+.profile-btn {
+  background-color: var(--subColor4);
+  color: var(--white);
+}
+
+.profile-btn:hover {
+  background-color: var(--subColor3);
+  color: var(--white);
+}
+
+.section-base-color {
+  background-color: var(--baseColor);
+  color: var(--titleColor);
+}
+
+.header-font-color {
+  color: var(--titleColor);
+}
+
+.content-font-color {
+  color: var(--contentColor);
+}
+
+.border-line {
+  border: 1px solid var(--borderLine);
+}
+
+/* 로그인/회원가입 페이지 색상 설정 */
+.login-page-color {
+  background-color: var(--subColor1);
+  border-color: var(--borderColor2);
+  color: var(--titleColor);
+}
+
+.login-page-button-color {
+  background-color: var(--subColor3);
+  color: var(--white);
+}
+
+.login-page-button-style {
+  padding: 1rem 0;
+  border-radius: 0.75rem;
+  font-weight: 600;
+}
+
+.social-login-button-style {
+  padding: 1rem 0.5rem;
+  border: 2px solid var(--subColor2);
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.input-style {
+  padding: 1rem;
+  border-radius: 0.75rem;
+}
+
+.my-page-button-style {
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  width: 250px;
+  padding: 1.25rem 2rem;
+  color: #fff;
+  border-radius: 20px;
+  
+}
+
+.commentsContainer {
+  height: 190px; 
+  overflow-y: auto;
+}
