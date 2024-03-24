@@ -1,6 +1,5 @@
 "use client";
 
-import { downloadImage } from "@/api/supabase/supabase";
 import { ProfileDataType } from "@/types";
 import React from "react";
 import MyPageScrap from "./MyPageScrap";

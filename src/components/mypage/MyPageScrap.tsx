@@ -49,7 +49,7 @@ export default function MyPageScrap() {
 
   return (
     <section className="bg-white rounded-2xl pt-4 pb-4">
-      <p className="font-bold text-xl text-center pt-2 pb-3 border-b-4 border-[#E0C3AE]">
+      <p className="font-bold text-xl text-center pt-2 pb-3 border-b-4 border-[color:var(--borderColor2)]">
         내가 레시피
       </p>
 
@@ -59,7 +59,7 @@ export default function MyPageScrap() {
         {userComments.map((comment, index) => (
           <div
             key={index}
-            className="flex space-x-12 pt-5 pb-5 border-b-2 border-[#E0C3AE]"
+            className="flex space-x-12 pt-5 pb-5 border-b-2 border-[color:var(--borderColor2)]"
           >
             <div>{comment.content}</div>
             <button
