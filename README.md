@@ -77,10 +77,13 @@ CookHub는 다음과 같은 특징을 가지고 있습니다.
 ![login](https://postfiles.pstatic.net/MjAyNDAzMjRfMjc2/MDAxNzExMjg4NjE2NjY2.hT17NTtuerLBc-I6wbzcEAixB5RFmsFr7DKejtQo9HIg.S_wPkrp-M3Xb0su5uVbMJX73BNs1d4AwoBE2B-TThLEg.PNG/image.png?type=w773)
 - 로그인 페이지에서는 가입했던 이메일과 비밀번호를 입력하여 로그인이 가능합니다.
 - 이메일 형식을 확인하여 형식과 맞지 않을 경우에 경고창을 띄웁니다.
+<br>
 ![alert](https://postfiles.pstatic.net/MjAyNDAzMjRfMjky/MDAxNzExMjg4NzIwNDcx.-ggJ362nDHlj-VO5pl3FfARm3iWNPeFAs92JNerHgeMg.CvNKDq0qEAe11hnyXjfAbplxNNrsG08TYFNjY9qpY4Ig.PNG/image.png?type=w773)
 - 로그인이 성공적으로 되었으면 알림창을 띄워 메인 페이지로 이동합니다.
+<br>
 ![logoutheader](https://postfiles.pstatic.net/MjAyNDAzMjRfMTIw/MDAxNzExMjg4NjYzMzE3.LuC9O8WDQ86xJc2dEktcb9sbpZUosqvSbGUGCRhKKW4g.ke6ejNpJGO-aX2NCUA5xTGURDtbH1HJ16X5yp6Spywsg.PNG/image.png?type=w773)
 - 로그인이 되어있지 않을 때, 헤더에는 로그인으로 되어있습니다.
+<br>
 ![loginheader](https://postfiles.pstatic.net/MjAyNDAzMjRfOTEg/MDAxNzExMjg4NzQxOTQw.TVtmRbw0ydLzgprkck6XYEn1Ht2z9sjPpxjI4BzgAM0g.-2y6pXE0OeIJruqVmSIh-8Wxb-XMhC-J8b2CHkq0-KAg.PNG/image.png?type=w773)
 - 로그인이 되었을 때, 헤더에는 마이페이지 접근이 가능하며 로그아웃으로 변경됩니다.
 
