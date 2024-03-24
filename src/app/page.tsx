@@ -25,7 +25,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    setIsLoading(true); // 컴포넌트가 마운트될 때 로딩 상태를 true
+    setIsLoading(true);
     fetchTopScrappedRecipes(); 
     fetchInitialRecipes(); 
   }, []);
