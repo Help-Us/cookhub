@@ -20,30 +20,36 @@ const FilteredFoods = ({
   searchKeyword: string;
 }) => {
   const router = useRouter();
-  const [recipeList, setRecipeList] = useState<RecipeType[]>();
+  const [categoryFilteredRecipes, setCategoryFilteredRecipes] =
+    useState<RecipeType[]>();
+
+  // searchedRecipes = 검색 레시피 결과
+  // categoryFilteredRecipes = 카테고리 필터링 레시피 결과
 
   // 레시피 불러오기
-  const { filteredRecipes, isFilterError, isFilterLoading } =
+  const { searchedRecipes, isFilterError, isFilterLoading } =
     usefilterRecipeQuery({ searchKeyword });
 
   const { topRecipes, isFetchTopRecipesError } = useFetchTopScrappedRecipes();
 
   useEffect(() => {
-    setRecipeList(categoryFilter());
-  }, [selectedFood, selectedCalorieNumberLevel, filteredRecipes]);
+    setCategoryFilteredRecipes(categoryFilter());
+  }, [selectedFood, selectedCalorieNumberLevel, searchedRecipes]);
 
   if (isFilterError) {
-    return alert(
+    alert(
       "레시피를 불러오는 도중 문제가 발생했습니다. 잠시 후 다시 시도해주세요."
     );
+    return;
   }
 
   if (isFetchTopRecipesError) {
+    alert("상위 스크랩된 레시피를 불러오는 동안 오류가 발생했습니다.");
     console.error(
       "상위 스크랩된 레시피를 불러오는 중 오류가 발생",
       isFetchTopRecipesError
     );
-    return alert("상위 스크랩된 레시피를 불러오는 동안 오류가 발생했습니다.");
+    return;
   }
   // 카테고리 필터링 함수
   const categoryFilter = () => {
@@ -71,7 +77,7 @@ const FilteredFoods = ({
       }
     };
 
-    const filterByCategoryRecipes = filteredRecipes?.filter((item) => {
+    const filterByCategoryRecipes = searchedRecipes?.filter((item) => {
       // 카테고리를 선택했으면 필터조건추가, 아니면 true로 필터링 조건 무시(모든 아이템이 통과)
       const filterByFood = selectedFood
         ? filterFoodType(item, selectedFood)
@@ -91,20 +97,20 @@ const FilteredFoods = ({
         <span className="loading loading-infinity loading-lg mt-12"></span>
       )}
       <div className="flex w-full justify-between text-sm items-center mb-2">
-        {recipeList && recipeList?.length >= 1000 ? (
+        {categoryFilteredRecipes && categoryFilteredRecipes?.length >= 1000 ? (
           <div className="">
             현재{" "}
             <span className="text-[color:var(--highlightColor1)] font-bold text-lg">
-              {recipeList?.length}
+              {categoryFilteredRecipes?.length}
             </span>
             건의 레시피가 있습니다.
           </div>
         ) : (
-          filteredRecipes && (
+          categoryFilteredRecipes && (
             <div className="">
               검색결과{" "}
               <span className="text-[color:var(--highlightColor1)] font-bold text-lg">
-                {recipeList?.length}
+                {categoryFilteredRecipes?.length}
               </span>
               건 조회
             </div>
@@ -112,12 +118,12 @@ const FilteredFoods = ({
         )}
       </div>
 
-      {recipeList?.length === 0 && (
+      {categoryFilteredRecipes?.length === 0 && (
         <div className="w-full mt-12 text-center">검색결과가 없습니다.</div>
       )}
       <div className="w-full grid grid-cols-4 gap-2">
         {/* --------------- 레시피 맵------------------- */}
-        {recipeList?.map((item) => {
+        {categoryFilteredRecipes?.map((item) => {
           return (
             <div
               key={item.RCP_ID}
