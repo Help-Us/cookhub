@@ -27,7 +27,7 @@ export const usefilterRecipeQuery = ({
   searchKeyword: string;
 }) => {
   const {
-    data: filteredRecipes,
+    data: searchedRecipes,
     isError: isFilterError,
     isLoading: isFilterLoading
   } = useQuery({
@@ -36,7 +36,7 @@ export const usefilterRecipeQuery = ({
     enabled: !!searchKeyword
   });
 
-  return { filteredRecipes, isFilterError, isFilterLoading };
+  return { searchedRecipes, isFilterError, isFilterLoading };
 };
 
 export const useFetchTopScrappedRecipes = () => {
