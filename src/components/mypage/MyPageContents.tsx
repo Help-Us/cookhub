@@ -96,7 +96,9 @@ export default function MyPageContents({ params }: { params: { id: string } }) {
       const userFetchId = userFetchData?.id;
 
       if (!imgFile && nickname === userFetchData?.user_metadata.nickname) {
-        return;
+        return alert(
+          "정보가 변경되지 않았습니다. 정보를 변경하지 않는 경우, [취소]를 눌러주세요."
+        );
       }
 
       let newAvatarImg = avatarUrl;
