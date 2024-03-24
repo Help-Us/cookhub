@@ -98,7 +98,7 @@ const FilteredFoods = ({
       )}
       <div className="flex w-full justify-between text-sm items-center mb-2">
         {categoryFilteredRecipes && categoryFilteredRecipes?.length >= 1000 ? (
-          <div className="">
+          <div>
             현재{" "}
             <span className="text-[color:var(--highlightColor1)] font-bold text-lg">
               {categoryFilteredRecipes?.length}
@@ -107,12 +107,22 @@ const FilteredFoods = ({
           </div>
         ) : (
           categoryFilteredRecipes && (
-            <div className="">
-              검색결과{" "}
-              <span className="text-[color:var(--highlightColor1)] font-bold text-lg">
-                {categoryFilteredRecipes?.length}
-              </span>
-              건 조회
+            <div className="flex justify-between items-center justify-center w-full">
+              <div className="">
+                검색결과{" "}
+                <span className="text-[color:var(--highlightColor1)] font-bold text-lg">
+                  {categoryFilteredRecipes?.length}
+                </span>
+                건 조회
+              </div>
+              {searchKeyword !== "All" && (
+                <div
+                  onClick={() => router.push("/category/All")}
+                  className={`flex cursor-pointer gap-4 mt-3`}
+                >
+                  전체 검색
+                </div>
+              )}
             </div>
           )
         )}
