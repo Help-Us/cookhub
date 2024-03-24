@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getCurrentLoginUserInfo } from "@/utils/supabase/checkLoginUser";
 import MyPageUpload from "./MyPageUpload";
 
-export default function MyPageContents({ params }: { params: { id: string } }) {
+export default function MyPageContents() {
   const defaultAvatarUrl = "https://ifh.cc/g/WDVwsQ.png"; // 비숑
   const [isEditing, setIsEditing] = useState(false);
   const [nickname, setNickname] = useState("");

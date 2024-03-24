@@ -107,7 +107,7 @@ const FilteredFoods = ({
           </div>
         ) : (
           categoryFilteredRecipes && (
-            <div className="flex justify-between items-center justify-center w-full">
+            <div className="flex justify-between items-center w-full">
               <div className="">
                 검색결과{" "}
                 <span className="text-[color:var(--highlightColor1)] font-bold text-lg">
