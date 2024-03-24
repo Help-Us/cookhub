@@ -9,6 +9,7 @@ import {
   deleteComment,
   updateComment
 } from "@/api/supabase/supabase";
+
 import { useLoginStateStore } from "@/shared/zustand/loginStateStore";
 import { useRouter } from "next/navigation";
 
@@ -72,7 +73,6 @@ const Comments = ({ post_id }: { post_id: string }) => {
         const { id: userId } = currentLoginUserInfo || {};
         const { avatar_img, nickname } =
           currentLoginUserInfo?.user_metadata || {};
-
         const result = await addComment(
           userId,
           post_id,
@@ -107,6 +107,7 @@ const Comments = ({ post_id }: { post_id: string }) => {
     if (!currentLoginUserInfo) {
       console.log("로그인한 사용자 정보를 가져올 수 없음");
       return alert("사용자 정보를 가져올 수 없습니다.");
+
     }
     const { id: userId } = currentLoginUserInfo;
 
