@@ -16,8 +16,8 @@ export const getCurrentLoggedInUserList = async (): Promise<void | any[]> => {
     .select("*");
 
   if (getCurrentUserError) {
-    console.log("DB에서 유저 리스트를 가져오는 동안 문제가 발생했습니다.");
-    return console.log("getCurrentUserError", getCurrentUserError);
+    console.error("[Error] Getting User List From DB => ", getCurrentUserError);
+    return alert("DB에서 유저 리스트를 가져오는 동안 문제가 발생했습니다.");
   }
 
   return currentUserList;
@@ -30,8 +30,8 @@ export const insertCurrentLoginUser = async (data: any) => {
     .insert(data);
 
   if (insertUserError) {
-    console.log("DB에 유저 정보를 입력하는 동안 문제가 발생했습니다.");
-    return console.log("insertUserError", insertUserError);
+    console.error("[Error] Adding User Info to DB => ", insertUserError);
+    return alert("DB에 유저 정보를 입력하는 동안 문제가 발생했습니다.");
   }
 };
 
@@ -43,7 +43,8 @@ export const removeCurrentLoginUser = async (data: any) => {
     .eq("uid", data);
 
   if (removeUserError) {
-    console.log("DB에서 유저 정보를 삭제하는 동안 문제가 발생했습니다.");
-    return console.log("removeUserError", removeUserError);
+    console.error("[Error] Removing User Info From DB => ", removeUserError);
+    alert("DB에서 유저 정보를 삭제하는 동안 문제가 발생했습니다.");
+    return null;
   }
 };
