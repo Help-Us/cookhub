@@ -99,7 +99,7 @@ CookHub는 다음과 같은 특징을 가지고 있습니다.
 ![category](https://postfiles.pstatic.net/MjAyNDAzMjRfMjY3/MDAxNzExMjg4ODMyNDg1.NGEOTxC9YpvL84VRP2J63QFnb4SIkbBH6_Yzqz9x7Ewg.hJp0kLkT8pieF8wsqXcEJ2LWhPdHK4to9uXjM44AmDgg.PNG/image.png?type=w773)
 - 로그인을 하지않은 사용자와 로그인한 사용자 모두 카테고리 페이지에 접근이 가능합니다.
 - 카테고리 페이지에서는 헤더의 '카테고리별 검색'을 누르면 전체 레시피를 띄울 수 있습니다.
-![filterfood]https://postfiles.pstatic.net/MjAyNDAzMjRfNDYg/MDAxNzExMjg4ODQ4NTA5.nBHagM-_C7BF-_o0uoNotEvzYVnUhFUrpLGxFlnDCuAg.fH2x44oIWYcxh1Mil54Ve96WVbE2VskdbV94fZd5zA0g.PNG/image.png?type=w773
+![filterfood](https://postfiles.pstatic.net/MjAyNDAzMjRfNDYg/MDAxNzExMjg4ODQ4NTA5.nBHagM-_C7BF-_o0uoNotEvzYVnUhFUrpLGxFlnDCuAg.fH2x44oIWYcxh1Mil54Ve96WVbE2VskdbV94fZd5zA0g.PNG/image.png?type=w773)
 - 카테고리 페이지에서는 원하는 레시피를 찾을 수 있게 요리 종류와 칼로리로 필터링을 할 수 있게 하였습니다.
 ![foodserch](https://postfiles.pstatic.net/MjAyNDAzMjRfODUg/MDAxNzExMjg4ODczMjY5.3pcGgAYt8cWDUQAR1RDL1ie51kd3C5SQ8TO2MeVNsCwg.w2J19FicR4zoDlLIqxq9DMo9HW3tyyPLwQgo6teyWUog.PNG/image.png?type=w773)
 - 메인 페이지에서 특정 레시피를 찾기위해 검색창에 키워드를 검색하면 해당 키워드와 같은 이름을 가진 레시피를 띄웁니다.
