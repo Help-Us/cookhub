@@ -1,7 +1,12 @@
-import { downloadImage } from "@/api/supabase/supabase";
 import { ProfileDataType } from "@/types";
-import React, { useState } from "react";
+import React from "react";
 import MyPageScrap from "./MyPageScrap";
+import { useRouter } from "next/navigation";
+import { useLoginStateStore } from "@/shared/zustand/loginStateStore";
+import {
+  getCurrentLoginUserInfo,
+  removeCurrentLoginUser
+} from "@/utils/supabase/checkLoginUser";
 
 export default function MyPageUpload({
   isEditing,
@@ -13,50 +18,57 @@ export default function MyPageUpload({
   uploadProfile,
   onChangeImageHandler
 }: ProfileDataType) {
-  return (
-    <section className="section-base-color block w-[1000px] h-[1200px] justify-center flex-nowrap p-16 rounded-3xl shadow-xl border-line shadow-[#E0C3AE]">
-      <h2 className="header-font-color text-center my-20 text-3xl">프로필</h2>
+  const router = useRouter();
+  const { logout } = useLoginStateStore();
 
-      <div className="flex justify-center gap-5 mb-10">
-        <div className="flex justify-between">
-          <div className="flex flex-col align-center mb-5">
+  const logoutHandler = async () => {
+    const currentLoginUser = await getCurrentLoginUserInfo();
+    const { id } = currentLoginUser!;
+    await removeCurrentLoginUser(id);
+    logout();
+    alert("로그아웃 되었습니다.");
+    router.replace("/");
+  };
+  return (
+    <section className="section-base-color block w-[800px] h-[960px] justify-center flex-nowrap p-16 rounded-3xl shadow-xl border-line shadow-[color:var(--borderColor2)]">
+      <h2 className="header-font-color text-center my-10 text-3xl">프로필</h2>
+
+      <div className="flex justify-center gap-5 py-12">
+        <div className="flex flex-col align-center">
+          {isEditing ? (
+            <input
+              type="file"
+              id="fileInput"
+              accept="image/*"
+              onChange={onChangeImageHandler}
+              className="cursor-pointer"
+            />
+          ) : (
             <img
               src={avatarUrl}
               alt="프로필 사진"
-              className="rounded-full border-4 border-solid shadow-lg border-[#E6A4B4] shadow-[#B6856A]"
+              className="rounded-full border-4 border-solid shadow-lg border-[color:var(--subColor3)] shadow-[color:var-(--contentColor)]"
             />
-          </div>
-          <div>
-            {isEditing && (
+          )}
+        </div>
+        <div className="flex flex-col text-xl gap-5">
+          <div className="flex flex-col gap-5 px-10">
+            <h2 className="">E-mail : {email}</h2>
+            {isEditing ? (
               <input
-                type="file"
-                id="fileInput"
-                accept="image/*"
-                onChange={onChangeImageHandler}
-                className="cursor-pointer"
+                type="text"
+                value={nickname}
+                maxLength={10}
+                onChange={onChangeNicknameHandler}
               />
+            ) : (
+              <h2>Nickname : {nickname}</h2>
             )}
           </div>
-        </div>
-        <div className="text-xl mb-7">
-          <h2 className="mb-5">E-mail : {email}</h2>
-          {isEditing ? (
-            <input
-              type="text"
-              value={nickname}
-              maxLength={10}
-              onChange={onChangeNicknameHandler}
-              className="mt-10 text-lg"
-            />
-          ) : (
-            <h2 className="mt-10 text-lg">Nickname : {nickname}</h2>
-          )}
-
-          <div className="flex flex-col text-xl mt-3 mb-5 px-12">
+          <div className="flex flex-col gap-2 px-10">
             {isEditing ? (
-              <div className="flex flex-col mt-3">
+              <>
                 <button
-                  // className="profile-btn w-[250px] py-2.5 mb-3 text-white rounded-md focus:outline-none focus:ring-blue-500 focus:ring-opacity-50"
                   className="my-page-button-style profile-btn"
                   onClick={() => uploadProfile()}
                 >
@@ -68,25 +80,27 @@ export default function MyPageUpload({
                 >
                   취소
                 </button>
-              </div>
+              </>
             ) : (
-              <div className="flex flex-col mt-3">
+              <>
                 <button
-                  // className="profile-btn w-[250px] py-2.5 mb-3 text-white rounded-md focus:outline-none  focus:ring-pink-500 focus:ring-opacity-50"
                   className="my-page-button-style profile-btn"
                   onClick={() => onChangeEditingHandler()}
                 >
                   수정하기
                 </button>
-                <button className="my-page-button-style profile-btn">
+                <button
+                  className="my-page-button-style profile-btn"
+                  onClick={logoutHandler}
+                >
                   로그아웃
                 </button>
-              </div>
+              </>
             )}
           </div>
         </div>
       </div>
-      <div className="flex flex-col mt-40">
+      <div className="flex flex-col py-12">
         <MyPageScrap />
       </div>
     </section>
