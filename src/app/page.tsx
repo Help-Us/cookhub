@@ -18,29 +18,27 @@ export default function Home() {
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY : "";
   const supabase = createClient<Database>(supabaseURL, supabaseKey);
 
-  const router = useRouter(); // useRouter 훅을 사용하기 위해 추가
+  const router = useRouter();
 
   const onSearch = (searchTerm: string) => {
     router.push(`/category/${searchTerm.trim() ? searchTerm : "All"}`);
   };
 
   useEffect(() => {
-    setIsLoading(true); // 컴포넌트가 마운트될 때 로딩 상태를 true로 설정
-    fetchTopScrappedRecipes(); // 마운트될 때, 스크랩 TOP 레시피 불러옴
-    fetchInitialRecipes(); // 마운트될 때, 추천 레시피 불러옴
+    setIsLoading(true);
+    fetchTopScrappedRecipes(); 
+    fetchInitialRecipes(); 
   }, []);
 
-  // 스크랩 TOP 레시피 목록을 가져오는 함수
-  // 스크랩 TOP 레시피 불러오는 함수
+  // 스크랩 TOP 레시피 목록
   const fetchTopScrappedRecipes = async () => {
     try {
       const { data, error } = await supabase
-        .rpc('fetch_top_scrapped_recipes') // 이 부분은 나중에 SQL 함수를 만들어주어야 합니다.
+        .rpc('scrapped_recipes_count')
         .select('RCP_ID, RCP_WAY, RCP_TYPE, RCP_IMG_BIG, RCP_NAME')
 
       if (error) throw error;
 
-      // 데이터 변환
       const formattedData = data.map(recipe => ({
         id: recipe.RCP_ID,
         image: recipe.RCP_IMG_BIG,
@@ -51,10 +49,9 @@ export default function Home() {
 
       setTopScrappedRecipes(formattedData);
     } catch (error) {
-      console.error("Failed to fetch top scrapped recipes:", error);
+      console.error("error", error);
     }
   };
-
 
   // 추천 레시피 목록
   const fetchInitialRecipes = async () => {
@@ -66,7 +63,6 @@ export default function Home() {
 
         if (error) throw error;
 
-        // 데이터 변환
         const formattedData = recipesData.map(recipe => ({
             id: recipe.RCP_ID,
             image: recipe.RCP_IMG_BIG,
@@ -79,7 +75,7 @@ export default function Home() {
         const randomRecipes = formattedData.sort(() => 0.5 - Math.random()).slice(0, 6);
         setRecipes(randomRecipes);
     } catch (error) {
-        console.error("Failed to fetch initial recipes:", error);
+        console.error("error", error);
     } finally {
         setIsLoading(false); 
     }
