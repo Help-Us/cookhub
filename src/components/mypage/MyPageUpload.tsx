@@ -2,7 +2,7 @@
 
 import { ProfileDataType } from "@/types";
 import React from "react";
-import MyPageScrap from "./MyPageScrap";
+import MyPageComments from "./MyPageComments";
 import { useRouter } from "next/navigation";
 import { useLoginStateStore } from "@/shared/zustand/loginStateStore";
 import {
@@ -103,7 +103,7 @@ export default function MyPageUpload({
         </div>
       </div>
       <div className="flex flex-col py-12">
-        <MyPageScrap />
+        <MyPageComments />
       </div>
     </section>
   );
