@@ -175,7 +175,6 @@ export const addComment = async (
 };
 
 // --- 댓글 삭제 함수
-
 export const deleteComment = async (comment_id, user_id) => {
   // 댓글의 user_id를 확인하기 위해 먼저 조회
   const { data: commentData, error: commentError } = await supabase
