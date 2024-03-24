@@ -2,10 +2,6 @@
 
 import "@/components/styles/style.css";
 
-import Image from "next/image";
-import googleLogo from "@/assets/googleLogo.png";
-import kakaoLogo from "@/assets/kakaoLogo.png";
-import naverLogo from "@/assets/naverLogo.jpg";
 import defaultImage from "@/assets/images/Cookhub_Logo.png";
 
 import { FormEvent } from "react";
@@ -21,26 +17,36 @@ const SignupPage = () => {
   const signUpHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { data: signupUserInfo, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          nickname,
-          avatar_img: defaultImage
+    try {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            nickname,
+            avatar_img: defaultImage
+          }
         }
-      }
-    });
+      });
 
-    if (error) {
-      console.log(error);
-      alert("회원가입 오류가 발생했습니다.");
-    } else {
-      //NOTE - 회원가입 결과 TEST
-      console.log("signupUserInfo", signupUserInfo);
+      if (error) {
+        if (error.name === "AuthWeakPasswordError") {
+          console.error(error.message);
+          alert("숫자와 영문자를 각각 최소 1자 이상 사용하세요.");
+        } else {
+          console.error(error);
+          alert("회원가입 오류가 발생했습니다.");
+        }
+      } else {
+        alert("회원가입이 완료되었습니다.");
+      }
+    } catch (error) {
+      console.error("try-catch error => ", error);
+    } finally {
       setEmail("");
       setPassword("");
       setNickname("");
+      router.replace("/login");
     }
   };
   return (
@@ -55,15 +61,16 @@ const SignupPage = () => {
         {/* 입력창 */}
         <div className="flex flex-col gap-3">
           <input
-            className="input-style"
+            className="input-style min-w-[600px]"
             type="text"
-            placeholder="닉네임"
+            placeholder="닉네임(최대 10자)"
+            maxLength={10}
             required
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
           />
           <input
-            className="input-style"
+            className="input-style min-w-[600px]"
             type="email"
             placeholder="아이디(이메일)"
             required
@@ -71,9 +78,10 @@ const SignupPage = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
-            className="input-style"
+            className="input-style min-w-[600px]"
             type="password"
-            placeholder="비밀번호"
+            placeholder="비밀번호(6자 이상, 숫자/영문자 최소 1자 이상)"
+            minLength={6}
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -87,43 +95,12 @@ const SignupPage = () => {
           >
             회원가입
           </button>
-
-          <button
-            type="button"
-            className="login-page-button-color login-page-button-style tracking-widest"
-          >
-            비밀번호 찾기
-          </button>
           <button
             type="button"
             className="login-page-button-color login-page-button-style tracking-widest"
             onClick={() => router.replace("/login")}
           >
             로그인 화면으로 돌아가기
-          </button>
-        </div>
-        {/* 소셜 회원가입 */}
-        <div className="flex justify-evenly gap-3 ">
-          <button
-            type="button"
-            className=" flex gap-2 items-center social-login-button-style bg-gray-50"
-          >
-            <Image src={googleLogo} alt="구글 로고" width="40" height="40" />
-            구글로 가입하기
-          </button>
-          <button
-            type="button"
-            className="flex gap-2 items-center social-login-button-style bg-yellow-300"
-          >
-            <Image src={kakaoLogo} alt="카카오 로고" width="40" height="40" />
-            카카오로 가입하기
-          </button>
-          <button
-            type="button"
-            className="flex gap-2 items-center social-login-button-style bg-[#3ec800]"
-          >
-            <Image src={naverLogo} alt="네이버 로고" width="40" height="40" />
-            네이버로 가입하기
           </button>
         </div>
       </form>

@@ -36,12 +36,12 @@ const RecommendedRecipe: React.FC<RecommendedRecipesProps> = ({ recipes }) => {
             <div className="card w-96 h-64 bg-base-100 shadow-xl cursor-pointer transition duration-500 ease-in-out hover:shadow-2xl hover:bg-gray-800 overflow-hidden rounded-lg relative transform hover:-translate-y-1 hover:scale-102">
               <div className="relative w-full h-full">
                 <Image
-                  src={recipe.image || defaultImage.src} // 이미지 URL이 없는 경우 기본 이미지 사용
+                  src={recipe.image || defaultImage.src} // 이미지 URL이 없는 경우 기본 이미지
                   alt={recipe.name}
                   layout="fill"
                   objectFit="cover"
                   onError={(e) => {
-                    e.currentTarget.src = defaultImage.src; // 로딩 실패 시 기본 이미지로 대체
+                    e.currentTarget.src = defaultImage.src; // 로딩 실패 시 기본 이미지
                   }}
                 />
               </div>

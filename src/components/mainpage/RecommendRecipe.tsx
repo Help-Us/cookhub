@@ -30,7 +30,6 @@ const RecommendedRecipe: React.FC<RecommendedRecipesProps> = ({ recipes }) => {
                   </div>
                 </div>
                 <figure>
-                {/* 이미지가 없거나 로드에 실패하면 defaultImage를 사용 */}
                 {recipe.image ? (
                   <img src={recipe.image} alt="Recipe" style={{ width: '400px', height: '300px' }} className="w-full h-auto" onError={handleImageError}/>
                 ) : (
