@@ -2,11 +2,6 @@
 
 import "@/components/styles/style.css";
 
-import Image from "next/image";
-import googleLogo from "@/assets/googleLogo.png";
-import kakaoLogo from "@/assets/kakaoLogo.png";
-import naverLogo from "@/assets/naverLogo.jpg";
-
 import { FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useUserInfoStore } from "@/shared/zustand/userInfoStore";
@@ -16,10 +11,18 @@ import {
   getCurrentLoginUserInfo,
   insertCurrentLoginUser
 } from "@/utils/supabase/checkLoginUser";
+import { getLocalStorageValue } from "@/utils/userInfo/getUserInfoFromJSON";
+import { useLoginStateStore } from "@/shared/zustand/loginStateStore";
 
 const LoginPage = () => {
   const router = useRouter();
   const { email, password, setEmail, setPassword } = useUserInfoStore();
+  const { loginState, login } = useLoginStateStore();
+
+  // 로그인 되어있으면 메인 페이지로 redirect
+  if (loginState) {
+    router.replace("/");
+  }
 
   const loginHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,10 +35,10 @@ const LoginPage = () => {
 
       if (error) {
         if (error.name === "AuthApiError") {
-          console.log(error.message);
+          console.error(error.message);
           alert("이메일 또는 비밀번호가 올바르지 않습니다.");
         } else {
-          console.log(error);
+          console.error(error);
           alert("회원가입 오류가 발생했습니다.");
         }
       } else {
@@ -66,11 +69,13 @@ const LoginPage = () => {
           // DB에 지금 로그인하는 유저의 정보를 입력
           await insertCurrentLoginUser(newLoginUser);
           alert("로그인 되었습니다.");
-          // router.replace("/");
+          await getLocalStorageValue();
+          login();
+          router.replace("/");
         }
       }
     } catch (error) {
-      console.log("try-catch error => ", error);
+      console.error("try-catch error => ", error);
     } finally {
       setEmail("");
       setPassword("");
@@ -89,7 +94,7 @@ const LoginPage = () => {
         {/* 입력창 */}
         <div className="flex flex-col gap-3">
           <input
-            className="input-style"
+            className="input-style min-w-[600px]"
             type="email"
             placeholder="아이디(이메일)"
             required
@@ -97,7 +102,7 @@ const LoginPage = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
-            className="input-style"
+            className="input-style min-w-[600px]"
             type="password"
             placeholder="비밀번호"
             required
@@ -119,30 +124,6 @@ const LoginPage = () => {
             onClick={() => router.replace("/signup")}
           >
             회원가입
-          </button>
-        </div>
-        {/* 소셜 로그인 */}
-        <div className="flex justify-evenly gap-3 ">
-          <button
-            type="button"
-            className=" flex gap-2 items-center social-login-button-style bg-gray-50"
-          >
-            <Image src={googleLogo} alt="구글 로고" width="40" height="40" />
-            구글 로그인
-          </button>
-          <button
-            type="button"
-            className="flex gap-2 items-center social-login-button-style bg-yellow-300"
-          >
-            <Image src={kakaoLogo} alt="카카오 로고" width="40" height="40" />
-            카카오 로그인
-          </button>
-          <button
-            type="button"
-            className="flex gap-2 items-center social-login-button-style bg-[#3ec800]"
-          >
-            <Image src={naverLogo} alt="네이버 로고" width="40" height="40" />
-            네이버 로그인
           </button>
         </div>
       </form>
