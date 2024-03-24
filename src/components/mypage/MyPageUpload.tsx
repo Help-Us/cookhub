@@ -38,13 +38,20 @@ export default function MyPageUpload({
       <div className="flex justify-center gap-5 py-12">
         <div className="flex flex-col align-center">
           {isEditing ? (
-            <input
-              type="file"
-              id="fileInput"
-              accept="image/*"
-              onChange={onChangeImageHandler}
-              className="cursor-pointer"
-            />
+            <>
+              <img
+                src={avatarUrl}
+                alt="프로필 사진"
+                className="rounded-full border-4 border-solid shadow-lg border-[color:var(--subColor3)] shadow-[color:var-(--contentColor)]"
+              />
+              <input
+                type="file"
+                id="fileInput"
+                accept="image/*"
+                onChange={onChangeImageHandler}
+                className="cursor-pointer"
+              />
+            </>
           ) : (
             <img
               src={avatarUrl}
