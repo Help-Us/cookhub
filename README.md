@@ -67,7 +67,7 @@ CookHub는 다음과 같은 특징을 가지고 있습니다.
 ### 🏷️ 회원가입 페이지
 ![signup](https://postfiles.pstatic.net/MjAyNDAzMjRfMTAg/MDAxNzExMjg4NTk0MDI1.5G-AGyBhkCcsUQgdrzyabZl_AGLzB-mBr-Zt3wOyJ5Yg.rDgkf67qGOWbg_0eid8WlBVwAndFKXAA6qAcUWWJAxIg.PNG/image.png?type=w773)
 - 회원가입 페이지에서는 닉네임, 이메일, 비밀번호를 사용하여 회원가입을 할 수 있습니다.
-- 닉네임, 이메일, 비밀번호에는 유효성 검사를 합니다. 닉네임은 자릿수를 검사, 이메일은 이메일 형식을 검사, 비밀번호는 숫자와 영어의 조합과 자릿수를 검사합니다.
+- 닉네임은 자릿수를 검사, 이메일은 이메일 형식을 검사, 비밀번호는 숫자와 영어의 조합과 자릿수를 검사합니다.
 ![alert](https://postfiles.pstatic.net/MjAyNDAzMjRfMjYx/MDAxNzExMjg4NzAwOTA5.-rLDRAbfe-hVdKaiSyhIBEmQrz55eKZYAfAqV61NwLIg.qXxLyeO8FbQ5pW-hhceNdsmlmqfYAwr-3LCwje034cAg.PNG/image.png?type=w773)
 - 회원가입이 성공적으로 되었으면 알림창을 띄운 후, 로그인 페이지로 이동합니다.
 
