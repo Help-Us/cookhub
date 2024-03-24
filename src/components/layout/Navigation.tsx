@@ -7,11 +7,15 @@ import {
 } from "@/utils/supabase/checkLoginUser";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Navigation() {
   const router = useRouter();
   const { loginState, logout } = useLoginStateStore();
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const logoutHandler = async () => {
     const currentLoginUser = await getCurrentLoginUserInfo();
@@ -30,7 +34,7 @@ export default function Navigation() {
           COOKHUB
         </Link>
         <div>
-          {loginState ? (
+          {isMounted && loginState ? (
             <>
               <Link href={"/mypage"} className="mr-5">
                 마이페이지
