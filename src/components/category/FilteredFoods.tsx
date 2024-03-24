@@ -27,25 +27,23 @@ const FilteredFoods = ({
     usefilterRecipeQuery({ searchKeyword });
 
   const { topRecipes, isFetchTopRecipesError } = useFetchTopScrappedRecipes();
-  console.log(topRecipes);
 
   useEffect(() => {
     setRecipeList(categoryFilter());
   }, [selectedFood, selectedCalorieNumberLevel, filteredRecipes]);
 
   if (isFilterError) {
-    alert(
+    return alert(
       "레시피를 불러오는 도중 문제가 발생했습니다. 잠시 후 다시 시도해주세요."
     );
-
-    return;
   }
 
   if (isFetchTopRecipesError) {
-    console.log(
+    console.error(
       "상위 스크랩된 레시피를 불러오는 중 오류가 발생",
       isFetchTopRecipesError
     );
+    return alert("상위 스크랩된 레시피를 불러오는 동안 오류가 발생했습니다.");
   }
   // 카테고리 필터링 함수
   const categoryFilter = () => {
