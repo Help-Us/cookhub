@@ -36,10 +36,10 @@ export default function MyPageScrap() {
       .order("created_at", { ascending: false }); // created_at 기준으로 내림차순 정렬
 
     if (error) {
-      console.log("코멘트 가져오기 오류:", error);
+      console.error("코멘트 가져오기 오류:", error);
+      alert("댓글 리스트를 가져오는 동안 오류가 발생했습니다.");
       return null;
     }
-    console.log("코멘트 데이터:", data);
     setUserComments(data); // 데이터가 있을 경우 상태에 저장하기
   };
 
@@ -49,8 +49,8 @@ export default function MyPageScrap() {
 
   return (
     <section className="bg-white rounded-2xl pt-4 pb-4">
-      <p className="font-bold text-xl text-center pt-2 pb-3 border-b-4 border-[#E0C3AE]">
-        내가 레시피
+      <p className="font-bold text-xl text-center pt-2 pb-3 border-b-4 border-[color:var(--borderColor2)]">
+        내가 작성한 댓글 - 레시피
       </p>
 
       <section
@@ -59,7 +59,7 @@ export default function MyPageScrap() {
         {userComments.map((comment, index) => (
           <div
             key={index}
-            className="flex space-x-12 pt-5 pb-5 border-b-2 border-[#E0C3AE]"
+            className="flex space-x-12 pt-5 pb-5 border-b-2 border-[color:var(--borderColor2)]"
           >
             <div>{comment.content}</div>
             <button

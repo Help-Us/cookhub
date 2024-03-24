@@ -10,7 +10,12 @@ import {
   updateComment
 } from "@/api/supabase/supabase";
 
+import { useLoginStateStore } from "@/shared/zustand/loginStateStore";
+import { useRouter } from "next/navigation";
+
 const Comments = ({ post_id }: { post_id: string }) => {
+  const router = useRouter();
+  const { loginState } = useLoginStateStore();
   const [inputText, setInputText] = useState("");
 
   // 댓글 데이터를 저장할 상태를 배열 대신 객체 배열로 변경
@@ -34,7 +39,6 @@ const Comments = ({ post_id }: { post_id: string }) => {
   // 페이지 로드 시 댓글 데이터를 불러오는 함수
   const fetchComments = async () => {
     const { data, error } = await supabase
-
       .from("comments")
       .select("*")
       .eq("post_id", post_id)
@@ -42,6 +46,10 @@ const Comments = ({ post_id }: { post_id: string }) => {
 
     if (data) {
       setComments(data);
+    }
+    if (error) {
+      console.error("댓글 데이터 불러오기 오류 => ", error);
+      alert("댓글 데이터를 불러오는 동안 오류가 발생했습니다.");
     }
   };
 
@@ -65,7 +73,6 @@ const Comments = ({ post_id }: { post_id: string }) => {
         const { id: userId } = currentLoginUserInfo || {};
         const { avatar_img, nickname } =
           currentLoginUserInfo?.user_metadata || {};
-
         const result = await addComment(
           userId,
           post_id,
@@ -86,7 +93,12 @@ const Comments = ({ post_id }: { post_id: string }) => {
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputText(event.target.value);
+    if (!loginState) {
+      alert("로그인한 유저만 댓글 작성이 가능합니다.");
+      router.replace("/login");
+    } else {
+      setInputText(event.target.value);
+    }
   };
 
   // 댓글 삭제
@@ -94,7 +106,8 @@ const Comments = ({ post_id }: { post_id: string }) => {
     const currentLoginUserInfo = await getCurrentLoginUserInfo();
     if (!currentLoginUserInfo) {
       console.log("로그인한 사용자 정보를 가져올 수 없음");
-      return;
+      return alert("사용자 정보를 가져올 수 없습니다.");
+
     }
     const { id: userId } = currentLoginUserInfo;
 
@@ -110,6 +123,7 @@ const Comments = ({ post_id }: { post_id: string }) => {
         );
       } else {
         console.log("댓글 삭제 실패");
+        alert("댓글을 삭제하지 못했습니다.");
       }
     } else {
       // 사용자가 '아니오'를 선택한 경우, 아무런 작업도 수행하지 않음
@@ -134,7 +148,7 @@ const Comments = ({ post_id }: { post_id: string }) => {
     const currentLoginUserInfo = await getCurrentLoginUserInfo();
     if (!currentLoginUserInfo) {
       console.log("로그인한 사용자 정보를 가져올 수 없음");
-      return;
+      return alert("사용자 정보를 가져올 수 없습니다.");
     }
     const { id: userId } = currentLoginUserInfo;
 
@@ -150,6 +164,7 @@ const Comments = ({ post_id }: { post_id: string }) => {
       cancelEditComment();
     } else {
       console.log("댓글 수정 실패");
+      alert("댓글을 수정하지 못했습니다.");
     }
   };
 
@@ -168,7 +183,7 @@ const Comments = ({ post_id }: { post_id: string }) => {
           className="flex h-20 w-950 p-10 mt-5 rounded-3xl caret-peach border-2 border-peach text-xl shadow-lg shadow-black-500"
           value={inputText}
           onChange={handleChange}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyPress}
         />
       </div>
       <div>
