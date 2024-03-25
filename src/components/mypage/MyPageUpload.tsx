@@ -32,7 +32,7 @@ export default function MyPageUpload({
     router.replace("/");
   };
   return (
-    <section className="section-base-color block w-[800px] h-[960px] justify-center flex-nowrap p-16 rounded-3xl shadow-xl border-line shadow-[color:var(--borderColor2)]">
+    <section className="section-base-color block justify-center flex-nowrap p-16 rounded-3xl shadow-xl border-line shadow-[color:var(--borderColor2)]">
       <h2 className="header-font-color text-center my-10 text-3xl">프로필</h2>
 
       <div className="flex justify-center gap-5 py-12">
@@ -53,11 +53,14 @@ export default function MyPageUpload({
               />
             </>
           ) : (
-            <img
-              src={avatarUrl}
-              alt="프로필 사진"
-              className="rounded-full border-4 border-solid shadow-lg border-[color:var(--subColor3)] shadow-[color:var-(--contentColor)]"
-            />
+            <>
+              <img
+                src={avatarUrl}
+                alt="프로필 사진"
+                className="rounded-full border-4 border-solid shadow-lg border-[color:var(--subColor3)] shadow-[color:var-(--contentColor)]"
+                style={{ width: "250px", height: "250px", objectFit: "cover" }}
+              />
+            </>
           )}
         </div>
         <div className="flex flex-col text-xl gap-5">
@@ -74,7 +77,7 @@ export default function MyPageUpload({
               <h2>Nickname : {nickname}</h2>
             )}
           </div>
-          <div className="flex flex-col gap-2 px-10">
+          <div className="flex flex-col gap-2 px-10 ">
             {isEditing ? (
               <>
                 <button

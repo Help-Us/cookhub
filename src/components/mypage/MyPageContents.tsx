@@ -159,7 +159,7 @@ export default function MyPageContents() {
   };
 
   return (
-    <div>
+    <div className="mypage-container">
       <MyPageUpload
         isEditing={isEditing}
         onChangeEditingHandler={onChangeEditingHandler}
