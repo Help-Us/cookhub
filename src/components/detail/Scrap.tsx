@@ -5,17 +5,21 @@ import {
   useCancelScrapMutation
 } from "@/hooks/mutateScrap";
 import { useCheckIsScrappedQuery } from "@/hooks/useQuery";
+import { useLoginStateStore } from "@/shared/zustand/loginStateStore";
 import { getCurrentLoginUserInfo } from "@/utils/supabase/checkLoginUser";
 import { User } from "@supabase/supabase-js";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { IoBookmark } from "react-icons/io5";
 
 const Scrap = ({ recipeId }: { recipeId: string }) => {
-  // 필요한거 유저아이디, 레시피아이디,
+  const router = useRouter();
+
   const addScrapMutation = useAddScrapMutation();
   const cancelScrapMutation = useCancelScrapMutation();
 
+  const { loginState } = useLoginStateStore();
   const [currentUserInfo, setCurrentUserInfo] = useState<User | null>();
   const userId = currentUserInfo?.id;
 
@@ -35,9 +39,15 @@ const Scrap = ({ recipeId }: { recipeId: string }) => {
   }, []);
 
   const handleScrapStatusToggle = async () => {
-    if (!userId) {
-      alert("로그인 정보가 유효하지 않습니다.");
-      return;
+    if (!loginState) {
+      if (
+        window.confirm(
+          "로그인한 유저만 스크랩이 가능합니다. 로그인하시겠습니까?"
+        )
+      ) {
+        router.replace("/login");
+        return;
+      } else return;
     }
 
     // 스크랩하지 않은 레시피일때
