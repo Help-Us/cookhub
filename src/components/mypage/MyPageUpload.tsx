@@ -39,6 +39,11 @@ export default function MyPageUpload({
         <div className="flex flex-col align-center">
           {isEditing ? (
             <>
+              <img
+                src={avatarUrl}
+                alt="프로필 사진"
+                className="rounded-full border-4 border-solid shadow-lg border-[color:var(--subColor3)] shadow-[color:var-(--contentColor)]"
+              />
               <input
                 type="file"
                 id="fileInput"
