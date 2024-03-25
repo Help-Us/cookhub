@@ -94,18 +94,19 @@ CookHub는 다음과 같은 특징을 가지고 있습니다.
 
 |사진|설명|
 |:-:|-|
-|![category](https://postfiles.pstatic.net/MjAyNDAzMjRfMjY3/MDAxNzExMjg4ODMyNDg1.NGEOTxC9YpvL84VRP2J63QFnb4SIkbBH6_Yzqz9x7Ewg.hJp0kLkT8pieF8wsqXcEJ2LWhPdHK4to9uXjM44AmDgg.PNG/image.png?type=w773)|로그인을 하지않은 사용자와 로그인한 사용자 모두 카테고리 페이지에 접근이 가능합니다.<br><br>카테고리 페이지에서는 헤더의 '카테고리별 검색'을 누르면 전체 레시피를 띄울 수 있습니다.|
-|![filterfood](https://postfiles.pstatic.net/MjAyNDAzMjRfNDYg/MDAxNzExMjg4ODQ4NTA5.nBHagM-_C7BF-_o0uoNotEvzYVnUhFUrpLGxFlnDCuAg.fH2x44oIWYcxh1Mil54Ve96WVbE2VskdbV94fZd5zA0g.PNG/image.png?type=w773)|카테고리 페이지에서는 원하는 레시피를 찾을 수 있게 요리 종류와 칼로리로 필터링을 할 수 있게 하였습니다.|
-|![foodserch](https://postfiles.pstatic.net/MjAyNDAzMjRfODUg/MDAxNzExMjg4ODczMjY5.3pcGgAYt8cWDUQAR1RDL1ie51kd3C5SQ8TO2MeVNsCwg.w2J19FicR4zoDlLIqxq9DMo9HW3tyyPLwQgo6teyWUog.PNG/image.png?type=w773)| 메인 페이지에서 특정 레시피를 찾기위해 검색창에 키워드를 검색하면 해당 키워드와 같은 이름을 가진 레시피를 띄웁니다.|
+|![category](https://postfiles.pstatic.net/MjAyNDAzMjRfMjY3/MDAxNzExMjg4ODMyNDg1.NGEOTxC9YpvL84VRP2J63QFnb4SIkbBH6_Yzqz9x7Ewg.hJp0kLkT8pieF8wsqXcEJ2LWhPdHK4to9uXjM44AmDgg.PNG/image.png?type=w773)|로그인을 하지않은 사용자와 로그인한 사용자 모두 카테고리 페이지에 접근이 가능합니다.<br>|
+|![filterfood](https://i.ibb.co/nBbjHH1/2024-03-25-095145.png)|카테고리 페이지에서는 요리 종류와 칼로리를 기준으로 사용자가 원하는 레시피를 쉽게 찾을 수 있도록 필터링 기능을 제공합니다. 중첩 필터링 기능을 통해 더욱 정밀한 검색 결과를 얻을 수 있습니다. 상위 스크랩된 레시피에는 '인기' 마크가 부여되어, 사용자들 사이에서 인기 있는 레시피를 한눈에 확인할 수 있습니다. |
+|![foodsearch](https://i.ibb.co/vk7nTsb/2024-03-25-094247.png)| 검색창에 키워드를 검색하면 해당 키워드를 포함하는 레시피를 띄웁니다. 전체 검색 버튼을 누르거나 헤더의 카테고리별 페이지를 눌러 전체 레시피를 검색할 수 있습니다.|
 
-<br>
+
+
 
 ### 🏷️ 레시피 상세 페이지
 
 |사진|설명|
 |:-:|-|
 |![detail](https://postfiles.pstatic.net/MjAyNDAzMjRfMjMx/MDAxNzExMjg4OTM2NzI0.8cU1BK0VvDu1QVOQKYGZUVeKeRZRv9tXzPpTobnPHokg.z4ZZv4Bk3dkrt28NvPPIo7WE1rWR8-gUmljRqjYoyaIg.PNG/image.png?type=w773)|로그인을 하지않은 사용자와 로그인한 사용자 모두 레시피 상세 페이지에 접근이 가능합니다.<br><br>메인 페이지, 카테고리 페이지에서 레시피를 클릭하면 상세 페이지로 넘어갑니다.|
-|![information](https://postfiles.pstatic.net/MjAyNDAzMjRfMjQg/MDAxNzExMjg4OTUxODg1.ykHiaWfHB9OV4WhccaPyORmxx6zaVq9NzPF2BqaPX3Eg.tIb1l80avYcshecvraiC3w2YjBKFtl7r1AVbBHAUfGAg.PNG/image.png?type=w773)|해당 레시피의 이름, 해쉬태그, 영양성분, 재료를 띄워 보여줍니다.|
+|![information](https://postfiles.pstatic.net/MjAyNDAzMjRfMjQg/MDAxNzExMjg4OTUxODg1.ykHiaWfHB9OV4WhccaPyORmxx6zaVq9NzPF2BqaPX3Eg.tIb1l80avYcshecvraiC3w2YjBKFtl7r1AVbBHAUfGAg.PNG/image.png?type=w773)|해당 레시피의 이름, 해쉬태그, 영양성분, 재료를 띄워 보여줍니다. 스크랩하기를 눌러 레시피를 스크랩할 수 있습니다. |
 |![cooking](https://postfiles.pstatic.net/MjAyNDAzMjRfODAg/MDAxNzExMjg4OTY5Njcz.rY_5QtcbU0kIuIki7FwnhO5MhVv-e9au-2DBP8sC884g.DlLageiqH4-ikdcz0SLT4i4QfxxvS5CvlMnmXpjbNI8g.PNG/image.png?type=w773)|레시피마다 만드는 방법과 단계가 모두 다르게 띄워집니다.<br><br>사용자가 한 눈에 레시피를 잘 파악하기 위해서 깔끔하게 정렬하였습니다.<br><br>레시피마다 각각 다른 tip을 띄웁니다.|
 |![comments](https://postfiles.pstatic.net/MjAyNDAzMjRfMjky/MDAxNzExMjg5MDEyMjUz.WUaY53sQs4bIsvHs_7GGRa71vWJ1QYfABlBlE9TNZWQg.5X4JHMLB9GIV140_j6Jh_O3esITSBHyxM7IYEYWC9gAg.PNG/image.png?type=w773)|레시피에 대한 리뷰를 남길 수 있게 댓글 기능을 추가하였습니다.<br><br>댓글 기능은 로그인한 사용자만 달 수 있으며, 로그인하지 않고 댓글을 달려고 할 시, 알림창을 띄우고 로그인 페이지로 이동합니다.<br><br>댓글 총 갯수를 카운트하여 몇 개의 댓글이 달렸는지 한 눈에 파악할 수 있습니다.<br><br>댓글 작성자에게만 수정, 삭제 버튼이 보입니다.|
 
