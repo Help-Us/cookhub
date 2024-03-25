@@ -127,7 +127,7 @@ export default function MyPageContents() {
       });
 
       if (nicknameError) {
-        console.error("닉네임 업데이트 실패~~~~~", nicknameError);
+        console.error("닉네임 업데이트에 실패 => ", nicknameError);
         return alert("닉네임을 업데이트하는 동안 오류가 발생했습니다.");
       }
 
@@ -138,7 +138,7 @@ export default function MyPageContents() {
         .select();
 
       if (nicknameChangeError) {
-        console.error("닉네임 DB 수정 에러 => ", nicknameChangeError);
+        console.error("닉네임 DB 수정 에러! => ", nicknameChangeError);
         return alert("닉네임을 DB에 입력하는 동안 오류가 발생했습니다.");
       }
 
