@@ -43,6 +43,7 @@ export default function MyPageUpload({
                 src={avatarUrl}
                 alt="프로필 사진"
                 className="rounded-full border-4 border-solid shadow-lg border-[color:var(--subColor3)] shadow-[color:var-(--contentColor)]"
+                style={{ width: "250px", height: "250px", objectFit: "cover" }}
               />
               <input
                 type="file"
