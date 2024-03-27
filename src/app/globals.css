@@ -31,6 +31,8 @@ a {
   color: inherit;
 }
 
+em {color: white}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: ;
