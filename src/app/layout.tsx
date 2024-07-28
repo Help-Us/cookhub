@@ -8,7 +8,10 @@ import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "Cookhub",
-  description: "Discover and share delightful recipes."
+  description: "Discover and share delightful recipes.",
+  icons: {
+    icon: "/Cookhub_Logo.png"
+  }
 };
 
 const noto = Noto_Sans_KR({
